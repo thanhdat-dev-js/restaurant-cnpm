@@ -1,0 +1,60 @@
+$box-shadow: 0px 4px 10px 0px #f4f4f4;
+$white-color: rgb(255, 255, 255);
+$grey-color: #e9edec77;
+$text-color: #000a43c9;
+$linear-3: all linear 0.3s;
+$bg-color: rgb(211, 211, 211);
+$border: 1px solid #dadada;
+$line-color: #dadada;
+$primary-color: #d93e06;
+$black-color: #000;
+$box-shadow: 2px 2px 11px 1px #b1b1b1;
+
+@mixin btn {
+    padding: 6px;
+    display: inline-block;
+    border-radius: 8px;
+    .MuiSvgIcon-root {
+        position: relative;
+        top: 1px;
+    }
+    &-increase {
+        border: 1px solid $primary-color;
+        color: $primary-color;
+        &:active {
+            background-color: $primary-color;
+            color: $white-color;
+        }
+    }
+    &-decrease {
+        border: 1px solid $black-color;
+        &:active {
+            background-color: $black-color;
+            color: $white-color;
+        }
+    }
+}
+
+@mixin imgBg {
+    background-image: url(../img/img1.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+@mixin rps600 {
+    @media (max-width: 600px) {
+        @content;
+    }
+}
+
+@mixin rpsM480 {
+    @media (max-width: 480px) {
+        @content;
+    }
+}
+@mixin rpsM360 {
+    @media (max-width: 360px) {
+        @content;
+    }
+}

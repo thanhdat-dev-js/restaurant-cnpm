@@ -1,0 +1,270 @@
+@import "variable";
+@import "cart";
+.menu {
+    overflow: hidden;
+    height: 100vh;
+    box-sizing: border-box;
+    &-wrap {
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+    }
+    .MuiContainer-root {
+        background-color: $white-color;
+        padding-left: 0;
+        padding-right: 0;
+    }
+    .MuiGrid-container {
+        position: relative;
+    }
+    .item {
+        background-color: green;
+        height: 100vh;
+    }
+    .header {
+        display: flex;
+        justify-content: space-between;
+        a,
+        .btn-showCart {
+            text-decoration: none;
+            font-size: 1.8rem;
+            color: $text-color;
+            height: 60px;
+            display: inline-flex;
+            align-items: center;
+            padding: 0 30px;
+            &:hover {
+                background-color: $text-color;
+                color: $white-color;
+                .MuiSvgIcon-root {
+                    background-color: $white-color;
+                    color: $text-color;
+                }
+            }
+        }
+
+        .MuiSvgIcon-root {
+            text-decoration: none;
+            font-size: 2.4rem;
+            border-radius: 6px;
+            color: $white-color;
+            background-color: $text-color;
+            margin: 0 10px;
+        }
+    }
+
+    .modal {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        align-items: center;
+        justify-content: center;
+        background-color: rgba(0, 0, 0, 0.671);
+        transition: $linear-3;
+        display: flex;
+        opacity: 0;
+        visibility: hidden;
+    }
+    .modal.open {
+        visibility: visible;
+        opacity: 1;
+    }
+    .modal-body {
+        z-index: 50;
+        width: 80%;
+        background-color: $white-color;
+        border-radius: 16px;
+        background-color: $bg-color;
+        .heading {
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .container {
+            background-color: $white-color;
+            color: #000;
+            display: flex;
+        }
+        .img-wrap {
+            width: 30%;
+            margin: 20px 50px;
+            border: $border;
+            border-radius: 10px;
+            padding: 30px;
+        }
+        .img {
+            padding-top: 100%;
+            background-image: url(../img/img1.jpg);
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            border-radius: 10px;
+        }
+        .content {
+            flex: 1;
+            padding: 20px 20px;
+            padding-left: 0;
+            display: flex;
+            flex-direction: column;
+        }
+        .name {
+            flex: 1;
+            margin-left: 20px;
+        }
+        .title {
+            display: flex;
+            line-height: 1.8;
+        }
+        .quantity {
+            border-top: $border;
+            border-bottom: $border;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 6px 0;
+            .btn {
+                @include btn;
+            }
+            span {
+                font-size: 1.4rem;
+                padding: 0 10px;
+            }
+        }
+        .btn-modal {
+            width: 100%;
+            margin-top: auto;
+        }
+    }
+}
+
+.menubody {
+    background-color: $grey-color;
+    flex: 1;
+    overflow: auto;
+    .heading {
+        display: flex;
+        justify-content: space-around;
+        .prev-btn {
+            width: 0px;
+            border: 28px solid $text-color;
+            border-color: transparent $text-color transparent transparent;
+            border-right-width: 14px;
+            border-left-width: 0;
+            margin-left: 20px;
+        }
+        .next-btn {
+            width: 0px;
+            border: 28px solid $text-color;
+            border-color: transparent transparent transparent $text-color;
+            border-left-width: 14px;
+            border-right-width: 0;
+            margin-right: 20px;
+        }
+        .btn {
+            display: flex;
+            align-items: center;
+            opacity: 0.9;
+            .disable {
+                opacity: 0.1;
+            }
+        }
+        .tag {
+            display: flex;
+            width: calc(100% - 68px);
+            overflow: hidden;
+        }
+        .tag-product {
+            background-color: $white-color;
+            width: 20%;
+            @include rps600 {
+                width: 50%;
+            }
+            margin: 10px;
+            border-radius: 16px;
+            padding-bottom: 20px;
+            text-align: center;
+            color: $text-color;
+            font-size: 1.2rem;
+            .tag-img {
+                background-image: url("../img/img1.jpg");
+                background-size: cover;
+                background-position: center;
+                padding-top: 60%;
+                border-radius: 10px;
+                margin: 0 20px;
+                margin-top: 20px;
+            }
+            h3 {
+                margin: 0;
+                margin-top: 10px;
+            }
+        }
+        .currentTag {
+            background-color: $text-color;
+            color: $white-color;
+        }
+    }
+    .content {
+        padding: 10px;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        .type {
+            padding: 20px 30px;
+            font-size: 1.6rem;
+            position: relative;
+            &::after {
+                content: "";
+                display: block;
+                position: absolute;
+                top: 50%;
+                right: 30px;
+                width: calc(100% - 140px);
+                height: 1px;
+                background-color: $line-color;
+            }
+        }
+        .product {
+            padding: 16px;
+            margin: 10px;
+            border-radius: 20px;
+            box-shadow: $box-shadow;
+            span {
+                color: $primary-color;
+            }
+            h3 {
+                margin: 10px 0;
+                font-size: 1.4rem;
+                font-weight: 700;
+            }
+            &-img {
+                background-image: url("../img/img1.jpg");
+                padding-top: 70%;
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-position: center;
+                border-radius: 16px;
+            }
+            &-wrap {
+                font-size: 1.4rem;
+                font-weight: 700;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                .addCart {
+                    font-size: 2.4rem;
+                }
+                .btn-addCart {
+                    background-color: $primary-color;
+                    padding: 6px 10px;
+                    border-radius: 10px;
+                    color: $white-color;
+                }
+            }
+        }
+    }
+}

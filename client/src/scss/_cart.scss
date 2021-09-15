@@ -1,0 +1,120 @@
+@import "variable";
+.cart {
+    position: absolute;
+    z-index: 20;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    justify-content: flex-end;
+    background-color: rgba(0, 0, 0, 0.671);
+    transition: $linear-3;
+    display: flex;
+    opacity: 0;
+    visibility: hidden;
+    &.cartOpen {
+        opacity: 1;
+        visibility: visible;
+    }
+    &-wrap {
+        z-index: 50;
+        background-color: $white-color;
+        width: 40%;
+    }
+    &-header {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        height: 60px;
+        font-size: 1.8rem;
+        color: $primary-color;
+        font-weight: 700;
+        .cart-icon {
+            margin: 0 16px;
+            font-size: 3rem;
+        }
+    }
+    .container {
+        overflow: auto;
+        height: 75vh;
+        .product {
+            margin: 10px;
+            padding: 20px;
+            border: $border;
+            border-radius: 10px;
+            display: flex;
+        }
+        .product-wrap {
+            width: 70px;
+            max-width: 15%;
+            margin-right: 20px;
+        }
+        .product-img {
+            border-radius: 10px;
+            padding-top: 100%;
+            @include imgBg;
+        }
+        .body {
+            flex: 1;
+            width: 70%;
+            font-size: 1.4rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            span {
+                color: $primary-color;
+            }
+            &-wrap {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+            .quantity {
+                .btn {
+                    @include btn;
+                    margin: 8px 16px;
+                }
+                .btn-decrease {
+                    margin-left: 0;
+                }
+            }
+            p {
+                font-weight: 500;
+                font-size: 1.6rem;
+                margin: 0;
+            }
+            .price {
+                color: $primary-color;
+                font-size: 1.6rem;
+                font-weight: 700;
+                line-height: 1.8;
+            }
+        }
+    }
+    .cart-footer {
+        padding: 16px;
+        &-wrap {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            h3 {
+                font-size: 2rem;
+            }
+            p {
+                color: $primary-color;
+                font-size: 1.6rem;
+                font-weight: 700;
+                line-height: 1.8;
+            }
+        }
+        .discount {
+            font-size: 1.2rem;
+            text-align: end;
+        }
+        .btn-modal {
+            width: 100%;
+            font-size: 1.6rem;
+            margin-top: 20px;
+        }
+    }
+}
