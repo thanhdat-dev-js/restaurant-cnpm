@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Container } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import MenuBookIcon from '@material-ui/icons/MenuBook';
-import KitchenIcon from '@material-ui/icons/Kitchen';
 import ReceiptIcon from '@material-ui/icons/Receipt';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import { HashLoader } from 'react-spinners';
@@ -47,7 +46,18 @@ export default () => {
                                     <MenuBookIcon />
                                 </Link>
                             </li>}
-
+                            {permission === 'admin' && <li>
+                                <Link to="/admin">
+                                    <span>admin</span>
+                                    <MenuBookIcon />
+                                </Link>
+                            </li>}
+                            {permission === 'kitchen' && <li>
+                                <Link to="/kitchen">
+                                    <span>Kichen</span>
+                                    <MenuBookIcon />
+                                </Link>
+                            </li>}
                         </ul>
                         <ul>
                             {permission === 'customer' && <li>
@@ -60,7 +70,7 @@ export default () => {
                                 <>
                                     <li>
                                         <Link to="/user">
-                                            <span>user</span>
+                                            <span>profile</span>
                                             <ReceiptIcon />
                                         </Link>
                                     </li>

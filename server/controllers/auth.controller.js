@@ -14,7 +14,7 @@ module.exports = {
                     }, process.env.SECRET, {
                         expiresIn: 60 * 60
                     })
-                    res.json({
+                    return res.json({
                         success: 1,
                         message: 'Dang nhap thanh cong',
                         token
@@ -25,7 +25,7 @@ module.exports = {
                     message: 'Sai mat khau',
                 })
             }
-            res.json({
+            return res.json({
                 success: 0,
                 message: 'Tai khoan khong ton tai'
             })

@@ -22,7 +22,11 @@ export default () => {
         });
     const [showModal, setShowModal] = useState(false);
     const [showCart, setShowCart] = useState(false);
-    const [dataCart, setDataCart] = useState({ products: [] });
+    const [dataCart, setDataCart] = useState({
+        products: [],
+        totalOrder: 0
+    });
+    const [loading, setLoading] = useState(false);
     useEffect(() => {
         try {
             let reqOptions = {
@@ -41,6 +45,16 @@ export default () => {
             console.log(e);
         }
     }, [])
+    useEffect(() => {
+        var totalOrder = 0;
+        dataCart.products.forEach(item => {
+            totalOrder += item.totalPrice
+        })
+        setDataCart({
+            ...dataCart,
+            totalOrder
+        })
+    }, [dataCart.products])
     function handleClickTag(idx) {
         setDataTag({
             ...dataTag,
@@ -77,9 +91,11 @@ export default () => {
     function handleClickDecreaseCart(idx, currentIdx) {
         const products = dataCart.products.map((item) => {
             if (item.currentIdxProduct === idx && item.currentIdx === currentIdx) {
+                const quantity = item.quantity === 1 ? 1 : item.quantity - 1;
                 return {
                     ...item,
-                    quantity: item.quantity === 1 ? 1 : item.quantity - 1
+                    quantity,
+                    totalPrice: item.price * quantity
                 }
             }
             return item;
@@ -92,9 +108,11 @@ export default () => {
     function handleClickIncreaseCart(idx, currentIdx) {
         const products = dataCart.products.map((item) => {
             if (item.currentIdxProduct === idx && item.currentIdx === currentIdx) {
+                const quantity = item.quantity + 1;
                 return {
                     ...item,
-                    quantity: item.quantity + 1
+                    quantity,
+                    totalPrice: item.price * quantity
                 }
             }
             return item;
@@ -130,7 +148,8 @@ export default () => {
                     isEmptyOrNull = false;
                     return {
                         ...item,
-                        quantity: item.quantity + value
+                        quantity: item.quantity + value,
+                        totalPrice: (item.quantity + value) * item.price
                     }
                 }
             }
@@ -142,6 +161,7 @@ export default () => {
                 currentIdxProduct: currentIdxProduct,
                 quantity: value,
                 price: dataTag.data[currentIdx].products[currentIdxProduct].price,
+                totalPrice: dataTag.data[currentIdx].products[currentIdxProduct].price * value,
                 productID: dataTag.data[currentIdx].products[currentIdxProduct].productID,
                 name: dataTag.data[currentIdx].products[currentIdxProduct].name
             })
@@ -151,115 +171,148 @@ export default () => {
         })
         closeModal();
     }
+    async function handlePayment() {
+        try {
+            setLoading(true);
+            var data = {
+                email: localStorage.getItem('EMAIL'),
+                total: dataCart.totalOrder,
+                products: dataCart.products.map((item) => {
+                    const {
+                        quantity,
+                        price,
+                        totalPrice,
+                        name,
+                        productID
+                    } = item;
+                    return {
+                        quantity,
+                        price,
+                        totalPrice,
+                        name,
+                        productID
+                    }
+                })
+            }
+            const res = await axios.post('http://127.0.0.1:4000/payment', data);
+            console.log(res);
+        }
+        catch (err) {
+            console.log(err)
+        }
+    }
     return (
-        <div className="menu">
-            <Container fluid='lg'>
-                <Grid container spacing={0}>
-                    {dataTag.data.length && <div className={classNames('modal', { open: showModal })}
-                        onClick={() => closeModal()}>
-                        <div className='modal-body' onClick={(e) => e.stopPropagation()}>
-                            <div className='heading'>
-                                <h3>Add to cart</h3>
-                                <CloseIcon onClick={() => closeModal()} />
-                            </div>
-                            <div className='container'>
-                                <div className='img-wrap'>
-                                    <div className='img'></div>
+        loading ?
+            <h1>Vui long doi thu ngan xac nhan don hang cua ban</h1>
+            :
+            <div className="menu" >
+                <Container fluid='lg'>
+                    <Grid container spacing={0}>
+                        {dataTag.data.length && <div className={classNames('modal', { open: showModal })}
+                            onClick={() => closeModal()}>
+                            <div className='modal-body' onClick={(e) => e.stopPropagation()}>
+                                <div className='heading'>
+                                    <h3>Add to cart</h3>
+                                    <CloseIcon onClick={() => closeModal()} />
                                 </div>
-                                <div className='content'>
-                                    <div className='title'>
-                                        <div className='sku'>
-                                            <h3>SKU</h3>
-                                            <p>41</p>
-                                        </div>
-                                        <div className='name'>
-                                            <h3>{dataTag.data[dataTag.currentIdx].type}</h3>
-                                            <p>{dataTag.data[dataTag.currentIdx].products[dataTag.currentIdxProduct] && dataTag.data[dataTag.currentIdx].products[dataTag.currentIdxProduct].name}</p>
-                                        </div>
-                                        <div className='price'>
-                                            <h3>Unit Price</h3>
-                                            <span>{dataTag.data[dataTag.currentIdx].products[dataTag.currentIdxProduct] && dataTag.data[dataTag.currentIdx].products[dataTag.currentIdxProduct].price}</span>
-                                        </div>
+                                <div className='container'>
+                                    <div className='img-wrap'>
+                                        <div className='img'></div>
                                     </div>
-                                    <div className='quantity'>
-                                        <h3>Quantity</h3>
-                                        <div>
-                                            <div className='btn btn-decrease' onClick={() => handleClickDecrease()}><RemoveIcon /></div>
-                                            <span>{dataTag.quantity}</span>
-                                            <div className='btn btn-increase' onClick={() => handleClickIncrease()}><AddIcon /></div>
+                                    <div className='content'>
+                                        <div className='title'>
+                                            <div className='sku'>
+                                                <h3>SKU</h3>
+                                                <p>41</p>
+                                            </div>
+                                            <div className='name'>
+                                                <h3>{dataTag.data[dataTag.currentIdx].type}</h3>
+                                                <p>{dataTag.data[dataTag.currentIdx].products[dataTag.currentIdxProduct] && dataTag.data[dataTag.currentIdx].products[dataTag.currentIdxProduct].name}</p>
+                                            </div>
+                                            <div className='price'>
+                                                <h3>Unit Price</h3>
+                                                <span>{dataTag.data[dataTag.currentIdx].products[dataTag.currentIdxProduct] && dataTag.data[dataTag.currentIdx].products[dataTag.currentIdxProduct].price}</span>
+                                            </div>
                                         </div>
+                                        <div className='quantity'>
+                                            <h3>Quantity</h3>
+                                            <div>
+                                                <div className='btn btn-decrease' onClick={() => handleClickDecrease()}><RemoveIcon /></div>
+                                                <span>{dataTag.quantity}</span>
+                                                <div className='btn btn-increase' onClick={() => handleClickIncrease()}><AddIcon /></div>
+                                            </div>
+                                        </div>
+                                        <Button className='btn-modal' variant="contained" color="secondary" onClick={() => addToCart()}>
+                                            <ShoppingCartOutlinedIcon /> <span>13213</span>
+                                        </Button>
                                     </div>
-                                    <Button className='btn-modal' variant="contained" color="secondary" onClick={() => addToCart()}>
-                                        <ShoppingCartOutlinedIcon /> <span>13213</span>
-                                    </Button>
                                 </div>
                             </div>
-                        </div>
-                    </div>}
-                    <Grid item xs={12} sm={12}>
-                        <div className='menu-wrap'>
-                            <div className='header'>
-                                <Link to='/'>
-                                    <HomeIcon />
-                                    <span>Back to home</span>
-                                </Link>
-                                <div className='btn-showCart' onClick={() => openCart()}>
-                                    <ShoppingCartIcon />
-                                    <span>Cart({dataCart.products.length})</span>
+                        </div>}
+                        <Grid item xs={12} sm={12}>
+                            <div className='menu-wrap'>
+                                <div className='header'>
+                                    <Link to='/'>
+                                        <HomeIcon />
+                                        <span>Back to home</span>
+                                    </Link>
+                                    <div className='btn-showCart' onClick={() => openCart()}>
+                                        <ShoppingCartIcon />
+                                        <span>Cart({dataCart.products.length})</span>
+                                    </div>
                                 </div>
+                                <Menubody data={dataTag.data} currentIdx={dataTag.currentIdx}
+                                    onclicknextbtn={onclicknextbtn} onclickprevbtn={onclickprevbtn}
+                                    handleClickTag={handleClickTag}
+                                    addToCart={addToCart}
+                                    openModal={openModal}></Menubody>
                             </div>
-                            <Menubody data={dataTag.data} currentIdx={dataTag.currentIdx}
-                                onclicknextbtn={onclicknextbtn} onclickprevbtn={onclickprevbtn}
-                                handleClickTag={handleClickTag}
-                                addToCart={addToCart}
-                                openModal={openModal}></Menubody>
-                        </div>
-                    </Grid>
-                    <div className={classNames('cart', { cartOpen: showCart })} onClick={() => closeCart()}>
-                        <div className='cart-wrap' onClick={(e) => e.stopPropagation()} >
-                            <div className='cart-header'>
-                                <ShoppingCartIcon className='cart-icon' /><span>YourCart({dataCart.products.length})</span>
-                            </div>
-                            <div className='container'>
-                                {dataCart.products.map((item, idx) => (
-                                    dataTag.data.length != 0 &&
-                                    <div className='product'>
-                                        <div className='product-wrap'>
-                                            <div className='product-img'></div>
-                                        </div>
-                                        <div className='body'>
-                                            <p><span>{idx + 1}. </span>{dataTag.data[item.currentIdx].products[item.currentIdxProduct].name}</p>
-                                            <div className='body-wrap'>
-                                                <div className='quantity'>
-                                                    <div className='btn btn-decrease' onClick={() => {
-                                                        handleClickDecreaseCart(item.currentIdxProduct, item.currentIdx)
-                                                    }} ><RemoveIcon /></div>
-                                                    <span>{item.quantity}</span>
-                                                    <div className='btn btn-increase' onClick={() => {
-                                                        handleClickIncreaseCart(item.currentIdxProduct, item.currentIdx)
-                                                    }}><AddIcon /></div>
-                                                </div>
-                                                <div className='price-wrap'>
-                                                    <div className='price'>{dataTag.data[item.currentIdx].products[item.currentIdxProduct].price}</div>
-                                                    <div>Khuyen maix</div>
+                        </Grid>
+                        <div className={classNames('cart', { cartOpen: showCart })} onClick={() => closeCart()}>
+                            <div className='cart-wrap' onClick={(e) => e.stopPropagation()} >
+                                <div className='cart-header'>
+                                    <ShoppingCartIcon className='cart-icon' /><span>YourCart({dataCart.products.length})</span>
+                                </div>
+                                <div className='container'>
+                                    {dataCart.products.map((item, idx) => (
+                                        dataTag.data.length != 0 &&
+                                        <div className='product'>
+                                            <div className='product-wrap'>
+                                                <div className='product-img'></div>
+                                            </div>
+                                            <div className='body'>
+                                                <p><span>{idx + 1}. </span>{dataTag.data[item.currentIdx].products[item.currentIdxProduct].name}</p>
+                                                <div className='body-wrap'>
+                                                    <div className='quantity'>
+                                                        <div className='btn btn-decrease' onClick={() => {
+                                                            handleClickDecreaseCart(item.currentIdxProduct, item.currentIdx)
+                                                        }} ><RemoveIcon /></div>
+                                                        <span>{item.quantity}</span>
+                                                        <div className='btn btn-increase' onClick={() => {
+                                                            handleClickIncreaseCart(item.currentIdxProduct, item.currentIdx)
+                                                        }}><AddIcon /></div>
+                                                    </div>
+                                                    <div className='price-wrap'>
+                                                        <div className='price'>{item.totalPrice}</div>
+                                                        <div>Khuyen mai</div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                ))}
-                            </div>
-                            <div className='cart-footer'>
-                                <div className='cart-footer-wrap'>
-                                    <h3>Total:</h3>
-                                    <p>Kr 323</p>
+                                    ))}
                                 </div>
-                                <div className='discount'>Khuyen mai</div>
-                                <Button className='btn-modal' variant="contained" color="secondary">PAYMENT</Button>
+                                <div className='cart-footer'>
+                                    <div className='cart-footer-wrap'>
+                                        <h3>Total:</h3>
+                                        <p>{dataCart.totalOrder}</p>
+                                    </div>
+                                    <div className='discount'>Khuyen mai</div>
+                                    <Button className='btn-modal' variant="contained" color="secondary" onClick={handlePayment}>PAYMENT</Button>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </Grid>
-            </Container>
-        </div>
+                    </Grid>
+                </Container>
+            </div >
     )
 }

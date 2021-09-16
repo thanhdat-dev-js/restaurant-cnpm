@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const shortid = require('shortid');
 const reqString = {
     type: String,
     required: true
@@ -11,15 +10,18 @@ const reqNumber = {
 
 const productSchema = new mongoose.Schema({
     quantity: reqNumber,
-    price: reqNumber
+    price: reqNumber,
+    totalPrice: reqNumber,
+    name: reqString,
+    productID: reqString
 })
 
 const orderSchema = new mongoose.Schema({
-    orderID = shortid.generate,
+    orderID: reqString,
     email: String,
-    product: [productSchema],
+    products: [productSchema],
     status: reqString,
-    payment: reqString,
+    payment: String,
     total: reqNumber
 },
     { timestamps: true }
