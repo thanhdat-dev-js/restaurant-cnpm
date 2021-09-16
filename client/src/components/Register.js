@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
-import { Input, Button } from '@material-ui/core';
+import { TextField, Button } from '@material-ui/core';
 import '../scss/register.scss';
 
 
@@ -54,16 +54,21 @@ export default function Register() {
     }
     return (
         <div className='register'>
-            <div>
-                <label for='name'>Name</label>
-                <Input type='text' id='name' name='name' onChange={handleOnchangeUsername} />
-                <label for='email'>email</label>
-                <Input type='text' id='email' name='email' onChange={handleOnchangeEmail} />
-                <label for='password'>password</label>
-                <Input type='password' id='password' name='password' onChange={handleOnchangePass} />
+            <div class='form'>
+                <h3>Register</h3>
+                <TextField variant="outlined" label='Name' type='text' id='name' name='name' onChange={handleOnchangeUsername} />
+                <TextField variant="outlined" label='Email' type='text' id='email' name='email' onChange={handleOnchangeEmail} />
+                <TextField variant="outlined" label='password' type='password' id='password' name='password' onChange={handleOnchangePass} />
                 <Button variant="contained" color="secondary" onClick={handleRegister}>Register</Button>
             </div>
-            <h1>{error}</h1>
+            {
+                error &&
+                <div className='error'>
+                    <h3>{error}</h3>
+                </div>
+            }
         </div>
     )
 }
+
+

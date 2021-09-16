@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useHistory } from "react-router-dom";
-import { Input, Button } from '@material-ui/core';
+import { TextField, Button } from '@material-ui/core';
 import '../scss/login.scss';
 
 
@@ -45,21 +45,21 @@ export default function Login() {
                 }
             })
             .catch(err => {
-                setError(err);
+                setError(`${err}`)
             })
     }
     return (
         <div className='login'>
-            <div >
-                <label for='email'>Email</label>
-                <Input type='text' id='email' name='email' onChange={handleOnchangeEmail} />
-                <label for='password'>Password</label>
-                <Input type='password' id='password' name='password' onChange={handleOnchangePass} />
-                <Button variant="contained" color="secondary" onClick={handleLogin} >Login</Button>
+            <div class='form'>
+                <h3>Login</h3>
+                <TextField variant="outlined" label='Email' type='text' id='email' name='email' onChange={handleOnchangeEmail} />
+                <TextField variant="outlined" label='password' type='password' id='password' name='password' onChange={handleOnchangePass} />
+                <Button variant="contained" color="secondary" onClick={handleLogin}>Login</Button>
             </div>
             {
-                error && <div>
-                    <h1>{error}</h1>
+                error &&
+                <div className='error'>
+                    <h3>{error}</h3>
                 </div>
             }
         </div>

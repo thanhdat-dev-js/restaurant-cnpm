@@ -58,3 +58,12 @@ $box-shadow: 2px 2px 11px 1px #b1b1b1;
         @content;
     }
 }
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
