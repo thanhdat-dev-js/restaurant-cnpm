@@ -10,9 +10,13 @@ import RemoveIcon from '@material-ui/icons/Remove';
 import Button from '@material-ui/core/Button';
 import ShoppingCartOutlinedIcon from '@material-ui/icons/ShoppingCartOutlined';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import { useHistory } from "react-router-dom";
+import socketClient from "socket.io-client";
+const SERVER = "http://127.0.0.1:4000/";
 const classNames = require('classnames');
-
 export default () => {
+    var socket = null;
+    const history = useHistory();
     const [dataTag, setDataTag] = useState(
         {
             data: [],
@@ -171,6 +175,9 @@ export default () => {
         })
         closeModal();
     }
+    useEffect(() => {
+        return () => socket ? socket.disconnect() : null;
+    }, [])
     async function handlePayment() {
         try {
             setLoading(true);
@@ -194,8 +201,19 @@ export default () => {
                     }
                 })
             }
-            const res = await axios.post('http://127.0.0.1:4000/payment', data);
-            console.log(res);
+            socket = socketClient(SERVER);
+            socket.emit('postOrder', data, (res) => {
+                if (res.success) {
+                    socket.on(`${res.orderId}`, (res) => {
+                        if (res.success) {
+                            history.push('/payment');
+                        }
+                    })
+                }
+                else {
+                    // xu li khi dat hang bi loi.
+                }
+            });
         }
         catch (err) {
             console.log(err)

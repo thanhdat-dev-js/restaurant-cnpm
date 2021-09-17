@@ -3,6 +3,8 @@ const router = express.Router();
 const category = require('./category.route');
 const auth = require('./auth.route');
 const payment = require('./payment.route');
+const order = require('../controllers/order.controller');
+const validate = require('../middlewares/validateToken');
 
 router.use('/', auth);
 router.use('/', category);

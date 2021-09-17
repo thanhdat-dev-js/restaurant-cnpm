@@ -6,6 +6,7 @@ import Kitchen from './components/Kitchen';
 import Login from './components/Login';
 import Register from './components/Register';
 import Admin from './components/Admin';
+import Payment from './components/Payment';
 import './scss/index.scss';
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
           <Route path="/clerk" component={Clerk} />
           <Route path="/login" component={Login} />
           <Route path="/register" component={Register} />
+          <Route path="/payment" component={Payment} />
           <Route path="/admin" component={Admin} />
           <Route path="*" component={() => <h1>404 NotFound</h1>} />
         </Switch>

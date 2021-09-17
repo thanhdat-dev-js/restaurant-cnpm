@@ -30,30 +30,31 @@ module.exports = {
             })
         }
     },
-    async postPayment(req, res) {
+    async postPayment(data, res, socket) {
         try {
-            if (!req.body.total) {
-                return res.json({
+            if (!data.total) {
+                return res({
                     success: 0,
                     message: "khong co thong tin don hang"
                 })
             }
             const order = new Order;
             order.orderID = shortId.generate();
-            order.email = req.body.email;
-            order.products = req.body.products;
+            order.email = data.email;
+            order.products = data.products;
             order.status = 'unconfirm';
-            order.payment = req.body.payment;
-            order.total = req.body.total;
+            order.payment = data.payment;
+            order.total = data.total;
+            console.log(data.total);
             await order.save();
-            res.json({
+            return res({
                 success: 1,
                 orderId: order.orderID,
                 message: "don hang da duoc luu vao db"
             })
         }
         catch (err) {
-            res.json({
+            return res({
                 success: 0,
                 message: "thanh toan don hang that bai"
             })
