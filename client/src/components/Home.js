@@ -31,73 +31,72 @@ export default () => {
     return (
         <div className="home">
             <Container fluid='lg'>
-                <div className="wrap">
-                    <div className="header">
-                        <ul>
-                            {permission === 'customer' && <li>
-                                <Link to="/menu">
-                                    <span>Menu</span>
-                                    <MenuBookIcon />
-                                </Link>
-                            </li>}
-                            {permission === 'clerk' && <li>
-                                <Link to="/clerk">
-                                    <span>Clerk</span>
-                                    <MenuBookIcon />
-                                </Link>
-                            </li>}
-                            {permission === 'admin' && <li>
-                                <Link to="/admin">
-                                    <span>admin</span>
-                                    <MenuBookIcon />
-                                </Link>
-                            </li>}
-                            {permission === 'kitchen' && <li>
-                                <Link to="/kitchen">
-                                    <span>Kichen</span>
-                                    <MenuBookIcon />
-                                </Link>
-                            </li>}
-                        </ul>
-                        <ul>
-                            {permission === 'customer' && <li>
-                                <Link to="/menu">
-                                    <span>Cart(0)</span>
-                                    <ShoppingCartIcon />
-                                </Link>
-                            </li>}
-                            {isAuthen ?
-                                <>
-                                    <li>
-                                        <Link to="/user">
-                                            <span>profile</span>
-                                            <ReceiptIcon />
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <Link onClick={handleLogout}>
-                                            <span>Log out</span>
-                                            <ReceiptIcon />
-                                        </Link>
-                                    </li>
-                                </>
-                                :
-                                <> <li>
-                                    <Link to="/login">
-                                        <span>Login</span>
+
+                <div className="header">
+                    <ul>
+                        {permission === 'customer' && <li>
+                            <Link to="/menu">
+                                <span>Menu</span>
+                                <MenuBookIcon />
+                            </Link>
+                        </li>}
+                        {permission === 'clerk' && <li>
+                            <Link to="/clerk">
+                                <span>Clerk</span>
+                                <MenuBookIcon />
+                            </Link>
+                        </li>}
+                        {permission === 'admin' && <li>
+                            <Link to="/admin">
+                                <span>admin</span>
+                                <MenuBookIcon />
+                            </Link>
+                        </li>}
+                        {permission === 'kitchen' && <li>
+                            <Link to="/kitchen">
+                                <span>Kichen</span>
+                                <MenuBookIcon />
+                            </Link>
+                        </li>}
+                    </ul>
+                    <ul>
+                        {/* {permission === 'customer' && <li>
+                            <Link to="/menu">
+                                <span>Cart(0)</span>
+                                <ShoppingCartIcon />
+                            </Link>
+                        </li>} */}
+                        {isAuthen ?
+                            <>
+                                <li>
+                                    <Link to="/user">
+                                        <span>profile</span>
                                         <ReceiptIcon />
                                     </Link>
                                 </li>
-                                    <li>
-                                        <Link to="/register">
-                                            <span>Register</span>
-                                            <ReceiptIcon />
-                                        </Link>
-                                    </li>
-                                </>
-                            }
-                        </ul>
-                    </div>
+                                <li>
+                                    <Link onClick={handleLogout}>
+                                        <span>Log out</span>
+                                        <ReceiptIcon />
+                                    </Link>
+                                </li>
+                            </>
+                            :
+                            <> <li>
+                                <Link to="/login">
+                                    <span>Login</span>
+                                    <ReceiptIcon />
+                                </Link>
+                            </li>
+                                <li>
+                                    <Link to="/register">
+                                        <span>Register</span>
+                                        <ReceiptIcon />
+                                    </Link>
+                                </li>
+                            </>
+                        }
+                    </ul>
                 </div>
                 {/* {loading ? <HashLoader loading={loading} color='blue' margin=''></HashLoader> : <div className="body"></div>} */}
             </Container >

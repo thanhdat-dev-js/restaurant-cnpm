@@ -14,8 +14,8 @@ import { useHistory } from "react-router-dom";
 import socketClient from "socket.io-client";
 const SERVER = "http://127.0.0.1:4000/";
 const classNames = require('classnames');
+
 export default () => {
-    var socket = null;
     const history = useHistory();
     const [dataTag, setDataTag] = useState(
         {
@@ -26,11 +26,16 @@ export default () => {
         });
     const [showModal, setShowModal] = useState(false);
     const [showCart, setShowCart] = useState(false);
-    const [dataCart, setDataCart] = useState({
-        products: [],
-        totalOrder: 0
+    const [dataCart, setDataCart] = useState(() => {
+        const data = JSON.parse(localStorage.getItem('ORDER'));
+        return data ? data :
+            {
+                products: [],
+                totalOrder: 0
+            }
     });
     const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(false);
     useEffect(() => {
         try {
             let reqOptions = {
@@ -42,7 +47,6 @@ export default () => {
                     ...dataTag,
                     data: response.data
                 })
-                console.log(response.data)
             })
         }
         catch (e) {
@@ -54,11 +58,14 @@ export default () => {
         dataCart.products.forEach(item => {
             totalOrder += item.totalPrice
         })
-        setDataCart({
+        const data = {
             ...dataCart,
             totalOrder
-        })
+        };
+        localStorage.setItem('ORDER', JSON.stringify(data));
+        setDataCart(data)
     }, [dataCart.products])
+
     function handleClickTag(idx) {
         setDataTag({
             ...dataTag,
@@ -175,9 +182,7 @@ export default () => {
         })
         closeModal();
     }
-    useEffect(() => {
-        return () => socket ? socket.disconnect() : null;
-    }, [])
+
     async function handlePayment() {
         try {
             setLoading(true);
@@ -201,17 +206,21 @@ export default () => {
                     }
                 })
             }
-            socket = socketClient(SERVER);
+            const socket = socketClient(SERVER);
             socket.emit('postOrder', data, (res) => {
                 if (res.success) {
                     socket.on(`${res.orderId}`, (res) => {
                         if (res.success) {
+                            localStorage.setItem('ORDER', null);
                             history.push('/payment');
+                        }
+                        else {
+                            setError(true);
                         }
                     })
                 }
                 else {
-                    // xu li khi dat hang bi loi.
+                    setError(true);
                 }
             });
         }
@@ -223,114 +232,108 @@ export default () => {
         loading ?
             <h1>Vui long doi thu ngan xac nhan don hang cua ban</h1>
             :
-            <div className="menu" >
+            (<div className='menu'>
                 <Container fluid='lg'>
-                    <Grid container spacing={0}>
-                        {dataTag.data.length && <div className={classNames('modal', { open: showModal })}
-                            onClick={() => closeModal()}>
-                            <div className='modal-body' onClick={(e) => e.stopPropagation()}>
-                                <div className='heading'>
-                                    <h3>Add to cart</h3>
-                                    <CloseIcon onClick={() => closeModal()} />
-                                </div>
-                                <div className='container'>
-                                    <div className='img-wrap'>
-                                        <div className='img'></div>
-                                    </div>
-                                    <div className='content'>
-                                        <div className='title'>
-                                            <div className='sku'>
-                                                <h3>SKU</h3>
-                                                <p>41</p>
-                                            </div>
-                                            <div className='name'>
-                                                <h3>{dataTag.data[dataTag.currentIdx].type}</h3>
-                                                <p>{dataTag.data[dataTag.currentIdx].products[dataTag.currentIdxProduct] && dataTag.data[dataTag.currentIdx].products[dataTag.currentIdxProduct].name}</p>
-                                            </div>
-                                            <div className='price'>
-                                                <h3>Unit Price</h3>
-                                                <span>{dataTag.data[dataTag.currentIdx].products[dataTag.currentIdxProduct] && dataTag.data[dataTag.currentIdx].products[dataTag.currentIdxProduct].price}</span>
-                                            </div>
-                                        </div>
-                                        <div className='quantity'>
-                                            <h3>Quantity</h3>
-                                            <div>
-                                                <div className='btn btn-decrease' onClick={() => handleClickDecrease()}><RemoveIcon /></div>
-                                                <span>{dataTag.quantity}</span>
-                                                <div className='btn btn-increase' onClick={() => handleClickIncrease()}><AddIcon /></div>
-                                            </div>
-                                        </div>
-                                        <Button className='btn-modal' variant="contained" color="secondary" onClick={() => addToCart()}>
-                                            <ShoppingCartOutlinedIcon /> <span>13213</span>
-                                        </Button>
-                                    </div>
-                                </div>
+                    {dataTag.data.length !== 0 && <div className={classNames('modal', { open: showModal })}
+                        onClick={() => closeModal()}>
+                        <div className='modal-body' onClick={(e) => e.stopPropagation()}>
+                            <div className='heading'>
+                                <h3>Add to cart</h3>
+                                <CloseIcon onClick={() => closeModal()} />
                             </div>
-                        </div>}
-                        <Grid item xs={12} sm={12}>
-                            <div className='menu-wrap'>
-                                <div className='header'>
-                                    <Link to='/'>
-                                        <HomeIcon />
-                                        <span>Back to home</span>
-                                    </Link>
-                                    <div className='btn-showCart' onClick={() => openCart()}>
-                                        <ShoppingCartIcon />
-                                        <span>Cart({dataCart.products.length})</span>
-                                    </div>
+                            <div className='container'>
+                                <div className='img-wrap'>
+                                    <div className='img'></div>
                                 </div>
-                                <Menubody data={dataTag.data} currentIdx={dataTag.currentIdx}
-                                    onclicknextbtn={onclicknextbtn} onclickprevbtn={onclickprevbtn}
-                                    handleClickTag={handleClickTag}
-                                    addToCart={addToCart}
-                                    openModal={openModal}></Menubody>
-                            </div>
-                        </Grid>
-                        <div className={classNames('cart', { cartOpen: showCart })} onClick={() => closeCart()}>
-                            <div className='cart-wrap' onClick={(e) => e.stopPropagation()} >
-                                <div className='cart-header'>
-                                    <ShoppingCartIcon className='cart-icon' /><span>YourCart({dataCart.products.length})</span>
-                                </div>
-                                <div className='container'>
-                                    {dataCart.products.map((item, idx) => (
-                                        dataTag.data.length != 0 &&
-                                        <div className='product'>
-                                            <div className='product-wrap'>
-                                                <div className='product-img'></div>
-                                            </div>
-                                            <div className='body'>
-                                                <p><span>{idx + 1}. </span>{dataTag.data[item.currentIdx].products[item.currentIdxProduct].name}</p>
-                                                <div className='body-wrap'>
-                                                    <div className='quantity'>
-                                                        <div className='btn btn-decrease' onClick={() => {
-                                                            handleClickDecreaseCart(item.currentIdxProduct, item.currentIdx)
-                                                        }} ><RemoveIcon /></div>
-                                                        <span>{item.quantity}</span>
-                                                        <div className='btn btn-increase' onClick={() => {
-                                                            handleClickIncreaseCart(item.currentIdxProduct, item.currentIdx)
-                                                        }}><AddIcon /></div>
-                                                    </div>
-                                                    <div className='price-wrap'>
-                                                        <div className='price'>{item.totalPrice}</div>
-                                                        <div>Khuyen mai</div>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                <div className='content'>
+                                    <div className='title'>
+                                        <div className='sku'>
+                                            <h3>SKU</h3>
+                                            <p>41</p>
                                         </div>
-                                    ))}
-                                </div>
-                                <div className='cart-footer'>
-                                    <div className='cart-footer-wrap'>
-                                        <h3>Total:</h3>
-                                        <p>{dataCart.totalOrder}</p>
+                                        <div className='name'>
+                                            <h3>{dataTag.data[dataTag.currentIdx].type}</h3>
+                                            <p>{dataTag.data[dataTag.currentIdx].products[dataTag.currentIdxProduct] && dataTag.data[dataTag.currentIdx].products[dataTag.currentIdxProduct].name}</p>
+                                        </div>
+                                        <div className='price'>
+                                            <h3>Unit Price</h3>
+                                            <span>{dataTag.data[dataTag.currentIdx].products[dataTag.currentIdxProduct] && dataTag.data[dataTag.currentIdx].products[dataTag.currentIdxProduct].price}</span>
+                                        </div>
                                     </div>
-                                    <div className='discount'>Khuyen mai</div>
-                                    <Button className='btn-modal' variant="contained" color="secondary" onClick={handlePayment}>PAYMENT</Button>
+                                    <div className='quantity'>
+                                        <h3>Quantity</h3>
+                                        <div>
+                                            <div className='btn btn-decrease' onClick={() => handleClickDecrease()}><RemoveIcon /></div>
+                                            <span>{dataTag.quantity}</span>
+                                            <div className='btn btn-increase' onClick={() => handleClickIncrease()}><AddIcon /></div>
+                                        </div>
+                                    </div>
+                                    <Button className='btn-modal' variant="contained" color="secondary" onClick={() => addToCart()}>
+                                        <ShoppingCartOutlinedIcon /> <span>13213</span>
+                                    </Button>
                                 </div>
                             </div>
                         </div>
-                    </Grid>
+                    </div>}
+                    <div className='header'>
+                        <Link to='/'>
+                            <HomeIcon />
+                            <span>Back to home</span>
+                        </Link>
+                        <div className='btn-showCart' onClick={() => openCart()}>
+                            <ShoppingCartIcon />
+                            <span>Cart({dataCart.products.length})</span>
+                        </div>
+                    </div>
+                    <Menubody data={dataTag.data} currentIdx={dataTag.currentIdx}
+                        onclicknextbtn={onclicknextbtn} onclickprevbtn={onclickprevbtn}
+                        handleClickTag={handleClickTag}
+                        addToCart={addToCart}
+                        openModal={openModal}></Menubody>
+                    <div className={classNames('cart', { cartOpen: showCart })} onClick={() => closeCart()}>
+                        <div className='cart-wrap' onClick={(e) => e.stopPropagation()} >
+                            <div className='cart-header'>
+                                <ShoppingCartIcon className='cart-icon' /><span>YourCart({dataCart.products.length})</span>
+                            </div>
+                            <div className='container'>
+                                {dataCart.products.map((item, idx) => (
+                                    dataTag.data.length != 0 &&
+                                    <div className='product'>
+                                        <div className='product-wrap'>
+                                            <div className='product-img'></div>
+                                        </div>
+                                        <div className='body'>
+                                            <p><span>{idx + 1}. </span>{dataTag.data[item.currentIdx].products[item.currentIdxProduct].name}</p>
+                                            <div className='body-wrap'>
+                                                <div className='quantity'>
+                                                    <div className='btn btn-decrease' onClick={() => {
+                                                        handleClickDecreaseCart(item.currentIdxProduct, item.currentIdx)
+                                                    }} ><RemoveIcon /></div>
+                                                    <span>{item.quantity}</span>
+                                                    <div className='btn btn-increase' onClick={() => {
+                                                        handleClickIncreaseCart(item.currentIdxProduct, item.currentIdx)
+                                                    }}><AddIcon /></div>
+                                                </div>
+                                                <div className='price-wrap'>
+                                                    <div className='price'>{item.totalPrice}</div>
+                                                    <div>Khuyen mai</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                            <div className='cart-footer'>
+                                <div className='cart-footer-wrap'>
+                                    <h3>Total:</h3>
+                                    <p>{dataCart.totalOrder}</p>
+                                </div>
+                                <div className='discount'>Khuyen mai</div>
+                                <Button className='btn-modal' variant="contained" color="secondary" onClick={handlePayment}>PAYMENT</Button>
+                            </div>
+                        </div>
+                    </div>
                 </Container>
-            </div >
+            </div>)
     )
 }

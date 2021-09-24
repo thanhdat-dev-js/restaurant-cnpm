@@ -1,26 +1,18 @@
 @import "variable";
 .home {
     height: 100vh;
-    .wrap {
-        position: relative;
-    }
     .header {
         height: 60px;
         box-shadow: $box-shadow;
         background-color: $white-color;
         display: flex;
         justify-content: space-between;
-        position: absolute;
-        left: 0;
-        right: 0;
-        top: 0;
         ul {
             padding-left: 0;
             list-style: none;
             margin: 0;
             display: flex;
             justify-content: flex-start;
-            max-width: 30%;
         }
         li {
             transition: $linear-3;
