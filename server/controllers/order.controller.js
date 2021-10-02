@@ -33,7 +33,7 @@ module.exports = {
     async postPayment(data, res, socket) {
         try {
             if (!data.total) {
-                return res({
+                return res.json({
                     success: 0,
                     message: "khong co thong tin don hang"
                 })
@@ -47,18 +47,18 @@ module.exports = {
             order.total = data.total;
             console.log(data.total);
             await order.save();
-            return res({
+            return res.json({
                 success: 1,
                 orderId: order.orderID,
                 message: "don hang da duoc luu vao db"
             })
         }
         catch (err) {
-            return res({
+            console.log(err);
+            return res.json({
                 success: 0,
                 message: "thanh toan don hang that bai"
             })
-            console.log(err)
         }
     },
     async getAllOrder(req, res) {
