@@ -15,10 +15,8 @@ export default (props) => {
                 <div className='tag'>
                     {props.data.map((item, idx) => {
                         var isCur = false;
-                        var length = props.data.length;
                         if (props.currentIdx === idx) isCur = true;
-                        var isVisiable = true;
-                        return (
+                        if (idx >= props.start && idx <= props.end) return (
                             <div className={classNames('tag-product', { currentTag: isCur })}
                                 onClick={(e) => props.handleClickTag(idx)}>
                                 <div className='tag-img'>

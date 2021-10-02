@@ -1,12 +1,12 @@
 import axios from 'axios';
-export default function auth() {
+export default function getOrder(status = null) {
     try {
         const token = localStorage.getItem('TOKEN') || null;
         if (token) {
             let reqOptions = {
-                url: "http://127.0.0.1:4000/info",
+                url: `http://127.0.0.1:4000/order?status=${status}`,
                 params: { token },
-                method: "GET"
+                method: "GET",
             }
             return axios.request(reqOptions)
         }

@@ -5,7 +5,7 @@ import { Container } from '@material-ui/core';
 
 export default function Payment() {
     return (
-        <div className="admin">
+        <div className="payment">
             <Container fluid='lg'>
                 <div className='header'>
                     <Link to='/'>
@@ -14,7 +14,10 @@ export default function Payment() {
                     </Link>
                 </div>
                 <div className='body'>
-                    <h1>Payment</h1>
+                    <h1>Nhan vien thu Ngan</h1>
+                    <table>
+                        <tr></tr>
+                    </table>
                 </div>
             </Container>
         </div>
