@@ -23,6 +23,9 @@ export default () => {
             currentIdx: 0,
             currentIdxProduct: 0,
             quantity: 1,
+            start: 0,
+            end: 4,
+            responsive: true
         });
     const [showModal, setShowModal] = useState(false);
     const [showCart, setShowCart] = useState(false);
@@ -65,7 +68,31 @@ export default () => {
         localStorage.setItem('ORDER', JSON.stringify(data));
         setDataCart(data)
     }, [dataCart.products])
-
+    useEffect(() => {
+        const handleWindowResize = () => {
+            if (window.innerWidth < 700) {
+                if (dataTag.responsive)
+                    setDataTag({
+                        ...dataTag,
+                        start: 0,
+                        currentIdx: 1,
+                        end: 2,
+                        responsive: false
+                    })
+            }
+            else if (!dataTag.responsive) {
+                setDataTag({
+                    ...dataTag,
+                    start: 0,
+                    currentIdx: 1,
+                    end: 4,
+                    responsive: true
+                })
+            }
+        }
+        window.addEventListener("resize", handleWindowResize);
+        return () => window.removeEventListener("resize", handleWindowResize);
+    });
     function handleClickTag(idx) {
         setDataTag({
             ...dataTag,
@@ -73,18 +100,34 @@ export default () => {
         })
     }
     function onclickprevbtn() {
-        if (dataTag.currentIdx == 0) return;
-        setDataTag({
-            ...dataTag,
-            currentIdx: dataTag.currentIdx - 1,
-        })
+        if (dataTag.currentIdx === 0) return;
+        if (dataTag.start === dataTag.currentIdx)
+            setDataTag({
+                ...dataTag,
+                start: dataTag.start - 1,
+                end: dataTag.end - 1,
+                currentIdx: dataTag.currentIdx - 1
+            })
+        else
+            setDataTag({
+                ...dataTag,
+                currentIdx: dataTag.currentIdx - 1,
+            })
     }
     function onclicknextbtn() {
         if (dataTag.currentIdx == dataTag.data.length - 1) return;
-        setDataTag({
-            ...dataTag,
-            currentIdx: dataTag.currentIdx + 1,
-        })
+        if (dataTag.end === dataTag.currentIdx)
+            setDataTag({
+                ...dataTag,
+                start: dataTag.start + 1,
+                end: dataTag.end + 1,
+                currentIdx: dataTag.currentIdx + 1
+            })
+        else
+            setDataTag({
+                ...dataTag,
+                currentIdx: dataTag.currentIdx + 1,
+            })
     }
     function handleClickIncrease() {
         setDataTag({
@@ -209,14 +252,11 @@ export default () => {
             const socket = socketClient(SERVER);
             socket.emit('postOrder', data, (res) => {
                 if (res.success) {
-                    socket.on(`${res.orderId}`, (res) => {
-                        if (res.success) {
-                            localStorage.setItem('ORDER', null);
-                            history.push('/payment');
-                        }
-                        else {
-                            setError(true);
-                        }
+                    socket.on(`${res.orderId}`, (status) => {
+                        localStorage.setItem('ORDER', null);
+                        socket.disconnect();
+                        if (status === 'confirmed') history.push('/payment');
+                        else if (status === 'cancel') history.push('/')
                     })
                 }
                 else {
@@ -285,7 +325,7 @@ export default () => {
                             <span>Cart({dataCart.products.length})</span>
                         </div>
                     </div>
-                    <Menubody data={dataTag.data} currentIdx={dataTag.currentIdx}
+                    <Menubody data={dataTag.data} start={dataTag.start} end={dataTag.end} currentIdx={dataTag.currentIdx}
                         onclicknextbtn={onclicknextbtn} onclickprevbtn={onclickprevbtn}
                         handleClickTag={handleClickTag}
                         addToCart={addToCart}

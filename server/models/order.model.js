@@ -21,6 +21,7 @@ const orderSchema = new mongoose.Schema({
     email: String,
     products: [productSchema],
     status: reqString,
+    process: reqString,
     payment: String,
     total: reqNumber
 },

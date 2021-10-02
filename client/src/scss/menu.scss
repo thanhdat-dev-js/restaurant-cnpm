@@ -174,10 +174,7 @@
         }
         .tag-product {
             background-color: $white-color;
-            width: 20%;
-            @include rps600 {
-                width: 50%;
-            }
+            width: 100%;
             margin: 10px;
             border-radius: 16px;
             padding-bottom: 20px;

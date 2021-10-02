@@ -21,14 +21,36 @@ const port = process.env.PORT || 4000;
 
 app.use('/', router);
 
-
+const Order = require('./models/order.model');
 const order = require('./controllers/order.controller');
 var client = 0;
 io.on('connection', (socket) => {
     console.log('tong so nguoi dang ket noi ', ++client);
     socket.on('postOrder', (data, res) => {
-        order.postPayment(data, res, socket);
+        order.postPayment(data, res, io);
     });
+    socket.on('confirmed', async (orderID) => {
+        const order = await Order.findOne({ orderID });
+        if (order) {
+            order.status = 'confirmed';
+            order.process = 'cooking';
+            await order.save();
+            io.emit(orderID, 'confirmed')
+        }
+    })
+    socket.on('cancel', async (orderID) => {
+        try {
+            const order = await Order.findOne({ orderID });
+            if (order) {
+                order.status = 'cancel';
+                await order.save();
+                io.emit(orderID, 'cancel')
+            }
+        }
+        catch (err) {
+            console.log(err);
+        }
+    })
     socket.on('disconnect', function () {
         console.log('tong so nguoi dang ket noi', --client);
     });
