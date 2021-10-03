@@ -1,6 +1,4 @@
-# restaurant-cnpm
-# Hướng dẫn chạy code cnpm
-## Link Github
+# Hướng dẫn chạy code  restaurant-cnpm
 [Link clone dự án restaurant-cnpm](https://github.com/thanhdat4421/restaurant-cnpm).
 ### Thiết lập môi trường
 * Cài đặt **Nodejs** 14.17
@@ -32,6 +30,8 @@ npm install
 ```
 npm start
 ```
+
+
 * Tương tự vào, vào folder client, chạy lệnh
 ```
 npm start
