@@ -1,7 +1,80 @@
 @import "variable";
-
 .clerk {
-    .MuiDataGrid-root {
-        font-size: 1.6rem;
+    font-size: 1.6rem;
+    .body {
+        .filter {
+            p {
+                font-size: 2rem;
+                font-weight: 700;
+                margin: 20px 0;
+            }
+            span {
+                font-size: 1.6rem;
+                font-weight: 500;
+                line-height: 1.6;
+                margin-left: 20px;
+                cursor: pointer;
+                &:hover {
+                    opacity: 0.8;
+                    background-color: $bg-color;
+                }
+            }
+            .active {
+                color: $primary-color;
+            }
+        }
+    }
+    .header {
+        display: flex;
+        justify-content: space-between;
+        a,
+        .btn-showCart {
+            text-decoration: none;
+            font-size: 1.8rem;
+            color: $text-color;
+            height: 60px;
+            display: inline-flex;
+            align-items: center;
+            padding: 0 30px;
+            &:hover {
+                background-color: $text-color;
+                color: $white-color;
+                .MuiSvgIcon-root {
+                    background-color: $white-color;
+                    color: $text-color;
+                }
+            }
+        }
+        .MuiSvgIcon-root {
+            text-decoration: none;
+            font-size: 2.4rem;
+            border-radius: 6px;
+            color: $white-color;
+            background-color: $text-color;
+            margin: 0 10px;
+        }
+    }
+    table {
+        font-family: Arial, Helvetica, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+    table td,
+    table th {
+        border: 1px solid #ddd;
+        padding: 8px;
+    }
+    table tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+    table tr:hover {
+        background-color: #ddd;
+    }
+    table th {
+        padding-top: 12px;
+        padding-bottom: 12px;
+        text-align: center;
+        background-color: $primary-color;
+        color: white;
     }
 }

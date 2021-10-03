@@ -62,8 +62,7 @@ module.exports = {
                     success: 0,
                     message: "Invalid token clerk"
                 })
-            console.log(req.query.status)
-            const order = req.query.status ? await Order.find({ status: req.query.status }) : await Order.find({});
+            const order = req.query.status ? await Order.find({ status: req.query.status }) : null;
             if (order) {
                 return res.json({
                     success: 1,

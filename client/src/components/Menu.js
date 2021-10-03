@@ -37,8 +37,7 @@ export default () => {
                 totalOrder: 0
             }
     });
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(false);
+    const [message, setMessage] = useState(null);
     useEffect(() => {
         try {
             let reqOptions = {
@@ -228,7 +227,7 @@ export default () => {
 
     async function handlePayment() {
         try {
-            setLoading(true);
+            setMessage('Vui lòng đợi thu ngân xác nhận đơn hàng, không chuyển trang hoặc f5');
             var data = {
                 email: localStorage.getItem('EMAIL'),
                 total: dataCart.totalOrder,
@@ -256,11 +255,11 @@ export default () => {
                         localStorage.setItem('ORDER', null);
                         socket.disconnect();
                         if (status === 'confirmed') history.push('/payment');
-                        else if (status === 'cancel') history.push('/')
+                        else if (status === 'cancel') setMessage('Đơn hàng của bạn đã bị hủy bởi thu nhân với lí do: ....')
                     })
                 }
                 else {
-                    setError(true);
+                    setMessage('Đơn hàng gửi lên bị lỗi');
                 }
             });
         }
@@ -269,8 +268,10 @@ export default () => {
         }
     }
     return (
-        loading ?
-            <h1>Vui long doi thu ngan xac nhan don hang cua ban</h1>
+        message ?
+            <div className='message'>
+                <h1>{message}</h1>
+            </div>
             :
             (<div className='menu'>
                 <Container fluid='lg'>
