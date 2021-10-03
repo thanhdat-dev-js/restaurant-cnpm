@@ -6,9 +6,9 @@ import HomeIcon from '@material-ui/icons/Home';
 import Button from '@material-ui/core/Button';
 import { Container } from '@material-ui/core';
 import verifyToken from '../midlewares/verifyToken';
-import axios from 'axios';
 import socketClient from "socket.io-client";
 import getOrder from '../midlewares/getOrder';
+import classNames from 'classnames';
 const SERVER = "http://127.0.0.1:4000/";
 var socket = null;
 
@@ -17,15 +17,17 @@ const formatDate = (dateString) => {
 }
 export default function Clerk() {
     const [data, setData] = useState(null);
-    const [filter, setFilter] = useState('');
+    const [filter, setFilter] = useState('unconfirmed');
     const history = useHistory();
-    function getData(filter = '') {
+    function getData(filter) {
         var order = getOrder(filter);
         if (order) {
             order.then(res => {
-                console.log(res)
-                if (res.data.order)
-                    setData([...res.data.order])
+                console.log(res.data)
+                if (res.data.order) {
+                    setData([...res.data.order]);
+                    setFilter(filter);
+                }
             })
         }
     }
@@ -37,11 +39,11 @@ export default function Clerk() {
                     history.push("/login");
                 }
                 else {
-                    getData();
+                    getData(filter);
                     try {
                         socket = socketClient(SERVER);
                         socket.on('clerk', () => {
-                            getData();
+                            getData(filter);
                         })
                     }
                     catch (err) {
@@ -67,14 +69,12 @@ export default function Clerk() {
                     </Link>
                 </div>
                 <div className='body'>
-                    <h1>Clerk</h1>
-                    <div>
-                        <span>Danh sach cac don hang chua thanh toan</span>
-                        <span>Danh sach cac don hang da thanh toan</span>
-                        <span>Danh sach toan bo don hang</span>
+                    <div className='filter'>
+                        <p>Danh sách đơn hàng:</p>
+                        <span className={classNames({ active: filter === 'unconfirmed' })} onClick={() => getData('unconfirmed')}>Chưa thanh toán</span>
+                        <span className={classNames({ active: filter === 'confirmed' })} onClick={() => getData('confirmed')}>Đã thanh toán</span>
+                        <span className={classNames({ active: filter === 'cancel' })} onClick={() => getData('cancel')}>Đã bị hủy</span>
                     </div>
-                </div>
-                <div>
                     <table>
                         <tr>
                             <th>STT</th>
@@ -84,6 +84,7 @@ export default function Clerk() {
                             <th>Total</th>
                             <th>Create At</th>
                             <th>Update At</th>
+                            {filter === 'unconfirmed' && <><th>Xác nhận</th><th>Hủy</th></>}
                         </tr>
                         {data && data.map((val, idx) => (
                             <tr>
@@ -94,20 +95,24 @@ export default function Clerk() {
                                 <td>{val.total}</td>
                                 <td>{formatDate(val.createdAt)}</td>
                                 <td>{formatDate(val.updatedAt)}</td>
-                                <td>
-                                    <Button className='btn-modal'
-                                        disabled={val.status === 'cancel' || val.status === 'confirmed'}
-                                        variant="contained" color="secondary"
-                                        onClick={() => handleClick('confirmed', val.orderID)}
-                                    >Confirmed</Button>
-                                </td>
-                                <td>
-                                    <Button className='btn-modal'
-                                        disabled={val.status === 'cancel' || val.status === 'confirmed'}
-                                        variant="contained" color="primary"
-                                        onClick={() => handleClick('cancel', val.orderID)}
-                                    >Cancel</Button>
-                                </td>
+                                {
+                                    filter === 'unconfirmed' && <>
+                                        <td>
+                                            <Button className='btn-modal'
+                                                disabled={val.status === 'cancel' || val.status === 'confirmed'}
+                                                variant="contained" color="secondary"
+                                                onClick={() => handleClick('confirmed', val.orderID)}
+                                            >Confirmed</Button>
+                                        </td>
+                                        <td>
+                                            <Button className='btn-modal'
+                                                disabled={val.status === 'cancel' || val.status === 'confirmed'}
+                                                variant="contained" color="primary"
+                                                onClick={() => handleClick('cancel', val.orderID)}
+                                            >Cancel</Button>
+                                        </td>
+                                    </>
+                                }
                             </tr>
                         )
                         )}
