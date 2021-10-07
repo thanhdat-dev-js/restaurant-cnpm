@@ -35,7 +35,8 @@ io.on('connection', (socket) => {
             order.status = 'confirmed';
             order.process = 'cooking';
             await order.save();
-            io.emit(orderID, 'confirmed')
+            io.emit(orderID, 'confirmed');
+            io.emit('kitchen');
         }
     })
     socket.on('cancel', async (orderID) => {
@@ -45,6 +46,18 @@ io.on('connection', (socket) => {
                 order.status = 'cancel';
                 await order.save();
                 io.emit(orderID, 'cancel')
+            }
+        }
+        catch (err) {
+            console.log(err);
+        }
+    })
+    socket.on('done', async (orderID) => {
+        try {
+            const order = await Order.findOne({ orderID });
+            if (order) {
+                order.process = 'done';
+                await order.save();
             }
         }
         catch (err) {

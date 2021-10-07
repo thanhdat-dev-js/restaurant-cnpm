@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Grid } from '@material-ui/core';
 import ShoppingCartOutlinedIcon from '@material-ui/icons/ShoppingCartOutlined';
 import '../scss/menu.scss';
@@ -10,7 +10,7 @@ export default (props) => {
         <div className='menubody'>
             <div className='heading'>
                 <div className='btn'>
-                    <div className={classNames('prev-btn', { disable: (() => props.currentIdx === 0 ? true : false)() })} onClick={() => props.onclicknextbtn()} onClick={() => props.onclickprevbtn()}></div>
+                    <div className={classNames('prev-btn', { disable: (() => props.currentIdx === 0 ? true : false)() })} onClick={() => props.onclickprevbtn()}></div>
                 </div>
                 <div className='tag'>
                     {props.data.map((item, idx) => {
@@ -24,6 +24,7 @@ export default (props) => {
                                 <h3>{item.type}</h3>
                             </div>
                         )
+                        return null;
                     })}
                 </div>
                 <div className='btn'>
@@ -31,10 +32,10 @@ export default (props) => {
                 </div>
             </div>
             <div className='content'>
-                <h3 className='type'>{props.data.length != 0 && props.data[props.currentIdx].type}</h3>
+                <h3 className='type'>{props.data.length !== 0 && props.data[props.currentIdx].type}</h3>
                 <div className='content-wrap'>
                     <Grid container spacing={0}>
-                        {props.data.length != 0 && props.data[props.currentIdx].products.map((item, idx) => (
+                        {props.data.length !== 0 && props.data[props.currentIdx].products.map((item, idx) => (
                             <Grid item xs={6} sm={4} lg={3} key={idx}>
                                 <div className='product' onClick={() => props.openModal(idx)}>
                                     <div className='product-img'></div>

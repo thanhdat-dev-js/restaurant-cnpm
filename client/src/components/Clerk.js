@@ -80,7 +80,6 @@ export default function Clerk() {
                             <th>STT</th>
                             <th>OrderID</th>
                             <th>Status</th>
-                            <th>Process</th>
                             <th>Total</th>
                             <th>Create At</th>
                             <th>Update At</th>
@@ -91,7 +90,6 @@ export default function Clerk() {
                                 <td>{idx}</td>
                                 <td>{val.orderID}</td>
                                 <td>{val.status}</td>
-                                <td>{val.process}</td>
                                 <td>{val.total}</td>
                                 <td>{formatDate(val.createdAt)}</td>
                                 <td>{formatDate(val.updatedAt)}</td>
