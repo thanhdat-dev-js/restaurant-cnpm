@@ -29,7 +29,7 @@ module.exports = {
     async postPayment(data, res, io) {
         try {
             if (!data.total) {
-                return res({
+                return res.json({
                     success: 0,
                     message: "khong co thong tin don hang"
                 })
