@@ -12,7 +12,7 @@ import ShoppingCartOutlinedIcon from '@material-ui/icons/ShoppingCartOutlined';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import { useHistory } from "react-router-dom";
 import socketClient from "socket.io-client";
-const SERVER = "http://127.0.0.1:4000/";
+const SERVER = "http://localhost:4000/";
 const classNames = require('classnames');
 
 export default () => {
@@ -41,7 +41,7 @@ export default () => {
     useEffect(() => {
         try {
             let reqOptions = {
-                url: "http://127.0.0.1:4000/category",
+                url: "http://localhost:4000/category",
                 method: "GET",
             }
             axios.request(reqOptions).then(function (response) {

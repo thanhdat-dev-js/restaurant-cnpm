@@ -28,7 +28,7 @@ export default function Login() {
     }
     function handleLogin() {
         let reqOptions = {
-            url: "http://127.0.0.1:4000/login",
+            url: "http://localhost:4000/login",
             method: 'POST',
             data: loginForm
         }

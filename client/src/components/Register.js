@@ -34,7 +34,7 @@ export default function Register() {
     }
     function handleRegister() {
         let reqOptions = {
-            url: "http://127.0.0.1:4000/register",
+            url: "http://localhost:4000/register",
             method: 'POST',
             data: registerForm
         }

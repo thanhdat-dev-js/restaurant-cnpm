@@ -9,7 +9,7 @@ import verifyToken from '../midlewares/verifyToken';
 import socketClient from "socket.io-client";
 import getOrder from '../midlewares/getOrder';
 import classNames from 'classnames';
-const SERVER = "http://127.0.0.1:4000/";
+const SERVER = "http://localhost:4000/";
 var socket = null;
 
 const formatDate = (dateString) => {
