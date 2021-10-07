@@ -1,9 +1,8 @@
 @import "variable";
 @import "cart";
 .menu {
-    overflow: hidden;
     height: 100vh;
-    box-sizing: border-box;
+    overflow: auto;
     .MuiContainer-root {
         background-color: $white-color;
         padding-left: 0;
@@ -139,7 +138,6 @@
 .menubody {
     background-color: $grey-color;
     flex: 1;
-    overflow: auto;
     .heading {
         display: flex;
         justify-content: space-around;
@@ -170,7 +168,6 @@
         .tag {
             display: flex;
             width: calc(100% - 68px);
-            overflow: hidden;
         }
         .tag-product {
             background-color: $white-color;

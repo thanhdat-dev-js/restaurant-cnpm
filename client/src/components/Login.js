@@ -8,7 +8,6 @@ import axios from 'axios';
 
 export default function Login() {
     const history = useHistory();
-    const [loading, setLoading] = useState(false);
     const [loginForm, setLoginForm] = useState({
         email: '',
         password: ''

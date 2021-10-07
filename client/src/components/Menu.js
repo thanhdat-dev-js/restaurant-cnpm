@@ -114,7 +114,7 @@ export default () => {
             })
     }
     function onclicknextbtn() {
-        if (dataTag.currentIdx == dataTag.data.length - 1) return;
+        if (dataTag.currentIdx === dataTag.data.length - 1) return;
         if (dataTag.end === dataTag.currentIdx)
             setDataTag({
                 ...dataTag,
@@ -180,10 +180,11 @@ export default () => {
     }
     function openModal(idx) {
         setDataTag({
+            ...dataTag,
             data: [...dataTag.data],
             currentIdx: dataTag.currentIdx,
             currentIdxProduct: idx,
-            quantity: 1
+            quantity: 1,
         })
         setShowModal(true);
     }
@@ -254,7 +255,7 @@ export default () => {
                     socket.on(`${res.orderId}`, (status) => {
                         localStorage.setItem('ORDER', null);
                         socket.disconnect();
-                        if (status === 'confirmed') history.push('/payment');
+                        if (status === 'confirmed') setMessage('Đơn hàng của bạn đã được xác nhận :>> phần này tự chuyển qua trang thanh toán:)) nhưng chưa làm kịp')
                         else if (status === 'cancel') setMessage('Đơn hàng của bạn đã bị hủy bởi thu nhân với lí do: ....')
                     })
                 }
@@ -338,7 +339,7 @@ export default () => {
                             </div>
                             <div className='container'>
                                 {dataCart.products.map((item, idx) => (
-                                    dataTag.data.length != 0 &&
+                                    dataTag.data.length !== 0 &&
                                     <div className='product'>
                                         <div className='product-wrap'>
                                             <div className='product-img'></div>
