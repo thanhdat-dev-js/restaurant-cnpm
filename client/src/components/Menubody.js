@@ -19,8 +19,9 @@ export default (props) => {
                         if (idx >= props.start && idx <= props.end) return (
                             <div className={classNames('tag-product', { currentTag: isCur })}
                                 onClick={(e) => props.handleClickTag(idx)}>
-                                <div className='tag-img'>
-                                </div>
+                                <div className='tag-img' style={{
+                                    backgroundImage: `url(${item.imgURL})`
+                                }}></div>
                                 <h3>{item.type}</h3>
                             </div>
                         )
@@ -38,7 +39,9 @@ export default (props) => {
                         {props.data.length !== 0 && props.data[props.currentIdx].products.map((item, idx) => (
                             <Grid item xs={6} sm={4} lg={3} key={idx}>
                                 <div className='product' onClick={() => props.openModal(idx)}>
-                                    <div className='product-img'></div>
+                                    <div className='product-img' style={{
+                                        backgroundImage: `url(${item.imgURL})`
+                                    }}></div>
                                     <h3><span>{idx + 1}. </span>{item.name}</h3>
                                     <div className='product-wrap'>
                                         <span>{item.price}</span>
