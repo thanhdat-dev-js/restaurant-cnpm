@@ -49,7 +49,7 @@
 
     .modal {
         position: absolute;
-        z-index: 10;
+        z-index: 100;
         top: 0;
         bottom: 0;
         right: 0;
@@ -77,6 +77,20 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
+            font-size: 1.6rem;
+        }
+        h3 {
+            font-size: 1.6rem;
+        }
+        p {
+            font-size: 1.4rem;
+        }
+        span {
+            font-size: 1.4rem;
+        }
+        .price span {
+            color: $primary-color;
+            font-weight: 500;
         }
         .container {
             background-color: $white-color;
@@ -130,6 +144,11 @@
         .btn-modal {
             width: 100%;
             margin-top: auto;
+        }
+        .description {
+            h3 {
+                margin: 16px 0;
+            }
         }
     }
 }
@@ -204,15 +223,25 @@
             padding: 20px 30px;
             font-size: 1.6rem;
             position: relative;
-            &::after {
+            &::before {
                 content: "";
                 display: block;
                 position: absolute;
                 top: 50%;
                 right: 30px;
-                width: calc(100% - 140px);
+                left: 30px;
                 height: 1px;
                 background-color: $line-color;
+                z-index: 1;
+            }
+            span {
+                background-color: $grey-color;
+                color: $black-color;
+                z-index: 50;
+                padding: 0 20px;
+                position: absolute;
+                top: 50%;
+                transform: translateY(-50%);
             }
         }
         .product {

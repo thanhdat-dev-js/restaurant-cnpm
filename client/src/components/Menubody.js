@@ -4,6 +4,11 @@ import ShoppingCartOutlinedIcon from '@material-ui/icons/ShoppingCartOutlined';
 import '../scss/menu.scss';
 const classNames = require('classnames');
 
+function format(n, currency) {
+    return currency + n.toFixed(0).replace(/./g, function (c, i, a) {
+        return i > 0 && c !== "." && (a.length - i) % 3 === 0 ? "," + c : c;
+    });
+}
 
 export default (props) => {
     return (
@@ -33,7 +38,7 @@ export default (props) => {
                 </div>
             </div>
             <div className='content'>
-                <h3 className='type'>{props.data.length !== 0 && props.data[props.currentIdx].type}</h3>
+                <h3 className='type'><span>{props.data.length !== 0 && props.data[props.currentIdx].type}</span></h3>
                 <div className='content-wrap'>
                     <Grid container spacing={0}>
                         {props.data.length !== 0 && props.data[props.currentIdx].products.map((item, idx) => (
@@ -44,7 +49,7 @@ export default (props) => {
                                     }}></div>
                                     <h3><span>{idx + 1}. </span>{item.name}</h3>
                                     <div className='product-wrap'>
-                                        <span>{item.price}</span>
+                                        <span>{format(item.price, 'đ')}</span>
                                         <div className='btn-addCart' onClick={(e) => {
                                             e.stopPropagation();
                                             props.addToCart(1, props.currentIdx, idx);

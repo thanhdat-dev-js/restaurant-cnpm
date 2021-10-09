@@ -12,8 +12,15 @@ import ShoppingCartOutlinedIcon from '@material-ui/icons/ShoppingCartOutlined';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import { useHistory } from "react-router-dom";
 import socketClient from "socket.io-client";
-const SERVER = "http://127.0.0.1:4000/";
+const SERVER = "http://localhost:4000/";
 const classNames = require('classnames');
+
+function format(n, currency) {
+    if (n && currency)
+        return currency + n.toFixed(0).replace(/./g, function (c, i, a) {
+            return i > 0 && c !== "." && (a.length - i) % 3 === 0 ? "," + c : c;
+        });
+}
 
 export default () => {
     const history = useHistory();
@@ -41,7 +48,7 @@ export default () => {
     useEffect(() => {
         try {
             let reqOptions = {
-                url: "http://127.0.0.1:4000/category",
+                url: "http://localhost:4000/category",
                 method: "GET",
             }
             axios.request(reqOptions).then(function (response) {
@@ -323,16 +330,16 @@ export default () => {
                                 <div className='content'>
                                     <div className='title'>
                                         <div className='sku'>
-                                            <h3>SKU</h3>
+                                            <h3>STT</h3>
                                             <p>41</p>
                                         </div>
                                         <div className='name'>
                                             <h3>{dataTag.data[dataTag.currentIdx].type}</h3>
-                                            <p>{dataTag.data[dataTag.currentIdx].products[dataTag.currentIdxProduct] && dataTag.data[dataTag.currentIdx].products[dataTag.currentIdxProduct].name}</p>
+                                            <p>{dataTag.data[dataTag.currentIdx].products[dataTag.currentIdxProduct]?.name}</p>
                                         </div>
                                         <div className='price'>
                                             <h3>Unit Price</h3>
-                                            <span>{dataTag.data[dataTag.currentIdx].products[dataTag.currentIdxProduct] && dataTag.data[dataTag.currentIdx].products[dataTag.currentIdxProduct].price}</span>
+                                            <span>{format(dataTag.data[dataTag.currentIdx].products[dataTag.currentIdxProduct]?.price, 'đ')}</span>
                                         </div>
                                     </div>
                                     <div className='quantity'>
@@ -342,6 +349,10 @@ export default () => {
                                             <span>{dataTag.quantity}</span>
                                             <div className='btn btn-increase' onClick={() => handleClickIncrease()}><AddIcon /></div>
                                         </div>
+                                    </div>
+                                    <div className='description'>
+                                        <h3>Description</h3>
+                                        <p>{dataTag.data[dataTag.currentIdx].products[dataTag.currentIdxProduct]?.description}</p>
                                     </div>
                                     <Button className='btn-modal' variant="contained" color="secondary" onClick={() => addToCart()}>
                                         <ShoppingCartOutlinedIcon /> <span>13213</span>
@@ -392,7 +403,7 @@ export default () => {
                                                     }}><AddIcon /></div>
                                                 </div>
                                                 <div className='price-wrap'>
-                                                    <div className='price'>{item.totalPrice}</div>
+                                                    <div className='price'>{format(item.totalPrice, 'đ')}</div>
                                                     <div>Khuyen mai</div>
                                                 </div>
                                             </div>
@@ -403,7 +414,7 @@ export default () => {
                             <div className='cart-footer'>
                                 <div className='cart-footer-wrap'>
                                     <h3>Total:</h3>
-                                    <p>{dataCart.totalOrder}</p>
+                                    <p>{format(dataCart.totalOrder, 'đ')}</p>
                                 </div>
                                 <div className='discount'>Khuyen mai</div>
                                 <Button className='btn-modal' variant="contained" color="secondary" onClick={handlePayment}>PAYMENT</Button>
