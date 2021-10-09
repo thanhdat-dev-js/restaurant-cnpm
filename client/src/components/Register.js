@@ -7,7 +7,6 @@ import '../scss/register.scss';
 
 export default function Register() {
     const history = useHistory();
-    const [loading, setLoading] = useState(false);
     const [registerForm, setRegisterForm] = useState({
         email: '',
         password: '',

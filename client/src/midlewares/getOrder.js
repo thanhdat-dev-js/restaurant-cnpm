@@ -1,5 +1,5 @@
 import axios from 'axios';
-export default function getOrder(status = null) {
+export default function getOrder(status = null, process = 'cooking') {
     try {
         const token = localStorage.getItem('TOKEN') || null;
         if (token) {
