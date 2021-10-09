@@ -92,7 +92,6 @@
         }
         .img {
             padding-top: 100%;
-            background-image: url(../img/img1.jpg);
             background-size: cover;
             background-repeat: no-repeat;
             background-position: center;
@@ -179,7 +178,6 @@
             color: $text-color;
             font-size: 1.2rem;
             .tag-img {
-                background-image: url("../img/img1.jpg");
                 background-size: cover;
                 background-position: center;
                 padding-top: 60%;
@@ -231,7 +229,6 @@
                 font-weight: 700;
             }
             &-img {
-                background-image: url("../img/img1.jpg");
                 padding-top: 70%;
                 background-repeat: no-repeat;
                 background-size: cover;

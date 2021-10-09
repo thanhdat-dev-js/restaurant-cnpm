@@ -24,8 +24,8 @@ export default () => {
             currentIdxProduct: 0,
             quantity: 1,
             start: 0,
-            end: 4,
-            responsive: true
+            end: 6,
+            responsive: 992
         });
     const [showModal, setShowModal] = useState(false);
     const [showCart, setShowCart] = useState(false);
@@ -69,24 +69,55 @@ export default () => {
     }, [dataCart.products])
     useEffect(() => {
         const handleWindowResize = () => {
-            if (window.innerWidth < 700) {
-                if (dataTag.responsive)
+            if (window.innerWidth > 992) {
+                if (dataTag.responsive !== 992)
+                    setDataTag({
+                        ...dataTag,
+                        start: 0,
+                        currentIdx: 1,
+                        end: 6,
+                        responsive: 992
+                    })
+            }
+            else if (window.innerWidth > 768) {
+                if (dataTag.responsive !== 768)
+                    setDataTag({
+                        ...dataTag,
+                        start: 0,
+                        currentIdx: 1,
+                        end: 5,
+                        responsive: 768
+                    })
+            }
+            else if (window.innerWidth > 576) {
+                if (dataTag.responsive !== 576)
+                    setDataTag({
+                        ...dataTag,
+                        start: 0,
+                        currentIdx: 1,
+                        end: 4,
+                        responsive: 576
+                    })
+            }
+            else if (window.innerWidth > 478) {
+                if (dataTag.responsive !== 478)
+                    setDataTag({
+                        ...dataTag,
+                        start: 0,
+                        currentIdx: 1,
+                        end: 3,
+                        responsive: 478
+                    })
+            }
+            else {
+                if (dataTag.responsive !== 477)
                     setDataTag({
                         ...dataTag,
                         start: 0,
                         currentIdx: 1,
                         end: 2,
-                        responsive: false
+                        responsive: 477
                     })
-            }
-            else if (!dataTag.responsive) {
-                setDataTag({
-                    ...dataTag,
-                    start: 0,
-                    currentIdx: 1,
-                    end: 4,
-                    responsive: true
-                })
             }
         }
         window.addEventListener("resize", handleWindowResize);
@@ -285,7 +316,9 @@ export default () => {
                             </div>
                             <div className='container'>
                                 <div className='img-wrap'>
-                                    <div className='img'></div>
+                                    <div className='img' style={{
+                                        backgroundImage: `url(${dataTag.data[dataTag.currentIdx].products[dataTag.currentIdxProduct]?.imgURL})`
+                                    }}></div>
                                 </div>
                                 <div className='content'>
                                     <div className='title'>
@@ -342,7 +375,9 @@ export default () => {
                                     dataTag.data.length !== 0 &&
                                     <div className='product'>
                                         <div className='product-wrap'>
-                                            <div className='product-img'></div>
+                                            <div className='product-img' style={{
+                                                backgroundImage: `url(${dataTag.data[item.currentIdx].products[item.currentIdxProduct].imgURL})`
+                                            }}></div>
                                         </div>
                                         <div className='body'>
                                             <p><span>{idx + 1}. </span>{dataTag.data[item.currentIdx].products[item.currentIdxProduct].name}</p>

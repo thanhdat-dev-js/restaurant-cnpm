@@ -36,7 +36,6 @@ $box-shadow: 2px 2px 11px 1px #b1b1b1;
 }
 
 @mixin imgBg {
-    background-image: url(../img/img1.jpg);
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;

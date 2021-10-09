@@ -1,4 +1,4 @@
-# Hướng dẫn chạy code  restaurant-cnpm
+# Hướng dẫn modify code restaurant-cnpm
 [Link clone dự án restaurant-cnpm](https://github.com/thanhdat4421/restaurant-cnpm).
 ### Thiết lập môi trường
 * Cài đặt **Nodejs** 14.xx
