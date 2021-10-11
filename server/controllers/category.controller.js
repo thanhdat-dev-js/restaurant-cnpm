@@ -8,21 +8,64 @@ module.exports = {
         });
     },
 
-    postProduct(req, res) {
-
-        Category.save();
+    async postProduct(req, res) {
+        try {
+            const categoryID = req.params.categoryID;
+            const successful = await Category.updateOne({ '_id': categoryID }, {
+                '$push': {
+                    products: {
+                        'price': req.body.price,
+                        'name': req.body.name,
+                        'imgURL': req.body.imgURL
+                    }
+                }
+            });
+            res.status(200).json(successful);
+        }
+        catch(err) {
+            res.status(500).json({ success: 0, message: err });
+        }
     },
 
-    putProduct(req, res) {
-        Category.updateOne({ 'products._id': req.params.productID }, (err, product) => {
-            // update
-        });
+    async putProduct(req, res) {
+        try {
+            const categoryID = req.params.categoryID;
+            const productID = req.params.productID;
+            const thatCategory = await Category.findOne({ '_id': categoryID }, {
+                // '$set': {
+                //     'products.$': {
+                //         'price': req.body.price,
+                //         'name': req.body.name,
+                //         'imgURL': req.body.imgURL
+                //     }
+                // }
+            });
+
+            if(thatCategory.save())
+                res.status(200).json(successful);
+        }
+        catch(err) {
+            res.status(500).json({ success: 0, message: err });
+        }
     },
 
-    deleteProduct(req, res) {
-        Category.find({ 'products._id': req.params.productID }, (err, product) => {
-            // delete a product by its id
-        });
+    async deleteProduct(req, res) {
+        try {  
+            const categoryID = req.params.categoryID;
+            const productID = req.params.productID;
+            const newCategory = await Category.updateOne({ '_id': categoryID }, { 
+                '$pull': {
+                    products: {
+                        '_id': productID
+                    }
+            }});
+            if (newCategory) {
+                res.status(200).json({ success: 1, message: newCategory });
+            }
+        }
+        catch(err) {
+            res.status(500).json({ success: 0, message: err });
+        }
     },
 
     getCategory(req, res) {
@@ -60,7 +103,6 @@ module.exports = {
                 message: err
             });
         }
-
     },
 
     async putCategory(req, res) {
@@ -83,14 +125,6 @@ module.exports = {
             if (await existed.save()) {
                 res.status(200).json(existed);
             }
-            
-            // const updateContent = {
-            //     type: req.body.type,
-            //     imgURL: req.body.imgURL,
-            //     products: req.body.products
-            // };
-    
-            // await Category.updateOne({ _id: categoryID }, updateContent);
         }
         catch(err) {
             res.status(500).json({ success: 0, message: err });
@@ -111,7 +145,6 @@ module.exports = {
                 res.status(200).json({ success: 1 });
             }
         });
-
     },
 
 }
