@@ -1,10 +1,9 @@
 import React from 'react'
+import ReserveNavbar from './ReserveNavbar';
 
 function ReserveList() {
     return (
-        <div>
-            
-        </div>
+        <ReserveNavbar/>
     )
 }
 

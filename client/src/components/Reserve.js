@@ -1,11 +1,11 @@
-import React from 'react'
+import React from 'react';
+import ReserveNavbar from './ReserveNavbar';
 
 function Reserve() {
+	
     return (
-        <div>
-            
-        </div>
-    )
+        <ReserveNavbar/>
+	)
 }
 
 export default Reserve
