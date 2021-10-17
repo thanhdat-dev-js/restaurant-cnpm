@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Container, Grid } from '@material-ui/core';
+import { Container } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 import HomeIcon from '@material-ui/icons/Home';
@@ -11,6 +11,7 @@ import Button from '@material-ui/core/Button';
 import ShoppingCartOutlinedIcon from '@material-ui/icons/ShoppingCartOutlined';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import { useHistory } from "react-router-dom";
+import verifyToken from '../midlewares/verifyToken';
 import socketClient from "socket.io-client";
 const SERVER = "http://localhost:4000/";
 const classNames = require('classnames');
@@ -267,8 +268,15 @@ export default () => {
     async function handlePayment() {
         try {
             setMessage('Vui lòng đợi thu ngân xác nhận đơn hàng, không chuyển trang hoặc f5');
+            const info = verifyToken();
+            var email = '';
+            if (info) {
+                await info.then(res => {
+                    email = res.data.email;
+                })
+            }
             var data = {
-                email: localStorage.getItem('EMAIL'),
+                email: email,
                 total: dataCart.totalOrder,
                 products: dataCart.products.map((item) => {
                     const {

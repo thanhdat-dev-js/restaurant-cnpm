@@ -23,7 +23,6 @@ export default function Kitchen() {
         var order = getOrder('', filter);
         if (order) {
             order.then(res => {
-                console.log(res.data)
                 if (res.data.order) {
                     setData([...res.data.order]);
                     setFilter(filter);
