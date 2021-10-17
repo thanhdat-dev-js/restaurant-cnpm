@@ -51,7 +51,7 @@ module.exports = {
                 email: req.body.email,
                 permission: 'customer'
             })
-            user.save();
+            await user.save();
             const token = jwt.sign({
                 email: req.body.email,
                 permission: 'customer'

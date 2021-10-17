@@ -17,7 +17,7 @@ module.exports = {
     },
 
     displayCustomerInfo(req, res) {
-        User.find({ permission: 'customer' }, (err, customer) => {
+        User.find({ permission: 'customer' }, { password: 0 }, (err, customer) => {
             res.status(200).json(customer);
         });
     },

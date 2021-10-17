@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const validateToken = require('../middlewares/validateToken');
+const validateAdmin = require('../middlewares/validateAdmin');
 const admin = require('../controllers/admin.controller');
 
 
-router.get('/admin', validateToken, (req, res) => {
+router.get('/admin', validateAdmin, (req, res) => {
     if (req.user === 'admin') {
         console.log('WORTHY');
     }
@@ -16,9 +16,9 @@ router.get('/admin', validateToken, (req, res) => {
     }
 });
 
-router.get('/admin/statistics', validateToken, admin.getAllStatistics);
-router.get('/admin/employee', validateToken, admin.getAllEmployee);
-router.get('/admin/customer-info', validateToken, admin.displayCustomerInfo);
+router.get('/admin/statistics', validateAdmin, admin.getAllStatistics);
+router.get('/admin/employee', validateAdmin, admin.getAllEmployee);
+router.get('/admin/customer-info', validateAdmin, admin.displayCustomerInfo);
 
 
 module.exports = router;
