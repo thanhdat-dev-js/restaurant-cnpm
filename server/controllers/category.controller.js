@@ -41,6 +41,14 @@ module.exports = {
                 // }
             });
 
+            thatCategory.products.forEach((product) => {
+                if (product._id === productID) {
+                    product.price = req.body.price || product.price;
+                    product.name = req.body.name || product.name;
+                    product.imgURL = req.body.imgURL || product.imgURL;
+                }
+            });
+
             if(thatCategory.save())
                 res.status(200).json(successful);
         }
