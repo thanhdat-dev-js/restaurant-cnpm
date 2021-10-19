@@ -16,7 +16,7 @@ router.get('/admin', validateAdmin, (req, res) => {
     }
 });
 
-router.get('/admin/statistics', validateAdmin, admin.getAllStatistics);
+router.get('/admin/statistics', validateAdmin, admin.getFilteredOrders);
 router.get('/admin/employee', validateAdmin, admin.getAllEmployee);
 router.get('/admin/customer-info', validateAdmin, admin.displayCustomerInfo);
 

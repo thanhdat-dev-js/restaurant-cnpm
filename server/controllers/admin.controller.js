@@ -10,10 +10,28 @@ module.exports = {
         })
     },
     
-    getAllStatistics(req, res) {
-        let result = {}
-
-        res.status(200).json(result);
+    // return order for statistic
+    async getFilteredOrders(req, res) {
+        try{
+            const order = await Order.find({$expr:{
+                $function: {
+                    body: (updatedAt) =>{
+                        return (
+                            Date(updatedAt) > Date(req.query.startTime) &&
+                            Date(updatedAt) < Date(req.query.endTime)
+                        )
+                    },
+                    args:["$updatedAt"],
+                    lang: "js"
+                }
+            }   })
+            if (order){
+                return res.status(201).res.json(order)
+            }
+        }
+        catch (err){
+            console.log(err)
+        }
     },
 
     displayCustomerInfo(req, res) {
