@@ -7,6 +7,8 @@ import Login from './components/Login';
 import Register from './components/Register';
 import Admin from './components/Admin';
 import Payment from './components/Payment';
+import Reserve from './components/Reserve'
+import ReserveList from './components/ReserveList'
 import './scss/index.scss';
 
 function App() {
@@ -22,6 +24,8 @@ function App() {
           <Route path="/register" component={Register} />
           <Route path="/payment" component={Payment} />
           <Route path="/admin" component={Admin} />
+          <Route path="/reserve" component={Reserve} />
+          <Route path="/reservelist" component={ReserveList} />
           <Route path="*" component={() => <h1>404 NotFound</h1>} />
         </Switch>
       </div>
