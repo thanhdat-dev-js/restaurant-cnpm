@@ -1,11 +1,11 @@
 import React from "react";
-const {data} = require('./test-data')
+const { data } = require('./test-data')
 
-export default function Statistics(){
+export default function Statistics() {
     return <div>
         <h1>This is the statistics page</h1>
         {
-            data.map((order) =>{
+            data.map((order) => {
                 return <h1>{order.orderID}</h1>;
             })
         }
