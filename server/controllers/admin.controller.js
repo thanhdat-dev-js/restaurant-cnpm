@@ -12,6 +12,13 @@ module.exports = {
     
     // return order for statistic
     async getFilteredOrders(req, res) {
+        const {startTime, endTime} = req.query;
+        /* console.log(Date(startTime))
+        console.log(Date(endTime))
+        return res.json({
+            success: 1,
+            message: "called getFilteredOrders"
+        })
         try{
             const order = await Order.find({$expr:{
                 $function: {
@@ -27,6 +34,23 @@ module.exports = {
             }   })
             if (order){
                 return res.status(201).res.json(order)
+            }
+        }
+        catch (err){
+            console.log(err)
+        } */
+        try{
+            const orders = await Order.find({})
+            const filtered_orders = orders.filter((order)=>{
+                return (Date(order.updatedAt) >= Date(startTime) &&
+                        Date(order.updatedAt) <= Date(endTime)
+                )
+            })
+            if (filtered_orders){
+                filtered_orders.map((order)=>{
+                    return res.send(order);
+                })
+                // return res.status(201).res.json(filtered_orders);
             }
         }
         catch (err){
