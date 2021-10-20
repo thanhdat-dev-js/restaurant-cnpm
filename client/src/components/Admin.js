@@ -7,6 +7,9 @@ import { Container } from '@material-ui/core';
 import verifyToken from '../midlewares/verifyToken';
 import Statistics from './Admin/Statistics';
 export default function Admin() {
+        const Statistics = true;
+        const Menu = false;
+        const Staff = false;
     const history = useHistory();
     useEffect(() => {
         const getInfo = verifyToken();
@@ -21,10 +24,9 @@ export default function Admin() {
         }
     }, []);
     useEffect(() => {
-
-    })
+    },)
     return (
-        <div className="admin">
+<div className="admin">
             <Container fluid='lg'>
                 <div className='header'>
                     <Link to='/'>
@@ -33,10 +35,13 @@ export default function Admin() {
                     </Link>
                 </div>
                 <div className='body'>
-                    <h1>ADmin</h1>
+                    <div className='filter'>
+                        <span className={`${Statistics && 'option--active'}`}>Thống kê</span>
+                        <span className={`${Menu && 'option--active'}`} >Thông tin nhân viên</span>
+                        <span className={`${Staff && 'option--active'}`}>Chỉnh sửa thực đơn</span>
+                    </div>
                 </div>
             </Container>
-            <Statistics></Statistics>
         </div>
     )
 }
