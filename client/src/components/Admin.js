@@ -5,7 +5,8 @@ import '../scss/admin.scss';
 import HomeIcon from '@material-ui/icons/Home';
 import { Container } from '@material-ui/core';
 import verifyToken from '../midlewares/verifyToken';
-import Statistics from './Admin/Statistics';
+import Statistics_NumOfOrders from './Admin/Statistics_NumOfOrders';
+
 export default function Admin() {
         const Statistics = true;
         const Menu = false;
@@ -41,6 +42,7 @@ export default function Admin() {
                         <span className={`${Staff && 'option--active'}`}>Chỉnh sửa thực đơn</span>
                     </div>
                 </div>
+                <Statistics_NumOfOrders></Statistics_NumOfOrders>
             </Container>
         </div>
     )
