@@ -11,16 +11,15 @@ module.exports = {
     async postProduct(req, res) {
         try {
             const categoryID = req.params.categoryID;
-            const successful = await Category.updateOne({ '_id': categoryID }, {
-                '$push': {
-                    products: {
-                        'price': req.body.price,
-                        'name': req.body.name,
-                        'imgURL': req.body.imgURL
-                    }
-                }
+            const thatCategory = await Category.updateOne({ '_id': categoryID });
+            
+            thatCategory.products.push({
+                'price': req.body.price,
+                'name': req.body.name,
+                'imgURL': req.body.imgURL
             });
-            res.status(200).json(successful);
+
+            res.status(200).json(thatCategory);
         }
         catch(err) {
             res.status(500).json({ success: 0, message: err });
@@ -31,28 +30,21 @@ module.exports = {
         try {
             const categoryID = req.params.categoryID;
             const productID = req.params.productID;
-            const thatCategory = await Category.findOne({ '_id': categoryID }, {
-                // '$set': {
-                //     'products.$': {
-                //         'price': req.body.price,
-                //         'name': req.body.name,
-                //         'imgURL': req.body.imgURL
-                //     }
-                // }
-            });
+            const thatCategory = await Category.findOne({ '_id': categoryID });
 
-            thatCategory.products.forEach((product) => {
-                if (product._id === productID) {
+            thatCategory.products.map((product) => {
+                if (product.productID.toString() === productID) {
                     product.price = req.body.price || product.price;
                     product.name = req.body.name || product.name;
                     product.imgURL = req.body.imgURL || product.imgURL;
                 }
             });
 
-            if(thatCategory.save())
-                res.status(200).json(successful);
+            if (thatCategory.save())
+                res.status(200).json(thatCategory);
         }
         catch(err) {
+            console.log(err);
             res.status(500).json({ success: 0, message: err });
         }
     },
@@ -64,7 +56,7 @@ module.exports = {
             const newCategory = await Category.updateOne({ '_id': categoryID }, { 
                 '$pull': {
                     products: {
-                        '_id': productID
+                        'productID': productID
                     }
             }});
             if (newCategory) {

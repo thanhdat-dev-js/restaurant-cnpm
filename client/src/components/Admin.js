@@ -5,7 +5,7 @@ import '../scss/admin.scss';
 import HomeIcon from '@material-ui/icons/Home';
 import { Container } from '@material-ui/core';
 import verifyToken from '../midlewares/verifyToken';
-
+import Statistics from './Admin/Statistics';
 export default function Admin() {
     const history = useHistory();
     useEffect(() => {
@@ -36,6 +36,7 @@ export default function Admin() {
                     <h1>ADmin</h1>
                 </div>
             </Container>
+            <Statistics></Statistics>
         </div>
     )
 }
