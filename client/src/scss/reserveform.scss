@@ -39,19 +39,17 @@
         margin-top: 30px;
         .personal-info-form {
             margin-top: 30px;
-            .form-row {
+            .form-cell {
                 margin-top: 10px;
                 display: flex;
                 justify-content: space-between; 
-                .form-cell {
-                    padding: 0px 8px;
+                padding: 0px 8px;
+                width: 100%;
+                .MuiInputBase-root {
+                    font-size: 1.6rem;
+                }
+                div {
                     width: 100%;
-                    .MuiInputBase-root {
-                        font-size: 1.6rem;
-                    }
-                    div {
-                        width: 100%;
-                    }
                 }
             }
             .form-btn-row {
