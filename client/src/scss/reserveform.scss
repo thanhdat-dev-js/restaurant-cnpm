@@ -4,29 +4,21 @@
     color: #000A43;
     text-align: center; 
     font-size: 15px;
-    width: 40%;
     min-width: 350px;
     .form-1 {
 
         .check-table-form {
             margin-top: 30px;
             .form-row {
-                margin-top: 10px;
+                margin: 10px 0px;
                 display: flex;
                 justify-content: space-between; 
                 .form-cell {
-                    padding: 0px 8px;
-                    width: 100%;
-                    .MuiInputBase-root {
-                        font-size: 1.6rem;
-                    }
-                    div {
-                        width: 100%;
-                    }
+                    margin: 5px 0px;
+                    width: 47%;
                 }
             }
             .form-btn-row {
-                padding: 8px;
                 .form-btn {
                     margin-top: 10px;
                     width: 100%;
@@ -40,20 +32,14 @@
         .personal-info-form {
             margin-top: 30px;
             .form-cell {
-                margin-top: 10px;
+                margin: 20px 0px;
                 display: flex;
                 justify-content: space-between; 
-                padding: 0px 8px;
-                width: 100%;
-                .MuiInputBase-root {
-                    font-size: 1.6rem;
-                }
                 div {
                     width: 100%;
                 }
             }
             .form-btn-row {
-                padding: 8px;
                 .form-btn {
                     margin-top: 10px;
                     width: 100%;

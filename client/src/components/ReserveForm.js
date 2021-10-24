@@ -1,76 +1,65 @@
 import { Button, TextField} from '@material-ui/core';
-import {AdapterDateFns,LocalizationProvider} from '@mui/lab';
+
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import {LocalizationProvider, DatePicker} from '@mui/lab';
 import '../scss/reserveform.scss';
 import React from 'react';
 
 function ReserveForm() {
-    // const theme = createTheme({
-    //     status: {
-    //         danger: '#e53e3e',
-    //     },
-    //     palette: {
-    //         primary: {
-    //             main: '#0971f1',
-    //             darker: '#053e85',
-    //         },
-    //         neutral: {
-    //             main: '#64748B',
-    //             contrastText: '#fff',
-    //         },
-    //     },
-    // });
+    const [value, setValue] = React.useState(null);
+    
     return (
+        
         <div className="reserve-form">
             <div  className="form-1">
                 <h1>Make a reservation</h1>
                 <div className="check-table-form">
                     <div className="form-row"> 
                         <div className="form-cell">
-                            <div>
-                                <TextField 
-                                    variant="outlined" 
-                                    label="Date"
-                                    name="date" 
-                                    placeholder="Date to reserve ..."
-                                    InputLabelProps={{style: {fontSize: 16}}}
-                                />
-                                <LocalizationProvider dateAdapter={AdapterDateFns}>...</LocalizationProvider>
-                            </div>
+                            <TextField 
+                                variant="outlined" 
+                                name="date" 
+                                type="date"
+                                fullWidth
+                                InputProps={{style: {fontSize: 14}}}
+                                InputLabelProps={{style: {fontSize: 14}}}
+                            />
                         </div>
                         <div className="form-cell">
-                            <div >
-                                <TextField 
-                                    variant="outlined" 
-                                    label="Time"
-                                    name="time" 
-                                    placeholder="Time to come ..."
-                                    InputLabelProps={{style: {fontSize: 16}}}
-                                />
-                            </div>
+                            <TextField 
+                                variant="outlined" 
+                                name="time" 
+                                type="time"
+                                fullWidth
+                                InputProps={{style: {fontSize: 16}}}
+                                InputLabelProps={{style: {fontSize: 16}}}
+                            />
                         </div>
                     </div>
                     <div className="form-row"> 
                         <div className="form-cell">
-                            <div>
-                                <TextField 
-                                    variant="outlined" 
-                                    label="Adults"
-                                    name="adults" 
-                                    placeholder="Number of adults ..."
-                                    InputLabelProps={{style: {fontSize: 16}}}
-                                />
-                            </div>
+                            <TextField 
+                                variant="outlined" 
+                                label="Adults"
+                                name="adults" 
+                                type="number"
+                                placeholder="Number of adults"
+                                fullWidth
+                                InputProps={{style: {fontSize: 16}}}
+                                InputLabelProps={{style: {fontSize: 16}}}
+                            />
                         </div>
                         <div className="form-cell">
-                            <div>
-                                <TextField 
-                                    variant="outlined" 
-                                    label="Children"
-                                    name="children" 
-                                    placeholder="Number of children ..."
-                                    InputLabelProps={{style: {fontSize: 16}}}
-                                />
-                            </div>
+                            <TextField 
+                                variant="outlined" 
+                                label="Children"
+                                name="children" 
+                                type="number"
+                                placeholder="Number of children"
+                                fullWidth
+                                InputProps={{style: {fontSize: 16}}}
+                                InputLabelProps={{style: {fontSize: 16}}}
+                            />
                         </div>
                     </div>
                     <div className="form-btn-row">
@@ -89,7 +78,8 @@ function ReserveForm() {
                             variant="outlined" 
                             label="First name"
                             name="fname" 
-                            placeholder="Your first name ..."
+                            placeholder="Your first name"
+                            InputProps={{style: {fontSize: 16}}}
                             InputLabelProps={{style: {fontSize: 16}}}
                         />
                     </div>
@@ -98,7 +88,8 @@ function ReserveForm() {
                             variant="outlined" 
                             label="Last name"
                             name="lname" 
-                            placeholder="Your last name ..."
+                            placeholder="Your last name"
+                            InputProps={{style: {fontSize: 16}}}
                             InputLabelProps={{style: {fontSize: 16}}}
                         />
                     </div>
@@ -107,7 +98,9 @@ function ReserveForm() {
                             variant="outlined" 
                             label="Phone number"
                             name="phone" 
-                            placeholder="Your phone number ..."
+                            type="tel"
+                            placeholder="Your phone number"
+                            InputProps={{style: {fontSize: 16}}}
                             InputLabelProps={{style: {fontSize: 16}}}
                         />
                     </div>
@@ -116,7 +109,9 @@ function ReserveForm() {
                             variant="outlined" 
                             label="Email address"
                             name="email" 
-                            placeholder="Your email address ..."
+                            type="email"
+                            placeholder="Your email address"
+                            InputProps={{style: {fontSize: 16}}}
                             InputLabelProps={{style: {fontSize: 16}}}
                         />
                     </div>
