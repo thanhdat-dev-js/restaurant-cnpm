@@ -12,46 +12,19 @@ module.exports = {
     
     // return order for statistic
     async getFilteredOrders(req, res) {
+        // Lấy startTime, endTime từ request
         const {startTime, endTime} = req.query;
-        /* console.log(Date(startTime))
-        console.log(Date(endTime))
-        return res.json({
-            success: 1,
-            message: "called getFilteredOrders"
-        })
         try{
-            const order = await Order.find({$expr:{
-                $function: {
-                    body: (updatedAt) =>{
-                        return (
-                            Date(updatedAt) > Date(req.query.startTime) &&
-                            Date(updatedAt) < Date(req.query.endTime)
-                        )
-                    },
-                    args:["$updatedAt"],
-                    lang: "js"
-                }
-            }   })
-            if (order){
-                return res.status(201).res.json(order)
-            }
-        }
-        catch (err){
-            console.log(err)
-        } */
-        try{
+            //lấy hết orders từ database, orders là 1 json
             const orders = await Order.find({})
+            //filter orders và chứa trong filtered_orders
             const filtered_orders = orders.filter((order)=>{
-                return (Date(order.updatedAt) >= Date(startTime) &&
-                        Date(order.updatedAt) <= Date(endTime)
+                return (order.updatedAt >= new Date(startTime) &&
+                        order.updatedAt <= new Date(endTime)
                 )
             })
-            if (filtered_orders){
-                filtered_orders.map((order)=>{
-                    return res.send(order);
-                })
-                // return res.status(201).res.json(filtered_orders);
-            }
+            // return filtered_orders dưới dạng json
+            return res.json(filtered_orders);
         }
         catch (err){
             console.log(err)

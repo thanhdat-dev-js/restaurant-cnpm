@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Container } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 
-import MenuBookIcon from '@material-ui/icons/MenuBook';
+import HomeIcon from '@material-ui/icons/Home';
 import ReceiptIcon from '@material-ui/icons/Receipt';
 
 import verifyToken from '../midlewares/verifyToken';
@@ -33,11 +33,12 @@ function ReserveNavbar() {
             <Container fluid='lg'>
 
                 <div className="header">
+                        
                     <ul>
                         <li>
-                            <Link to="/menu">
-                                <span>Menu</span>
-                                <MenuBookIcon />
+                            <Link to='/'>
+                                <HomeIcon />
+                                <span>Back to home</span>
                             </Link>
                         </li>
                         
