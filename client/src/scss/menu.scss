@@ -249,6 +249,11 @@
             margin: 10px;
             border-radius: 20px;
             box-shadow: $box-shadow;
+            cursor: pointer;
+            &:hover {
+                transform: translateY(-6px);
+                transition: $linear-3;
+            }
             span {
                 color: $primary-color;
             }

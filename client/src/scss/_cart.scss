@@ -29,10 +29,17 @@
         font-size: 1.8rem;
         color: $primary-color;
         font-weight: 700;
+        position: relative;
         .cart-icon {
             margin: 0 16px;
             font-size: 3rem;
         }
+    }
+    &-close {
+        position: absolute;
+        top: 12px;
+        right: 26px;
+        font-size: 3rem !important;
     }
     .container {
         overflow: auto;
@@ -43,6 +50,13 @@
             border: $border;
             border-radius: 10px;
             display: flex;
+            &-close {
+                position: absolute;
+                top: 0;
+                right: 0;
+                font-size: 2rem;
+                color: $text-color;
+            }
         }
         .product-wrap {
             width: 70px;
@@ -61,6 +75,7 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            position: relative;
             span {
                 color: $primary-color;
             }

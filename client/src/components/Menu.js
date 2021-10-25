@@ -10,6 +10,7 @@ import RemoveIcon from '@material-ui/icons/Remove';
 import Button from '@material-ui/core/Button';
 import ShoppingCartOutlinedIcon from '@material-ui/icons/ShoppingCartOutlined';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline';
 import { useHistory } from "react-router-dom";
 import verifyToken from '../midlewares/verifyToken';
 import socketClient from "socket.io-client";
@@ -72,6 +73,7 @@ export default () => {
             ...dataCart,
             totalOrder
         };
+        console.log(dataCart)
         localStorage.setItem('ORDER', JSON.stringify(data));
         setDataCart(data)
     }, [dataCart.products])
@@ -214,6 +216,19 @@ export default () => {
             products
         })
     }
+    function removeProduct(idx) {
+        var products = [];
+        dataCart.products.forEach((item, index) => {
+            if (idx !== index) {
+                products.push(item);
+            }
+        })
+        setDataCart({
+            ...dataCart,
+            products
+        })
+    }
+
     function closeModal() {
         setShowModal(false);
     }
@@ -388,6 +403,7 @@ export default () => {
                         <div className='cart-wrap' onClick={(e) => e.stopPropagation()} >
                             <div className='cart-header'>
                                 <ShoppingCartIcon className='cart-icon' /><span>YourCart({dataCart.products.length})</span>
+                                <CloseIcon className='cart-close' onClick={() => closeCart()} />
                             </div>
                             <div className='container'>
                                 {dataCart.products.map((item, idx) => (
@@ -415,6 +431,7 @@ export default () => {
                                                     <div>Khuyen mai</div>
                                                 </div>
                                             </div>
+                                            <RemoveCircleOutlineIcon className='product-close' onClick={() => removeProduct(idx)} />
                                         </div>
                                     </div>
                                 ))}

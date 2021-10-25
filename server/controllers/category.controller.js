@@ -12,7 +12,7 @@ module.exports = {
         try {
             const categoryID = req.params.categoryID;
             const thatCategory = await Category.updateOne({ '_id': categoryID });
-            
+
             thatCategory.products.push({
                 'price': req.body.price,
                 'name': req.body.name,
@@ -21,7 +21,7 @@ module.exports = {
 
             res.status(200).json(thatCategory);
         }
-        catch(err) {
+        catch (err) {
             res.status(500).json({ success: 0, message: err });
         }
     },
@@ -43,34 +43,35 @@ module.exports = {
             if (thatCategory.save())
                 res.status(200).json(thatCategory);
         }
-        catch(err) {
+        catch (err) {
             console.log(err);
             res.status(500).json({ success: 0, message: err });
         }
     },
 
     async deleteProduct(req, res) {
-        try {  
+        try {
             const categoryID = req.params.categoryID;
             const productID = req.params.productID;
-            const newCategory = await Category.updateOne({ '_id': categoryID }, { 
+            const newCategory = await Category.updateOne({ '_id': categoryID }, {
                 '$pull': {
                     products: {
                         'productID': productID
                     }
-            }});
+                }
+            });
             if (newCategory) {
                 res.status(200).json({ success: 1, message: newCategory });
             }
         }
-        catch(err) {
+        catch (err) {
             res.status(500).json({ success: 0, message: err });
         }
     },
 
     getCategory(req, res) {
         Category.find({ _id: req.params.categoryID }, (err, thatCategory) => {
-           res.status(200).json(thatCategory); 
+            res.status(200).json(thatCategory);
         });
     },
 
@@ -98,7 +99,7 @@ module.exports = {
                 });
             }
         }
-        catch(err) {
+        catch (err) {
             res.status(500).json({
                 message: err
             });
@@ -110,14 +111,14 @@ module.exports = {
         try {
             const categoryID = req.params.categoryID;
             const existed = await Category.findOne({ _id: categoryID });
-    
+
             if (!existed) {
                 return res.status(400).json({
                     success: 0,
                     message: "Category not found."
                 })
             }
-    
+
             existed.type = req.body.type || existed.type;
             existed.imgURL = req.body.imgURL || existed.imgURL;
             existed.products = req.body.products || existed.products;
@@ -126,7 +127,7 @@ module.exports = {
                 res.status(200).json(existed);
             }
         }
-        catch(err) {
+        catch (err) {
             res.status(500).json({ success: 0, message: err });
         }
 
