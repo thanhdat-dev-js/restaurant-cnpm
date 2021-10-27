@@ -10,9 +10,9 @@ const reqNumber = {
     required: true
 }
 
-const reservationSchema = new mongoose.Schema({
+const reserveSchema = new mongoose.Schema({
     userID: reqString,
-    reservationID: {
+    reserveID: {
         'type': String,
         'default': shortid.generate
     },
@@ -30,4 +30,4 @@ const reservationSchema = new mongoose.Schema({
     { timestamps: true }
 )
 
-module.exports = mongoose.model('Reservation', reservationSchema);
+module.exports = mongoose.model('reserve', reserveSchema);

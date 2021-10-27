@@ -9,14 +9,10 @@
 
         .check-table-form {
             margin-top: 30px;
-            .form-row {
-                margin: 10px 0px;
+            .form-cell {
+                margin: 20px 0px;
                 display: flex;
                 justify-content: space-between; 
-                .form-cell {
-                    margin: 5px 0px;
-                    width: 47%;
-                }
             }
             .form-btn-row {
                 .form-btn {
