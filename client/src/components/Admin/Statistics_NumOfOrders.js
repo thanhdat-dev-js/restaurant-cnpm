@@ -13,8 +13,8 @@ const Statistics_NumOfOrders = () =>{
     
     
     // arr[0] for Day
-    // arr[2] for Confirmed
-    // arr[3] for Cancelled
+    // arr[1] for Confirmed
+    // arr[2] for Cancelled
     
     useEffect(() => {
     //i is the number of day in the data

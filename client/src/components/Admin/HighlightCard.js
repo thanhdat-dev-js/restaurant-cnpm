@@ -9,7 +9,7 @@ export default function HighlightCard() {
             <Grid item sm={4} xs={12}>
                 <Card>
                     <CardContent>
-                        <Typography component="h2" variant="body2"><h2>Tổng doanh thu</h2></Typography>
+                        <Typography component="h2" variant="body2"><h1>Tổng doanh thu</h1></Typography>
                         <Typography component="h2" variant="body2"><h3><i>500000000</i></h3></Typography>
                     </CardContent>
                 </Card>
