@@ -1,3 +1,14 @@
+<<<<<<< HEAD
+import { Button, TextField } from '@material-ui/core';
+
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import { LocalizationProvider, DatePicker } from '@mui/lab';
+import '../scss/reserveform.scss';
+import React from 'react';
+
+function ReserveForm() {
+    const [value, setValue] = React.useState(null);
+=======
 import {React, useState} from 'react'
 import { Button, TextField} from '@material-ui/core'
 
@@ -92,12 +103,63 @@ function ReserveForm() {
         });
         console.log(res);
     }
+>>>>>>> 1faf9056b95c13e10aff1aab388f3774b8b7a4c3
 
     return (
-        
+
         <div className="reserve-form">
-            <div  className="form-1">
+            <div className="form-1">
                 <h1>Make a reservation</h1>
+<<<<<<< HEAD
+                <div className="check-table-form">
+                    <div className="form-row">
+                        <div className="form-cell">
+                            <TextField
+                                variant="outlined"
+                                name="date"
+                                type="date"
+                                fullWidth
+                                InputProps={{ style: { fontSize: 14 } }}
+                                InputLabelProps={{ style: { fontSize: 14 } }}
+                            />
+                        </div>
+                        <div className="form-cell">
+                            <TextField
+                                variant="outlined"
+                                name="time"
+                                type="time"
+                                fullWidth
+                                InputProps={{ style: { fontSize: 16 } }}
+                                InputLabelProps={{ style: { fontSize: 16 } }}
+                            />
+                        </div>
+                    </div>
+                    <div className="form-row">
+                        <div className="form-cell">
+                            <TextField
+                                variant="outlined"
+                                label="Adults"
+                                name="adults"
+                                type="number"
+                                placeholder="Number of adults"
+                                fullWidth
+                                InputProps={{ style: { fontSize: 16 } }}
+                                InputLabelProps={{ style: { fontSize: 16 } }}
+                            />
+                        </div>
+                        <div className="form-cell">
+                            <TextField
+                                variant="outlined"
+                                label="Children"
+                                name="children"
+                                type="number"
+                                placeholder="Number of children"
+                                fullWidth
+                                InputProps={{ style: { fontSize: 16 } }}
+                                InputLabelProps={{ style: { fontSize: 16 } }}
+                            />
+                        </div>
+=======
                 <form className="check-table-form" onSubmit={handleOnclickCheckbtn}>
                     <div className="form-cell">
                         <TextField 
@@ -140,6 +202,7 @@ function ReserveForm() {
                             InputProps={{style: {fontSize: 16}}}
                             InputLabelProps={{style: {fontSize: 16}}}
                         />
+>>>>>>> 1faf9056b95c13e10aff1aab388f3774b8b7a4c3
                     </div>
 
                     <div className="form-btn-row">
@@ -156,10 +219,56 @@ function ReserveForm() {
                     </div>
                 </form>
             </div>
+<<<<<<< HEAD
+            <div className="form-2">
+
+=======
             <div  className="form-2">
+>>>>>>> 1faf9056b95c13e10aff1aab388f3774b8b7a4c3
                 <h1>How can we contact you?</h1>
                 <form className="personal-info-form" onSubmit={handleOnclickConfirmbtn}>
                     <div className="form-cell">
+<<<<<<< HEAD
+                        <TextField
+                            variant="outlined"
+                            label="First name"
+                            name="fname"
+                            placeholder="Your first name"
+                            InputProps={{ style: { fontSize: 16 } }}
+                            InputLabelProps={{ style: { fontSize: 16 } }}
+                        />
+                    </div>
+                    <div className="form-cell">
+                        <TextField
+                            variant="outlined"
+                            label="Last name"
+                            name="lname"
+                            placeholder="Your last name"
+                            InputProps={{ style: { fontSize: 16 } }}
+                            InputLabelProps={{ style: { fontSize: 16 } }}
+                        />
+                    </div>
+                    <div className="form-cell">
+                        <TextField
+                            variant="outlined"
+                            label="Phone number"
+                            name="phone"
+                            type="tel"
+                            placeholder="Your phone number"
+                            InputProps={{ style: { fontSize: 16 } }}
+                            InputLabelProps={{ style: { fontSize: 16 } }}
+                        />
+                    </div>
+                    <div className="form-cell">
+                        <TextField
+                            variant="outlined"
+                            label="Email address"
+                            name="email"
+                            type="email"
+                            placeholder="Your email address"
+                            InputProps={{ style: { fontSize: 16 } }}
+                            InputLabelProps={{ style: { fontSize: 16 } }}
+=======
                         <TextField 
                             required
                             fullWidth
@@ -207,6 +316,7 @@ function ReserveForm() {
                             onChange = {handleOnchangeEmail}
                             InputProps={{style: {fontSize: 16}}}
                             InputLabelProps={{style: {fontSize: 16}}}
+>>>>>>> 1faf9056b95c13e10aff1aab388f3774b8b7a4c3
                         />
                     </div>
                     <div className="form-btn-row">

@@ -41,6 +41,18 @@ $box-shadow: 2px 2px 11px 1px #b1b1b1;
     background-position: center;
 }
 
+@mixin rps1000 {
+    @media (max-width: 1000px) {
+        @content;
+    }
+}
+
+@mixin rps800 {
+    @media (max-width: 800px) {
+        @content;
+    }
+}
+
 @mixin rps600 {
     @media (max-width: 600px) {
         @content;
