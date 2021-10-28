@@ -1,5 +1,5 @@
 const Reserve = require('../models/reserve.model');
-const shortId = require('shortid')
+const shortId = require('shortid');
 
 module.exports = {
 
@@ -16,24 +16,36 @@ module.exports = {
     },
     
     async postReserve(req, res) {
+        const data = JSON.parse(req.body.data || req.query.data); 
         const reserve = new Reserve({
-            userID: req.body.userID,
-            reserveID: req.body.reserveID,
-            firstName: req.body.firstName,
-            lastName: req.body.lastName,
-            adultsNumber: req.body.adults,
-            kidsNumber: req.body.kids, 
-            date: req.body.date,
-            phone: req.body.phone,
-            email: req.body.email
+            userEmail: req.user.email,
+            reserveID: shortId.generate(),
+            firstName: data.firstName,
+            lastName: data.lastName,
+            adultsNumber: data.adults,
+            kidsNumber: data.kids, 
+            date: data.datetime,
+            phone: data.phone,
+            email: data.email
         });
     
+        // console.log(data);
+        console.log(req);
+        console.log(reserve);
+
         try {
             const reserveSave = await reserve.save();
-            res.json(reserveSave);
+            // res.json(reserveSave);
+            console.log(reserveSave);
+            return res({
+                success: 1,
+                reserveId: reserve.reserveID,
+                message: "Successfully save reservation!"
+            })
         }
         catch (err) {
             res.json({message: err})
         }
+        
     },
 }

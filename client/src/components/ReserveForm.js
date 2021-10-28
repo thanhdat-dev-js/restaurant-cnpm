@@ -3,11 +3,13 @@ import { Button, TextField} from '@material-ui/core'
 
 import '../scss/reserveform.scss'
 import verifyReserve from '../midlewares/verifyReserve'
+import postReserve from '../midlewares/postReserve';
 
 
 
 function ReserveForm() {
     const [checkForm, setCheckForm] = useState({
+        status: false,
         datetime: null,
         adults: 0,
         kids: 0
@@ -41,7 +43,14 @@ function ReserveForm() {
     }
 
     const handleOnclickCheckbtn = (e) => {
-        verifyReserve(checkForm.datetime);
+        e.preventDefault();
+        const ret = verifyReserve(checkForm.datetime);
+        if (ret.status) {
+            setCheckForm({
+                ...checkForm,
+                status: true
+            })
+        }
     }   
 
 
@@ -74,6 +83,14 @@ function ReserveForm() {
     }
 
     const handleOnclickConfirmbtn = (e) => {
+        e.preventDefault();
+        const res = postReserve({
+            ...checkForm,
+            ...confirmForm,
+            firstName: confirmForm.fname,
+            lastName: confirmForm.lname
+        });
+        console.log(res);
     }
 
     return (
@@ -81,7 +98,7 @@ function ReserveForm() {
         <div className="reserve-form">
             <div  className="form-1">
                 <h1>Make a reservation</h1>
-                <form className="check-table-form">
+                <form className="check-table-form" onSubmit={handleOnclickCheckbtn}>
                     <div className="form-cell">
                         <TextField 
                             required
@@ -134,14 +151,14 @@ function ReserveForm() {
                             style={{ fontSize: '14px'}}
                             sx = {{mt: 1,}}
                         >
-                            Check available tables
+                            Check available tables{checkForm.status? " (" + checkForm.status +") " : ''}
                         </Button>
                     </div>
                 </form>
             </div>
             <div  className="form-2">
                 <h1>How can we contact you?</h1>
-                <div className="personal-info-form">
+                <form className="personal-info-form" onSubmit={handleOnclickConfirmbtn}>
                     <div className="form-cell">
                         <TextField 
                             required
@@ -195,15 +212,15 @@ function ReserveForm() {
                     <div className="form-btn-row">
                         <Button 
                             fullWidth
+                            type="submit"
                             color="secondary" variant="contained"
-                            onclick={handleOnclickConfirmbtn}
                             style={{ fontSize: '14px'}}
                             sx = {{mt: 1,}}
                         >
                             Confirm reservation
                         </Button>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
     )

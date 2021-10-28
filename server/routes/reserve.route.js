@@ -3,7 +3,6 @@ const router = express.Router();
 
 const validateToken = require('../middlewares/validateToken');
 const reserve = require('../controllers/reserve.controller');
-const Reserve = require('../models/reserve.model');
 
 
 router.get('/reserve', validateToken, reserve.getReserve);
