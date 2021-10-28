@@ -12,6 +12,7 @@ const userSchema = new mongoose.Schema({
     username: reqString,
     password: reqString,
     email: reqString,
+    reservations: [String],
     permission: String
 },
     { timestamps: true }
