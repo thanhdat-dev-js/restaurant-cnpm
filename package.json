@@ -1,0 +1,10 @@
+{
+  "devDependencies": {
+    "react-highcharts": "^16.1.0"
+  },
+  "dependencies": {
+    "@material-ui/core": "^4.12.3",
+    "highcharts": "^9.3.0",
+    "highcharts-react-official": "^3.1.0"
+  }
+}

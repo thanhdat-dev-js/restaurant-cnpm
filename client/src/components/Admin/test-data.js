@@ -5,8 +5,8 @@ const data =[{
   "products": [
     {
       "quantity": 1,
-      "price": 120,
-      "totalPrice": 120,
+      "price": 3000000,
+      "totalPrice": 3000000,
       "name": "hamberger",
       "productID": "v5DCq9E8c",
       "_id": {
@@ -18,7 +18,7 @@ const data =[{
   "email": null,
   "status": "cancel",
   "process": "pending",
-  "total": 120,
+  "total": 3000000,
   "createdAt": {
     "$date": "2021-10-07T11:06:43.921Z"
   },
@@ -33,8 +33,8 @@ const data =[{
   "products": [
     {
       "quantity": 2,
-      "price": 120,
-      "totalPrice": 240,
+      "price": 300000,
+      "totalPrice": 600000,
       "name": "hamberger",
       "productID": "v5DCq9E8c",
       "_id": {
@@ -43,8 +43,8 @@ const data =[{
     },
     {
       "quantity": 2,
-      "price": 120,
-      "totalPrice": 240,
+      "price": 300000,
+      "totalPrice": 600000,
       "name": "asdasda fasf af h",
       "productID": "ph8xqOFrH_",
       "_id": {
@@ -53,8 +53,8 @@ const data =[{
     },
     {
       "quantity": 2,
-      "price": 120,
-      "totalPrice": 240,
+      "price": 300000,
+      "totalPrice": 600000,
       "name": "asdasdag rg g",
       "productID": "1R4vFWDPus",
       "_id": {
@@ -66,7 +66,7 @@ const data =[{
   "email": null,
   "status": "confirmed",
   "process": "done",
-  "total": 720,
+  "total": 1800000,
   "createdAt": {
     "$date": "2021-10-07T11:11:54.639Z"
   },
