@@ -28,7 +28,6 @@ export default () => {
     return (
         <div className="home">
             <Container fluid='lg'>
-
                 <div className="header">
                     <ul>
                         {permission === 'customer' && <li>

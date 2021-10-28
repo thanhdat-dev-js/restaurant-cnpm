@@ -14,7 +14,7 @@ export default function Payment() {
                     </Link>
                 </div>
                 <div className='body'>
-                    <h1>Nhan vien thu Ngan</h1>
+                    <h1>Payment</h1>
                     <table>
                         <tr></tr>
                     </table>

@@ -22,6 +22,10 @@
         .btn-showCart {
             text-decoration: none;
             font-size: 1.8rem;
+            font-weight: 500;
+            @include rps600 {
+                font-size: 1.4rem;
+            }
             color: $text-color;
             height: 60px;
             display: inline-flex;
@@ -69,6 +73,7 @@
     .modal-body {
         z-index: 50;
         width: 80%;
+        max-width: 900px;
         background-color: $white-color;
         border-radius: 16px;
         background-color: $bg-color;
@@ -84,6 +89,7 @@
         }
         p {
             font-size: 1.4rem;
+            margin-bottom: 10px;
         }
         span {
             font-size: 1.4rem;
@@ -98,11 +104,12 @@
             display: flex;
         }
         .img-wrap {
-            width: 30%;
-            margin: 20px 50px;
+            width: 36%;
+            margin: 20px 20px;
             border: $border;
             border-radius: 10px;
             padding: 30px;
+            align-items: center;
         }
         .img {
             padding-top: 100%;
@@ -203,6 +210,10 @@
                 border-radius: 10px;
                 margin: 0 20px;
                 margin-top: 20px;
+                @include rpsM480 {
+                    margin: 0 6px;
+                    margin-top: 6px;
+                }
             }
             h3 {
                 margin: 0;
@@ -220,7 +231,7 @@
         display: flex;
         flex-direction: column;
         .type {
-            padding: 20px 30px;
+            padding: 20px 10px;
             font-size: 1.6rem;
             position: relative;
             &::before {
@@ -238,7 +249,7 @@
                 background-color: $grey-color;
                 color: $black-color;
                 z-index: 50;
-                padding: 0 20px;
+                padding: 0 10px;
                 position: absolute;
                 top: 50%;
                 transform: translateY(-50%);
@@ -248,11 +259,19 @@
             padding: 16px;
             margin: 10px;
             border-radius: 20px;
-            box-shadow: $box-shadow;
+            box-shadow: 2px 2px 11px 1px #b1b1b1;
             cursor: pointer;
+            height: calc(100% - 16px);
+            @include rps800 {
+                cursor: unset;
+            }
             &:hover {
                 transform: translateY(-6px);
                 transition: $linear-3;
+                .product-img {
+                    filter: contrast(0.6);
+                    transition: $linear-3;
+                }
             }
             span {
                 color: $primary-color;
@@ -280,9 +299,14 @@
                 }
                 .btn-addCart {
                     background-color: $primary-color;
-                    padding: 6px 10px;
+                    padding: 2px 4px;
                     border-radius: 10px;
                     color: $white-color;
+                    padding-bottom: 0;
+                    cursor: pointer;
+                    &:active {
+                        background-color: $text-color;
+                    }
                 }
             }
         }

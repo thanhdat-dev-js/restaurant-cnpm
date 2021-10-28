@@ -23,9 +23,7 @@ app.use('/', router);
 
 const Order = require('./models/order.model');
 const order = require('./controllers/order.controller');
-var client = 0;
 io.on('connection', (socket) => {
-    console.log('tong so nguoi dang ket noi ', ++client);
     socket.on('postOrder', (data, res) => {
         order.postPayment(data, res, io);
     });
@@ -64,9 +62,6 @@ io.on('connection', (socket) => {
             console.log(err);
         }
     })
-    socket.on('disconnect', function () {
-        console.log('tong so nguoi dang ket noi', --client);
-    });
 })
 
 
