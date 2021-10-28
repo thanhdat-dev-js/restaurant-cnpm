@@ -21,7 +21,7 @@ export default function Menubody(props) {
                         var isCur = false;
                         if (props.currentIdx === idx) isCur = true;
                         if (idx >= props.start && idx <= props.end) return (
-                            <div className={classNames('tag-product', { currentTag: isCur })}
+                            <div key={idx} className={classNames('tag-product', { currentTag: isCur })}
                                 onClick={(e) => props.handleClickTag(idx)}>
                                 <div className='tag-img' style={{
                                     backgroundImage: `url("${item.imgURL}")`

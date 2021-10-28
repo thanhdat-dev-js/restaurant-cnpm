@@ -104,7 +104,6 @@ export default () => {
          ...dataCart,
          totalOrder
       };
-      console.log(dataCart)
       localStorage.setItem('ORDER', JSON.stringify(data));
       setDataCart(data)
    }, [dataCart.products])
@@ -449,7 +448,7 @@ export default () => {
                      </div>
                      <div className='container'>
                         {dataTag.data.length !== 0 && dataCart.products.map((item, idx) => (
-                           <div className='product'>
+                           <div className='product' key={idx}>
                               <div className='product-wrap'>
                                  <img src={`${dataTag.data[item.currentIdx].products[item.currentIdxProduct].imgURL}`} />
                               </div>

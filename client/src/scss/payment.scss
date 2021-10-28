@@ -1,0 +1,45 @@
+@import "variable";
+
+.payment {
+   width: 100vw;
+   font-size: 1.6rem;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   height: 100vh;
+   .main {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      max-width: 450px;
+      padding: 20px;
+      border: $border;
+      .MuiTypography-root,
+      .MuiButton-label {
+         font-size: 1.6rem;
+      }
+      h1 {
+         text-align: center;
+         padding: 20px;
+      }
+      Button {
+         margin-top: 20px;
+      }
+      .qr {
+         text-align: center;
+         h1 {
+            padding: 0;
+         }
+         a {
+            text-decoration: none;
+            color: $white-color;
+            font-size: 1.8rem;
+            font-weight: 500;
+            display: block;
+            padding: 6px 10px;
+            border-radius: 10px;
+            background-color: $primary-color;
+         }
+      }
+   }
+}

@@ -17,15 +17,15 @@ function App() {
       <div className="App">
         <Switch>
           <Route path="/" exact component={Home} />
-          <Route path="/menu" component={Menu} />
-          <Route path="/kitchen" component={Kitchen} />
-          <Route path="/clerk" component={Clerk} />
-          <Route path="/login" component={Login} />
-          <Route path="/register" component={Register} />
-          <Route path="/payment" component={Payment} />
-          <Route path="/admin" component={Admin} />
-          <Route path="/reserve" component={Reserve} />
-          <Route path="/reservelist" component={ReserveList} />
+          <Route path="/menu" exact component={Menu} />
+          <Route path="/kitchen" exact component={Kitchen} />
+          <Route path="/clerk" exact component={Clerk} />
+          <Route path="/login" exact component={Login} />
+          <Route path="/register" exact component={Register} />
+          <Route path="/payment" exact component={Payment} />
+          <Route path="/admin" exact component={Admin} />
+          <Route path="/reserve" exact component={Reserve} />
+          <Route path="/reservelist" exact component={ReserveList} />
           <Route path="*" component={() => <h1>404 NotFound</h1>} />
         </Switch>
       </div>
