@@ -6,17 +6,17 @@ import '../scss/reserve.scss';
 
 function Reserve() {
 	
-    return (
-        <div className="reserve">
-            <ReserveNavbar/>
-            <Container fluid="lg">
-                <div className="reserve-body"> 
-                    <div className="reserve-form-container">
-                        <ReserveForm/>
-                    </div>
-                </div>
-            </Container>
+  return (
+    <div className="reserve">
+      <ReserveNavbar/>
+      <Container fluid="lg">
+        <div className="reserve-body"> 
+          <div className="reserve-form-container">
+            <ReserveForm/>
+          </div>
         </div>
+      </Container>
+    </div>
 	)
 }
 
