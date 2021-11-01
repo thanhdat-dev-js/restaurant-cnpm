@@ -1,12 +1,14 @@
 import React, {useEffect, useState} from "react";
-import {Bar} from 'react-chartjs-2'
+import {Bar} from 'react-chartjs-2';
 const {data} = require ('./test-data.js')
 
 
 
-const Statistics_NumOfOrders = () =>{
+const Statistics_NumOfOrders = (props) =>{
 
+    const {startDate, endDate} = props;
     const [orderedData, setOrderedData] = useState([]);
+    
     var numOfDays = 31;
     var endTime = new Date();
     var arr = Array.from(Array(3), _ => Array(numOfDays).fill(0));
@@ -20,10 +22,6 @@ const Statistics_NumOfOrders = () =>{
     //i is the number of day in the data
     for(let i = 1; i <= numOfDays; i++){
         let Day = new Date(endTime - 86400000*i).setHours(0,0,0,0);
-        // console.log(Day);
-        // arr[0][numOfDays - i] = (Day.getDate()).toString();
-        // arr[1][numOfDays - i] = (Day.getMonth()).toString();
-        // daysLabel.push(arr[0][numOfDays - i] + "/" + arr[1][numOfDays-i]);
         arr[0][numOfDays - i] = new Date(Day).toLocaleDateString();
     }
 
@@ -38,17 +36,15 @@ const Statistics_NumOfOrders = () =>{
         console.log("index ", index);
         //count order that is cancelled
         if (order.status === "cancel"){
-            console.log("cancel" + `${index}`);
             arr[2][index]++;
         }
         // count order that is confirmed
         else if (order.status === "confirmed"){
-            console.log(index);
             arr[1][index]++;
         }
     })
 
-        console.log("use effect")
+    console.log("use effect")
     console.log(endTime);
     console.log(arr);
     }, [])
