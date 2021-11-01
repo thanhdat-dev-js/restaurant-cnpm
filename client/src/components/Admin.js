@@ -6,6 +6,8 @@ import HomeIcon from '@material-ui/icons/Home';
 import { Container } from '@material-ui/core';
 import verifyToken from '../midlewares/verifyToken';
 import Statistics_NumOfOrders from './Admin/Statistics_NumOfOrders';
+import Statistics_revenue from './Admin/Statistics_revenue';
+import HighlightCard from './Admin/HighlightCard';
 
 export default function Admin() {
         const Statistics = true;
@@ -43,6 +45,11 @@ export default function Admin() {
                     </div>
                 </div>
                 <Statistics_NumOfOrders></Statistics_NumOfOrders>
+                <h1>Biểu đồ thống kê doanh thu trong vòng 30 ngày</h1>
+                <HighlightCard />
+                <Statistics_revenue />
+                <h1>Biểu đồ thống kê tần suất gọi món trong ngày</h1>
+                <p>Vẫn đang làm :'D</p>
             </Container>
         </div>
     )

@@ -11,7 +11,7 @@ const reqNumber = {
 }
 
 const reserveSchema = new mongoose.Schema({
-    userID: reqString,
+    userEmail: reqString,
     reserveID: {
         'type': String,
         'default': shortid.generate
@@ -30,4 +30,4 @@ const reserveSchema = new mongoose.Schema({
     { timestamps: true }
 )
 
-module.exports = mongoose.model('reserve', reserveSchema);
+module.exports = mongoose.model('Reserve', reserveSchema);

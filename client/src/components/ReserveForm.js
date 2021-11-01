@@ -1,12 +1,15 @@
-import { Button, TextField} from '@material-ui/core';
+import { React, useState } from 'react'
+import { Button, TextField } from '@material-ui/core'
 
-import AdapterDateFns from '@mui/lab/AdapterDateFns';
-import {LocalizationProvider, DatePicker} from '@mui/lab';
-import '../scss/reserveform.scss';
-import {React, useState} from 'react';
+import '../scss/reserveform.scss'
+import verifyReserve from '../midlewares/verifyReserve'
+import postReserve from '../midlewares/postReserve';
+
+
 
 function ReserveForm() {
     const [checkForm, setCheckForm] = useState({
+        status: false,
         datetime: null,
         adults: 0,
         kids: 0
@@ -40,6 +43,14 @@ function ReserveForm() {
     }
 
     const handleOnclickCheckbtn = (e) => {
+        e.preventDefault();
+        const ret = verifyReserve(checkForm.datetime);
+        if (ret.status) {
+            setCheckForm({
+                ...checkForm,
+                status: true
+            })
+        }
     }
 
 
@@ -72,121 +83,144 @@ function ReserveForm() {
     }
 
     const handleOnclickConfirmbtn = (e) => {
+        e.preventDefault();
+        const res = postReserve({
+            ...checkForm,
+            ...confirmForm,
+            firstName: confirmForm.fname,
+            lastName: confirmForm.lname
+        });
+        console.log(res);
     }
 
     return (
-        
+
         <div className="reserve-form">
-            <h1>{checkForm.datetime||"hello"}</h1>
-            <div  className="form-1">
+            <div className="form-1">
                 <h1>Make a reservation</h1>
-                <div className="check-table-form">
+                <form className="check-table-form" onSubmit={handleOnclickCheckbtn}>
                     <div className="form-cell">
-                        <TextField 
-                            variant="outlined" 
-                            name="datetime" 
+                        <TextField
+                            required
+                            fullWidth
+                            variant="outlined"
+                            name="datetime"
                             type="datetime-local"
-                            fullWidth
-                            onChange = {handleOnchangeDatetime}
-                            InputProps={{style: {fontSize: 14}}}
-                            InputLabelProps={{style: {fontSize: 14}}}
+                            onChange={handleOnchangeDatetime}
+                            InputProps={{ style: { fontSize: 14 } }}
+                            InputLabelProps={{ style: { fontSize: 14 } }}
                         />
                     </div>
-                    
+
                     <div className="form-cell">
-                        <TextField 
-                            variant="outlined" 
+                        <TextField
+                            required
+                            fullWidth
+                            type="number"
+                            name="adults"
                             label="Adults"
-                            name="adults" 
-                            type="number"
+                            variant="outlined"
                             placeholder="Number of adults"
-                            fullWidth
-                            onChange = {handleOnchangeAdults}
-                            InputProps={{style: {fontSize: 16}}}
-                            InputLabelProps={{style: {fontSize: 16}}}
+                            onChange={handleOnchangeAdults}
+                            InputProps={{ style: { fontSize: 16 } }}
+                            InputLabelProps={{ style: { fontSize: 16 } }}
                         />
                     </div>
+
                     <div className="form-cell">
-                        <TextField 
-                            variant="outlined" 
-                            label="Children"
-                            name="children" 
-                            type="number"
-                            placeholder="Number of children"
+                        <TextField
+                            required
                             fullWidth
-                            onChange = {handleOnchangeKids}
-                            InputProps={{style: {fontSize: 16}}}
-                            InputLabelProps={{style: {fontSize: 16}}}
+                            type="number"
+                            name="children"
+                            label="Children"
+                            variant="outlined"
+                            placeholder="Number of children"
+                            onChange={handleOnchangeKids}
+                            InputProps={{ style: { fontSize: 16 } }}
+                            InputLabelProps={{ style: { fontSize: 16 } }}
                         />
                     </div>
+
                     <div className="form-btn-row">
-                        <Button 
-                            className="form-btn" variant="contained" color="secondary"
+                        <Button
+                            fullWidth
+                            type="submit"
+                            variant="contained" color="secondary"
                             onclick={handleOnclickCheckbtn}
+                            style={{ fontSize: '14px' }}
+                            sx={{ mt: 1, }}
                         >
-                            Check available tables
+                            Check available tables{checkForm.status ? " (" + checkForm.status + ") " : ''}
                         </Button>
                     </div>
-                </div>
+                </form>
             </div>
-            <div  className="form-2">
+            <div className="form-2">
                 <h1>How can we contact you?</h1>
-                <div className="personal-info-form">
+                <form className="personal-info-form" onSubmit={handleOnclickConfirmbtn}>
                     <div className="form-cell">
-                        <TextField 
-                            variant="outlined" 
+                        <TextField
+                            required
+                            fullWidth
                             label="First name"
-                            name="fname" 
+                            variant="outlined"
                             placeholder="Your first name"
-                            onChange = {handleOnchangeFname}
-                            InputProps={{style: {fontSize: 16}}}
-                            InputLabelProps={{style: {fontSize: 16}}}
+                            onChange={handleOnchangeFname}
+                            InputProps={{ style: { fontSize: 16 } }}
+                            InputLabelProps={{ style: { fontSize: 16 } }}
                         />
                     </div>
                     <div className="form-cell">
-                        <TextField 
-                            variant="outlined" 
+                        <TextField
+                            required
+                            fullWidth
                             label="Last name"
-                            name="lname" 
+                            variant="outlined"
                             placeholder="Your last name"
-                            onChange = {handleOnchangeLname}
-                            InputProps={{style: {fontSize: 16}}}
-                            InputLabelProps={{style: {fontSize: 16}}}
+                            onChange={handleOnchangeLname}
+                            InputProps={{ style: { fontSize: 16 } }}
+                            InputLabelProps={{ style: { fontSize: 16 } }}
                         />
                     </div>
                     <div className="form-cell">
-                        <TextField 
-                            variant="outlined" 
-                            label="Phone number"
-                            name="phone" 
+                        <TextField
+                            required
+                            fullWidth
                             type="tel"
+                            variant="outlined"
+                            label="Phone number"
                             placeholder="Your phone number"
-                            onChange = {handleOnchangePhone}
-                            InputProps={{style: {fontSize: 16}}}
-                            InputLabelProps={{style: {fontSize: 16}}}
+                            onChange={handleOnchangePhone}
+                            InputProps={{ style: { fontSize: 16 } }}
+                            InputLabelProps={{ style: { fontSize: 16 } }}
                         />
                     </div>
                     <div className="form-cell">
-                        <TextField 
-                            variant="outlined" 
-                            label="Email address"
-                            name="email" 
+                        <TextField
+                            required
+                            fullWidth
                             type="email"
+                            variant="outlined"
+                            label="Email address"
                             placeholder="Your email address"
-                            onChange = {handleOnchangeEmail}
-                            InputProps={{style: {fontSize: 16}}}
-                            InputLabelProps={{style: {fontSize: 16}}}
+                            onChange={handleOnchangeEmail}
+                            InputProps={{ style: { fontSize: 16 } }}
+                            InputLabelProps={{ style: { fontSize: 16 } }}
                         />
                     </div>
                     <div className="form-btn-row">
-                        <Button 
-                            className="form-btn" variant="contained" color="secondary"
-                            onclick={handleOnclickConfirmbtn}
+                        <Button
+                            fullWidth
+                            type="submit"
+                            color="secondary" variant="contained"
+                            style={{ fontSize: '14px' }}
+                            sx={{ mt: 1, }}
                         >
                             Confirm reservation
                         </Button>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
     )

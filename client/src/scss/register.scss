@@ -4,15 +4,21 @@
     justify-content: center;
     align-items: center;
     height: 100vh;
-
+    padding: 0 20px;
+    background-color: $grey-color;
     .form {
         display: flex;
         flex-direction: column;
         justify-content: space-around;
+        border: $border;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: $box-shadow;
+        background-color: $white-color;
         width: 100%;
-        max-width: 500px;
         height: 100%;
-        max-height: 300px;
+        max-width: 500px;
+        max-height: 400px;
         h3 {
             text-align: center;
         }
