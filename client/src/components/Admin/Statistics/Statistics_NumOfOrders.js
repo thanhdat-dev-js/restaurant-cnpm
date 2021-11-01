@@ -2,18 +2,21 @@ import React, {useEffect, useState} from "react";
 import {Bar} from 'react-chartjs-2';
 const {data} = require ('./test-data.js')
 
-
+const dateDiff = (startDate, endDate) => {
+    const date1 = startDate;
+    const date2 = endDate;
+    const diffTime = Math.abs(date2 - date1);
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    return diffDays
+}
 
 const Statistics_NumOfOrders = (props) =>{
 
     const {startDate, endDate} = props;
-    const [orderedData, setOrderedData] = useState([]);
-    
-    var numOfDays = 31;
-    var endTime = new Date();
+    const numOfDays = dateDiff(startDate, endDate) + 1;
+    const [graphData, setGraphData] = useState(Array.from(Array(3), _ => Array(numOfDays).fill(0)));
     var arr = Array.from(Array(3), _ => Array(numOfDays).fill(0));
-    
-    
+
     // arr[0] for Day
     // arr[1] for Confirmed
     // arr[2] for Cancelled
@@ -21,7 +24,7 @@ const Statistics_NumOfOrders = (props) =>{
     useEffect(() => {
     //i is the number of day in the data
     for(let i = 1; i <= numOfDays; i++){
-        let Day = new Date(endTime - 86400000*i).setHours(0,0,0,0);
+        let Day = new Date(endDate - 86400000*i).setHours(0,0,0,0);
         arr[0][numOfDays - i] = new Date(Day).toLocaleDateString();
     }
 
@@ -43,21 +46,18 @@ const Statistics_NumOfOrders = (props) =>{
             arr[1][index]++;
         }
     })
-
-    console.log("use effect")
-    console.log(endTime);
-    console.log(arr);
-    }, [])
+    setGraphData(arr);
+    }, [startDate,endDate]);
     return (
     <div>
         <h1>Đây là bảng số liệu đơn trong ngày</h1>
         <Bar
             data = {{
-                labels: arr[0],
+                labels: graphData[0],
                 datasets: [
                     {
                         label: 'confirmed',
-                        data: arr[1],
+                        data: graphData[1],
                         backgroundColor:[
                             'rgba(255, 99, 132, 0.2)'
                         ],
@@ -69,7 +69,7 @@ const Statistics_NumOfOrders = (props) =>{
                     },
                     {
                         label: 'cancel',
-                        data: arr[2],
+                        data: graphData[2],
                         backgroundColor:[
                             'rgba(54, 162, 235, 0.2)',
                         ],
