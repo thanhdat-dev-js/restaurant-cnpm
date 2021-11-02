@@ -10,14 +10,8 @@ import Menu from './Admin/Menu/Menu';
 import Staff from './Admin/Staff/Staff';
 
 export default function Admin() {
-<<<<<<< Updated upstream
 
     const [Active, SetActive] = useState("Statistics");
-=======
-    const Statistics = true;
-    const Menu = false;
-    const Staff = false;
->>>>>>> Stashed changes
     const history = useHistory();
     useEffect(() => {
         const getInfo = verifyToken();
@@ -45,17 +39,9 @@ export default function Admin() {
                 </div>
                 <div className='body'>
                     <div className='filter'>
-<<<<<<< Updated upstream
                         <span className={`${Active ==="Statistics" && 'option--active'}`} onClick={()=>{SetActive("Statistics")}}>Thống kê</span>
                         <span className={`${Active ==="Staff" && 'option--active'}`} onClick={()=>{SetActive("Staff")}}>Thông tin nhân viên</span>
                         <span className={`${Active ==="Menu" && 'option--active'}`} onClick={()=>{SetActive("Menu")}}>Chỉnh sửa thực đơn</span>
-=======
-                        <span className={`${Statistics && 'option--active'}`}>Thống kê</span>
-                        <span className={`${Menu && 'option--active'}`} >Thông tin nhân viên</span>
-                        <Link to='/admin/categories'>
-                            <span className={`${Staff && 'option--active'}`}>Chỉnh sửa thực đơn</span>
-                        </Link>
->>>>>>> Stashed changes
                     </div>
                 </div>
                 <div>

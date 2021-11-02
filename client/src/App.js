@@ -6,7 +6,6 @@ import Kitchen from './components/Kitchen';
 import Login from './components/Login';
 import Register from './components/Register';
 import Admin from './components/Admin';
-import AdminCat from './components/Admin/EditCategory';
 import Payment from './components/Payment';
 import Reserve from './components/Reserve'
 import ReserveList from './components/ReserveList'
