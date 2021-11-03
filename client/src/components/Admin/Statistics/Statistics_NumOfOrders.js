@@ -31,12 +31,12 @@ const Statistics_NumOfOrders = (props) =>{
     data.forEach((order) =>{
         // console.log()
         const dayOfOrder = new Date(order.updatedAt.$date).setHours(0,0,0,0);
-        console.log(dayOfOrder);
+        // console.log(dayOfOrder);
         // find the right index of the order in the arr
         const index = arr[0].findIndex((day) => {
             return day === new Date(dayOfOrder).toLocaleDateString(); 
         })
-        console.log("index ", index);
+        // console.log("index ", index);
         //count order that is cancelled
         if (order.status === "cancel"){
             arr[2][index]++;
