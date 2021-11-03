@@ -1,7 +1,6 @@
 import { React, useState } from 'react'
 import { Button, TextField, Box } from '@material-ui/core'
 
-import '../scss/reserveform.scss'
 import verifyReserve from '../midlewares/verifyReserve'
 import postReserve from '../midlewares/postReserve';
 

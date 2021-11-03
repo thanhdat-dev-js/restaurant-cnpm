@@ -2,7 +2,6 @@ import { Container, Box } from '@material-ui/core';
 import React from 'react';
 import ReserveNavbar from './ReserveNavbar';
 import ReserveForm from './ReserveForm';
-import '../scss/reserve.scss';
 
 function Reserve() {
 	
