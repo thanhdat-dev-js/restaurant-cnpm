@@ -5,6 +5,7 @@
   "dependencies": {
     "@material-ui/core": "^4.12.3",
     "highcharts": "^9.3.0",
-    "highcharts-react-official": "^3.1.0"
+    "highcharts-react-official": "^3.1.0",
+    "react-typing-effect": "^2.0.5"
   }
 }

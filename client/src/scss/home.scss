@@ -1,8 +1,7 @@
 @import "variable";
 .home {
-    height: 100vh;
     .header {
-        height: 60px;
+        height: 70px;
         box-shadow: $box-shadow;
         background-color: $white-color;
         display: flex;
@@ -20,7 +19,7 @@
                 transition: $linear-3;
                 color: $text-color;
                 text-decoration: none;
-                height: 60px;
+                height: 70px;
                 display: flex;
                 align-items: center;
                 padding: 0 20px;
@@ -40,4 +39,21 @@
             }
         }
     }
+}
+
+.typing-effect {
+    height: calc(100vh - 160px);
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    h1 {
+        width: 100%;
+        max-width: 700px;
+        text-align: center;
+    }
+}
+
+.text-styled {
+    font-size: 38px;
 }
