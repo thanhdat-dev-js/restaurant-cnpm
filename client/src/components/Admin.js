@@ -5,14 +5,13 @@ import '../scss/admin.scss';
 import HomeIcon from '@material-ui/icons/Home';
 import { Container } from '@material-ui/core';
 import verifyToken from '../midlewares/verifyToken';
-import Statistics_NumOfOrders from './Admin/Statistics_NumOfOrders';
-import Statistics_revenue from './Admin/Statistics_revenue';
-import HighlightCard from './Admin/HighlightCard';
+import Statistics from './Admin/Statistics/Statistics';
+import Menu from './Admin/Menu/Menu';
+import Staff from './Admin/Staff/Staff';
 
 export default function Admin() {
-        const Statistics = true;
-        const Menu = false;
-        const Staff = false;
+
+    const [Active, SetActive] = useState("Statistics");
     const history = useHistory();
     useEffect(() => {
         const getInfo = verifyToken();
@@ -27,9 +26,10 @@ export default function Admin() {
         }
     }, []);
     useEffect(() => {
-    },)
+        console.log(Active);
+    },[Active])
     return (
-<div className="admin">
+        <div className="admin">
             <Container fluid='lg'>
                 <div className='header'>
                     <Link to='/'>
@@ -39,17 +39,16 @@ export default function Admin() {
                 </div>
                 <div className='body'>
                     <div className='filter'>
-                        <span className={`${Statistics && 'option--active'}`}>Thống kê</span>
-                        <span className={`${Menu && 'option--active'}`} >Thông tin nhân viên</span>
-                        <span className={`${Staff && 'option--active'}`}>Chỉnh sửa thực đơn</span>
+                        <span className={`${Active ==="Statistics" && 'option--active'}`} onClick={()=>{SetActive("Statistics")}}>Thống kê</span>
+                        <span className={`${Active ==="Staff" && 'option--active'}`} onClick={()=>{SetActive("Staff")}}>Thông tin nhân viên</span>
+                        <span className={`${Active ==="Menu" && 'option--active'}`} onClick={()=>{SetActive("Menu")}}>Chỉnh sửa thực đơn</span>
                     </div>
                 </div>
-                <Statistics_NumOfOrders></Statistics_NumOfOrders>
-                <h1>Biểu đồ thống kê doanh thu trong vòng 30 ngày</h1>
-                <HighlightCard />
-                <Statistics_revenue />
-                <h1>Biểu đồ thống kê tần suất gọi món trong ngày</h1>
-                <p>Vẫn đang làm :'D</p>
+                <div>
+                    {Active==="Statistics" && <Statistics/>}
+                    {Active==="Staff" && <Staff/>}
+                    {Active==="Menu" && <Menu/>}
+                </div>
             </Container>
         </div>
     )

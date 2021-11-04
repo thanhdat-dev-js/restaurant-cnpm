@@ -61,17 +61,21 @@ export default function Kitchen() {
     return (
         <div className="kitchen">
             <Container fluid='lg'>
-                <div className='header'>
-                    <Link to='/'>
-                        <HomeIcon />
-                        <span>Back to home</span>
-                    </Link>
-                </div>
                 <div className='body'>
                     <div className='filter'>
-                        <p>Danh sách đơn hàng:</p>
-                        <span className={classNames({ active: filter === 'cooking' })} onClick={() => getData('cooking')}>Đang nấu</span>
-                        <span className={classNames({ active: filter === 'done' })} onClick={() => getData('done')}>Đã nấu xong</span>
+                        <div className='header'>
+                            <Link to='/'>
+                                <HomeIcon />
+                                <span>Back to home</span>
+                            </Link>
+                        </div>
+
+                        <div className="wrapper">
+                            <span className={classNames({ active: filter === 'unconfirmed' })} onClick={() => getData('unconfirmed')}>Chưa thanh toán</span>
+                            <span className={classNames({ active: filter === 'confirmed' })} onClick={() => getData('confirmed')}>Đã thanh toán</span>
+                            <span className={classNames({ active: filter === 'cancel' })} onClick={() => getData('cancel')}>Đã bị hủy</span>
+                        </div>
+                        <p>Danh sách đơn hàng</p>
                     </div>
                     <table>
                         <tr>

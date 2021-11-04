@@ -1,67 +1,58 @@
 import React, {useEffect, useState} from "react";
-import {Bar} from 'react-chartjs-2'
-const {data} = require ('./test-data.js')
+// import { useMemo } from "react";
+import {Bar} from 'react-chartjs-2';
 
+const dateDiff = (startDate, endDate) => {
+    const date1 = startDate;
+    const date2 = endDate;
+    const diffTime = Math.abs(date2 - date1);
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    return diffDays
+}
 
+const Statistics_NumOfOrders = (props) =>{
 
-const Statistics_NumOfOrders = () =>{
-
-    const [orderedData, setOrderedData] = useState([]);
-    var numOfDays = 31;
-    var endTime = new Date();
+    const {startDate, endDate, data} = props;
+    console.log(data);
+    const numOfDays = dateDiff(startDate, endDate) + 1;
+    const [graphData, setGraphData] = useState(Array.from(Array(3), _ => Array(numOfDays).fill(0)));
     var arr = Array.from(Array(3), _ => Array(numOfDays).fill(0));
-    
-    
     // arr[0] for Day
-    // arr[2] for Confirmed
-    // arr[3] for Cancelled
+    // arr[1] for Confirmed
+    // arr[2] for Cancelled
     
-    useEffect(() => {
+    useEffect(async () => {
     //i is the number of day in the data
-    for(let i = 1; i <= numOfDays; i++){
-        let Day = new Date(endTime - 86400000*i).setHours(0,0,0,0);
-        // console.log(Day);
-        // arr[0][numOfDays - i] = (Day.getDate()).toString();
-        // arr[1][numOfDays - i] = (Day.getMonth()).toString();
-        // daysLabel.push(arr[0][numOfDays - i] + "/" + arr[1][numOfDays-i]);
-        arr[0][numOfDays - i] = new Date(Day).toLocaleDateString();
+    for(let i = 0; i < numOfDays; i++){
+        let Day = new Date(endDate - 86400000*i).setHours(0,0,0,0);
+        arr[0][numOfDays - i-1] = new Date(Day).toLocaleDateString();
     }
-
-    data.forEach((order) =>{
-        // console.log()
-        const dayOfOrder = new Date(order.updatedAt.$date).setHours(0,0,0,0);
-        console.log(dayOfOrder);
-        // find the right index of the order in the arr
+    await data.forEach((order) =>{
+        const dayOfOrder = new Date(order.updatedAt).setHours(0,0,0,0);
         const index = arr[0].findIndex((day) => {
             return day === new Date(dayOfOrder).toLocaleDateString(); 
         })
-        console.log("index ", index);
-        //count order that is cancelled
         if (order.status === "cancel"){
-            console.log("cancel" + `${index}`);
             arr[2][index]++;
         }
-        // count order that is confirmed
         else if (order.status === "confirmed"){
-            console.log(index);
             arr[1][index]++;
         }
     })
-
-        console.log("use effect")
-    console.log(endTime);
-    console.log(arr);
-    }, [])
+    setGraphData(arr);
+    // console.log(arr);
+    // setGData();
+    }, [data]);
     return (
     <div>
         <h1>Đây là bảng số liệu đơn trong ngày</h1>
         <Bar
             data = {{
-                labels: arr[0],
+                labels: graphData[0],
                 datasets: [
                     {
                         label: 'confirmed',
-                        data: arr[1],
+                        data: graphData[1],
                         backgroundColor:[
                             'rgba(255, 99, 132, 0.2)'
                         ],
@@ -73,7 +64,7 @@ const Statistics_NumOfOrders = () =>{
                     },
                     {
                         label: 'cancel',
-                        data: arr[2],
+                        data: graphData[2],
                         backgroundColor:[
                             'rgba(54, 162, 235, 0.2)',
                         ],

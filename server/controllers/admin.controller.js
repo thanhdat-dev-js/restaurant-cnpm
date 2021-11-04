@@ -18,7 +18,7 @@ module.exports = {
             //lấy hết orders từ database, orders là 1 json
             const orders = await Order.find({})
             //filter orders và chứa trong filtered_orders
-            const filtered_orders = await orders.filter((order)=>{
+            const filtered_orders = orders.filter((order)=>{
                 return (order.updatedAt >= new Date(startTime) &&
                         order.updatedAt <= new Date(endTime)
                 )

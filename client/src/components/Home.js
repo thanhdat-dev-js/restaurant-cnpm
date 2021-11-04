@@ -4,6 +4,9 @@ import { Link } from 'react-router-dom';
 import MenuBookIcon from '@material-ui/icons/MenuBook';
 import ReceiptIcon from '@material-ui/icons/Receipt';
 import verifyToken from '../midlewares/verifyToken';
+import ReactTypingEffect from 'react-typing-effect';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import '../scss/home.scss';
 export default () => {
     const [isAuthen, setIsAuthen] = useState(false);
@@ -27,7 +30,7 @@ export default () => {
     }
     return (
         <div className="home">
-            <Container fluid='lg'>
+            <div fluid='lg'>
                 <div className="header">
                     <ul>
                         {permission === 'customer' && <li>
@@ -56,24 +59,18 @@ export default () => {
                         </li>}
                     </ul>
                     <ul>
-                        {/* {permission === 'customer' && <li>
-                            <Link to="/menu">
-                                <span>Cart(0)</span>
-                                <ShoppingCartIcon />
-                            </Link>
-                        </li>} */}
                         {isAuthen ?
                             <>
                                 <li>
                                     <Link to="/user">
                                         <span>profile</span>
-                                        <ReceiptIcon />
+                                        <AccountCircleIcon />
                                     </Link>
                                 </li>
                                 <li>
                                     <Link onClick={handleLogout}>
                                         <span>Log out</span>
-                                        <ReceiptIcon />
+                                        <ExitToAppIcon />
                                     </Link>
                                 </li>
                             </>
@@ -81,21 +78,40 @@ export default () => {
                             <> <li>
                                 <Link to="/login">
                                     <span>Login</span>
-                                    <ReceiptIcon />
                                 </Link>
                             </li>
                                 <li>
                                     <Link to="/register">
                                         <span>Register</span>
-                                        <ReceiptIcon />
                                     </Link>
                                 </li>
                             </>
                         }
                     </ul>
                 </div>
-                {/* {loading ? <HashLoader loading={loading} color='blue' margin=''></HashLoader> : <div className="body"></div>} */}
-            </Container >
+                <div className="typing-effect" >
+                    <img src="https://logopond.com/logos/e6b478cef54b8fb8acfd1b4dee22f543.png" />;
+                    <ReactTypingEffect
+                        speed={80}
+                        text={["Chào mừng quý khách ghé thăm nhà hàng sushi của chúng tôi!!!"]}
+                        cursorRenderer={cursor => <h1>{cursor}</h1>}
+                        displayTextRenderer={(text, i) => {
+                            return (
+                                <h1>
+                                    {text.split('').map((char, i) => {
+                                        const key = `${i}`;
+                                        return (
+                                            <span className="text-styled"
+                                                key={key}
+                                            >{char}</span>
+                                        );
+                                    })}
+                                </h1>
+                            );
+                        }}
+                    />
+                </div>
+            </div >
         </div >
     )
 }

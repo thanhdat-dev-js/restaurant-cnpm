@@ -50,7 +50,7 @@ export default function Login() {
     return (
         <div className='login'>
             <div class='form'>
-                <h3>Login</h3>
+                <h3><img src="https://logopond.com/logos/e6b478cef54b8fb8acfd1b4dee22f543.png" height="70" /></h3>
                 <TextField variant="outlined" label='Email' type='text' id='email' name='email' onChange={handleOnchangeEmail} />
                 <TextField variant="outlined" label='password' type='password' id='password' name='password' onChange={handleOnchangePass} />
                 <Button variant="contained" color="secondary" onClick={handleLogin}>Login</Button>

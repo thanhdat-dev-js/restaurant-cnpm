@@ -1,11 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const validateAdmin = require('../middlewares/validateAdmin');
 const category = require('../controllers/category.controller');
 
 router.get('/category', category.getAllProducts);
 router.get('/category/:categoryID', category.getCategory)
 
+// For CRUD category/product
 router.post('/category', category.postCategory);
 router.post('/category/:categoryID', category.postProduct);
 

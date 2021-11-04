@@ -1,22 +1,24 @@
-import { Container } from '@material-ui/core';
+import { Container, Box } from '@material-ui/core';
 import React from 'react';
 import ReserveNavbar from './ReserveNavbar';
 import ReserveForm from './ReserveForm';
-import '../scss/reserve.scss';
 
 function Reserve() {
 	
-    return (
-        <div className="reserve">
-            <ReserveNavbar/>
-            <Container fluid="lg">
-                <div className="reserve-body"> 
-                    <div className="reserve-form-container">
-                        <ReserveForm/>
-                    </div>
-                </div>
-            </Container>
-        </div>
+  return (
+    <div className="reserve">
+      <ReserveNavbar/>
+      <Container fluid="lg">
+        <Box className="reserve-body" sx={{p:3, bgcolor: '#f8f8f8'}}> 
+          <Box 
+            className="reserve-form-container"
+            sx={{pt:10, display: 'flex', justifyContent: 'center', bgcolor: '#fff'}}
+          >
+            <ReserveForm/>
+          </Box>
+        </Box>
+      </Container>
+    </div>
 	)
 }
 
