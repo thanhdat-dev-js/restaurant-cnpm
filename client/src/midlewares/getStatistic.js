@@ -1,8 +1,8 @@
 import axios from 'axios';
 export default function getStatistic(startDate,endDate) {
-    console.log("at middleware getStatistic");
-    console.log(startDate);
-    console.log(endDate);
+    // console.log("at middleware getStatistic");
+    // console.log(startDate);
+    // console.log(endDate);
     try {
         const token = localStorage.getItem('TOKEN') || null;
         if (token) {
@@ -11,7 +11,7 @@ export default function getStatistic(startDate,endDate) {
                 params: { token },
                 method: "GET",
             }
-            console.log(reqOptions.url)
+            // console.log(reqOptions.url)
             return axios.request(reqOptions)
         }
         else return null;

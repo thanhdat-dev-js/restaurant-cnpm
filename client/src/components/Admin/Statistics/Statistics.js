@@ -22,35 +22,23 @@ export default function Statistics(){
   }
     ]);
     const [open, setOpen] = useState(false);
-    const [data, setData] = useState(null);
+    const [data, setData] = useState([]);
     let optionRef = useRef();
     function getData(startDate, endDate) {
         var orders = getStatistic(startDate, endDate);
         if (orders) {
             orders.then(res => {
-                console.log(res.data)
-                if (res.data.filtered_orders) {
-                    setData([...res.data.filtered_orders]);
+                // console.log(res.data)
+                if (res.data) {
+                    setData(res.data);
                 }
             })
         }
     }
     useEffect(() => {
-                    getData(dateRange[0].startDate.toISOString(), dateRange[0].endDate.toISOString());
-                    // try {
-                    //     socket = socketClient(SERVER);
-                    //     socket.on('admin', () => {
-                    //         getData(dateRange[0].startDate, dateRange[0].endDate);
-                    //     })
-                    // }
-                    // catch (err) {
-                    //     console.log(err)
-                    // }
+            getData(dateRange[0].startDate.toISOString(), dateRange[0].endDate.toISOString());
     }, [dateRange]);
     useEffect(() => {
-        // console.log(dateRange[0]["startDate"]);
-        // console.log(dateRange);
-        // console.log(open);
         let handler = (event) =>{
             if (!optionRef.current.contains(event.target)){
                 setOpen(false);
@@ -78,7 +66,7 @@ export default function Statistics(){
                         direction="horizontal"
                     />}
                     </div>
-                    <Statistics_NumOfOrders startDate={dateRange[0].startDate} endDate={dateRange[0].endDate}/>
+                    <Statistics_NumOfOrders startDate={dateRange[0].startDate} endDate={dateRange[0].endDate} data={data}/>
         </div>
     )
 }
