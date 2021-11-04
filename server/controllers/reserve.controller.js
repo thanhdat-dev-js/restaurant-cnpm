@@ -16,7 +16,7 @@ module.exports = {
     },
     
     async postReserve(req, res) {
-        const data = JSON.parse(req.body.data || req.query.data); 
+        const data = 'data' in req.body ? req.body.data : JSON.Parse(req.query.data); 
         const reserve = new Reserve({
             userEmail: req.user.email,
             reserveID: shortId.generate(),
@@ -47,5 +47,52 @@ module.exports = {
             res.json({message: err})
         }
         
+    },
+
+    async verifyReserve(req, res) {
+        try {
+            console.log("In server");
+            const data = 'data' in req.body ? req.body.data : JSON.parse(req.query.data); 
+            console.log(data);
+            const datetime = new Date(data.datetime);
+            const toDay = new Date(Date.now());
+            
+            console.log("Input");
+            console.log(datetime);
+            console.log("Output");
+            console.log(toDay);
+            console.log(datetime.getDate());
+            console.log(toDay.getDate());
+    
+            // Accept conditions:
+            // 1. Not in the pass
+            // 2. Not earlier than 3 days
+            // 3. There are enough tables
+            
+            if (datetime < toDay) {
+                res.send({
+                    'status': false,
+                    'message': 'Please not select day in the pass.'
+                })
+            }
+            else if (datetime.getDate() - toDay.getDate() > 3) {
+                res.send({
+                    'status': false,
+                    'message': 'You can only reserve a table at most 3 days in advance.'
+                })
+            }
+            else {
+                try {
+                    const reserves = await Reserve.find({});
+                    res.send(reserves);
+                }
+                catch(e) {
+                    res.send({'status': false, 'message': e.toString(), 'error': true})
+                }
+            }
+        }
+        catch(e) {
+            res.send({'status': false, 'message': e.toString(), 'error': true})
+        }
     },
 }
