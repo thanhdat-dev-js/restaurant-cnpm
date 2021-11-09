@@ -1,10 +1,10 @@
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
 import "../../../scss/clerk.scss";
-import Button from "@material-ui/core/Button";
-import classNames from "classnames";
+import { Button, TextField } from "@material-ui/core";
+// import classNames from "classnames";
 
 import verifyToken from "../../../midlewares/verifyToken";
 const SERVER = "http://localhost:4000/";
@@ -18,7 +18,11 @@ const formatDate = (dateString) => {
 };
 
 export default function Menu() {
-  const [dataTag, setDataTag] = useState();
+  const [dataTag, setDataTag] = useState({
+    data: [],
+    current: 0,
+  });
+  const [showModal, setShowModal] = useState(false);
 
   const history = useHistory();
   useEffect(() => {
@@ -31,6 +35,7 @@ export default function Menu() {
         }
       });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -44,38 +49,92 @@ export default function Menu() {
         method: "GET",
       };
       axios.request(reqOptions).then(function (response) {
-        setDataTag(response);
+        setDataTag({ ...response, current: 35 });
       });
     } catch (e) {
       console.log(e);
     }
   }
 
-  function handleCategory(action, id) {
+  function addCategory(val) {
+    
+    let req = {
+      url: SERVER + "category/",
+      method: "POST",
+      data: {
+        type: val.type,
+        imgURL: val.imgURL,
+      }
+    };
+    axios.request(req).then((res) => console.log(res));
+    getData();
+  }
+
+  function deleteCategory(id) {
+
     try {
-      if (action === "update") {
-
-
-
-
-
-      } else if (action === "delete") {
         let req = {
           url: SERVER + "category/" + id,
           method: "DELETE",
         };
         axios.request(req).then((res) => console.log(res));
-      }
-    } catch (err) {
+    } 
+    catch (err) {
       console.log(err);
     }
   }
 
   return (
     <div className="clerk">
+      {showModal && (
+        <div className="menu-modal">
+
+          <h2>{dataTag.data[dataTag.current]?.type}</h2>
+
+          <TextField 
+            label="Loại"
+            defaultValue={dataTag.data[dataTag.current]?.type}
+            variant='outlined'
+          />
+          <TextField 
+            label="Đường dẫn ảnh"
+            defaultValue={dataTag.data[dataTag.current]?.imgURL}
+            variant='outlined'
+          />
+
+          {dataTag.data[dataTag.current]?.products.map((product, idx) => (
+            <div>
+              <TextField 
+                label="ID"
+                defaultValue={product.productID}
+                variant='outlined'
+              />
+              <TextField 
+                label="Tên"
+                defaultValue={product.name}
+                variant='outlined'
+              />
+              <TextField 
+                label="Đường dẫn ảnh"
+                defaultValue={product.imgURL}
+                variant='outlined'
+              />
+              <TextField 
+                label="Giá"
+                defaultValue={product.price}
+                variant='outlined'
+              />
+              <TextField 
+                label="Mô tả"
+                defaultValue={product.description}
+                variant='outlined'
+              />
+            </div>
+          ))}
+        </div>
+      )}
 
       <div className="body">
-
         <table>
           <tr>
             <th>STT</th>
@@ -100,7 +159,7 @@ export default function Menu() {
                 variant="contained"
                 color="primary"
                 onClick={() => {
-                  handleCategory("update");
+                  // handleCategory("update");
                 }}
               >
                 Thêm mới
@@ -124,7 +183,9 @@ export default function Menu() {
                     variant="contained"
                     color="primary"
                     onClick={() => {
-                      handleCategory("update", val._id);
+                      setShowModal(true)
+                      setDataTag({ ...dataTag, current: idx });
+                      // handleCategory("update", val._id);
                     }}
                   >
                     Cập nhật
@@ -138,7 +199,7 @@ export default function Menu() {
                     onClick={() => {
                       window.confirm(
                         `Bạn thực sự muốn xoá mục ${val.type}?\nMọi thay đổi sẽ không được hoàn tác!`
-                      ) && handleCategory("delete", val._id);
+                      ) && deleteCategory(val._id);
                     }}
                   >
                     Xoá

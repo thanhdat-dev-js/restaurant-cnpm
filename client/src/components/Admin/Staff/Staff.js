@@ -1,13 +1,13 @@
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
 import "../../../scss/clerk.scss";
 import Button from "@material-ui/core/Button";
-import classNames from "classnames";
+// import classNames from "classnames";
 
 import verifyToken from "../../../midlewares/verifyToken";
-const SERVER = "http://localhost:4000/";
+// const SERVER = "http://localhost:4000/";
 
 const formatDate = (dateString) => {
   return (
@@ -31,6 +31,8 @@ export default function Staff() {
         }
       });
     }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -48,26 +50,6 @@ export default function Staff() {
       });
     } catch (e) {
       console.log(e);
-    }
-  }
-
-  function handleCategory(action, id) {
-    try {
-      if (action === "update") {
-
-
-
-
-        
-      } else if (action === "delete") {
-        let req = {
-          url: SERVER + "category/" + id,
-          method: "DELETE",
-        };
-        axios.request(req).then((res) => console.log(res));
-      }
-    } catch (err) {
-      console.log(err);
     }
   }
 
@@ -101,9 +83,9 @@ export default function Staff() {
                 className="btn-modal"
                 variant="contained"
                 color="primary"
-                onClick={() => {
-                  handleCategory("update");
-                }}
+                // onClick={() => {
+                //   handleCategory("update");
+                // }}
               >
                 Thêm mới
               </Button>
@@ -126,9 +108,9 @@ export default function Staff() {
                     className="btn-modal"
                     variant="contained"
                     color="primary"
-                    onClick={() => {
-                      handleCategory("update", val._id);
-                    }}
+                    // onClick={() => {
+                    //   handleCategory("update", val._id);
+                    // }}
                   >
                     Cập nhật
                   </Button>
@@ -138,11 +120,11 @@ export default function Staff() {
                     className="btn-modal"
                     variant="outlined"
                     color="secondary"
-                    onClick={() => {
-                      window.confirm(
-                        `Bạn thực sự muốn xoá mục ${val.type}?\nMọi thay đổi sẽ không được hoàn tác!`
-                      ) && handleCategory("delete", val._id);
-                    }}
+                    // onClick={() => {
+                    //   window.confirm(
+                    //     `Bạn thực sự muốn xoá mục ${val.type}?\nMọi thay đổi sẽ không được hoàn tác!`
+                    //   ) && handleCategory("delete", val._id);
+                    // }}
                   >
                     Xoá
                   </Button>
