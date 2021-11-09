@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Container } from '@material-ui/core';
+// import { Container } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import MenuBookIcon from '@material-ui/icons/MenuBook';
-import ReceiptIcon from '@material-ui/icons/Receipt';
+// import ReceiptIcon from '@material-ui/icons/Receipt';
 import verifyToken from '../midlewares/verifyToken';
 import ReactTypingEffect from 'react-typing-effect';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
@@ -90,7 +90,7 @@ export default () => {
                     </ul>
                 </div>
                 <div className="typing-effect" >
-                    <img src="https://logopond.com/logos/e6b478cef54b8fb8acfd1b4dee22f543.png" />;
+                    <img src="https://logopond.com/logos/e6b478cef54b8fb8acfd1b4dee22f543.png" alt='logo'/>;
                     <ReactTypingEffect
                         speed={80}
                         text={["Chào mừng quý khách ghé thăm nhà hàng sushi của chúng tôi!!!"]}
