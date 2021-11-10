@@ -4,7 +4,7 @@ import { Button, TextField, Box } from '@material-ui/core'
 import verifyReserve from '../midlewares/verifyReserve'
 import postReserve from '../midlewares/postReserve';
 
-import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 
 function ReserveForm() {
     const [checking, setChecking] = useState(true)

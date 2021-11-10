@@ -79,6 +79,7 @@ export default function Statistics(){
                     />}
                     </div>
                     <Statistics_NumOfOrders startDate={dateRange[0].startDate} endDate={dateRange[0].endDate}/>
+                    <Statistics_revenue startDate={dateRange[0].startDate} endDate={dateRange[0].endDate}/>
         </div>
     )
 }
