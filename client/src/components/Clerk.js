@@ -52,6 +52,7 @@ export default function Clerk() {
                 }
             })
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
     async function handleClick(status, orderID) {
         if (socket) {
@@ -62,18 +63,21 @@ export default function Clerk() {
     return (
         <div className="clerk">
             <Container fluid='lg'>
-                <div className='header'>
-                    <Link to='/'>
-                        <HomeIcon />
-                        <span>Back to home</span>
-                    </Link>
-                </div>
                 <div className='body'>
                     <div className='filter'>
-                        <p>Danh sách đơn hàng:</p>
-                        <span className={classNames({ active: filter === 'unconfirmed' })} onClick={() => getData('unconfirmed')}>Chưa thanh toán</span>
-                        <span className={classNames({ active: filter === 'confirmed' })} onClick={() => getData('confirmed')}>Đã thanh toán</span>
-                        <span className={classNames({ active: filter === 'cancel' })} onClick={() => getData('cancel')}>Đã bị hủy</span>
+                        <div className='header'>
+                            <Link to='/'>
+                                <HomeIcon />
+                                <span>Back to home</span>
+                            </Link>
+                        </div>
+
+                        <div className="wrapper">
+                            <span className={classNames({ active: filter === 'unconfirmed' })} onClick={() => getData('unconfirmed')}>Chưa thanh toán</span>
+                            <span className={classNames({ active: filter === 'confirmed' })} onClick={() => getData('confirmed')}>Đã thanh toán</span>
+                            <span className={classNames({ active: filter === 'cancel' })} onClick={() => getData('cancel')}>Đã bị hủy</span>
+                        </div>
+                        <p>Danh sách đơn hàng</p>
                     </div>
                     <table>
                         <tr>

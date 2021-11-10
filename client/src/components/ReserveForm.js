@@ -7,7 +7,8 @@ import postReserve from '../midlewares/postReserve';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 
 function ReserveForm() {
-    const [checking, setChecking] = useState(true)
+    const [checking, setChecking] = useState(true);
+    const [errorMsg, setErrorMsg] = useState('');
     const [checkForm, setCheckForm] = useState({
         status: false,
         datetime: null,
@@ -31,12 +32,18 @@ function ReserveForm() {
     const handleOnclickCheckbtn = (e) => {
         e.preventDefault();
         const ret = verifyReserve(checkForm.datetime);
-        if (ret.status) {
-            setCheckForm({
-                ...checkForm,
-                status: true
-            });
-            setChecking(false);
+        if (ret) {
+            ret.then((res) => {
+
+                if (res.data.status===false) {
+                    setErrorMsg(res.data.message);
+                }
+                else {
+                    setChecking(false);
+                    console.log(res.data.status);
+                    console.log(res.data);
+                }
+            })
         }
     }
 
@@ -104,10 +111,11 @@ function ReserveForm() {
                         <Button
                             fullWidth type="submit" variant="contained" color="secondary"
                             onclick={handleOnclickCheckbtn}
-                            style={{ fontSize: '14px' }}
+                            style={{ fontSize: '14px'}}
                         >
                             Check available tables
                         </Button>
+                        <Box sx={{color: 'red', fontSize: 16, textAlign: 'left', mt: 1}}>{errorMsg}</Box>
                     </form>
                 </Box>
 
@@ -162,6 +170,7 @@ function ReserveForm() {
 
                         <Button
                             fullWidth type="submit" color="secondary" variant="contained"
+                            onclick={handleOnclickConfirmbtn}
                             style={{ fontSize: '14px' }}
                         >
                             Confirm reservation

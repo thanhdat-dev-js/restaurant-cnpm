@@ -4,13 +4,21 @@
     font-size: 1.6rem;
     .body {
         .filter {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            .wrapper {
+                line-height: 70px;
+                min-width: 350px;
+            }
             p {
-                font-size: 2rem;
+                font-size: 1.75rem;
                 font-weight: 700;
                 margin: 20px 0;
+                min-width: 200px;
             }
             span {
-                font-size: 1.6rem;
+                font-size: 1.75rem;
                 font-weight: 500;
                 line-height: 1.6;
                 margin-left: 20px;
@@ -33,7 +41,7 @@
             text-decoration: none;
             font-size: 1.8rem;
             color: $text-color;
-            height: 60px;
+            height: 70px;
             display: inline-flex;
             align-items: center;
             padding: 0 30px;
@@ -64,6 +72,11 @@
     table th {
         border: 1px solid #ddd;
         padding: 8px;
+        text-align: center;
+        // padding-left: 40px;
+        // @include rps800 {
+        //     padding-left: 10px;
+        // }
     }
     table tr:nth-child(even) {
         background-color: #f2f2f2;
