@@ -10,6 +10,26 @@ import Edit from '@material-ui/icons/Edit'
 import Delete from '@material-ui/icons/Delete'
 
 function ReserveList() {
+    var data = [
+        {
+            datetime: "2021-10-24 07:22 CH",
+            adults: 2,
+            children: 2,
+            fname: "Edward",
+            lname: "Cullen",
+            phone: "123456789",
+            email: "edward@gmail.com"
+        },
+        {
+            datetime: "2021-10-24 07:22 CH",
+            adults: 2,
+            children: 2,
+            fname: "Alice",
+            lname: "Cullen",
+            phone: "987654321",
+            email: "alice@gmail.com"
+        },
+    ]
     return (
         <div>
             <ReserveNavbar/>
@@ -28,6 +48,17 @@ function ReserveList() {
                                 <th><Edit fontSize="large"/></th>
                                 <th><Delete fontSize="large"/></th>
                             </tr>
+                            {data.map((data) => {
+                                return (
+                                <tr>
+                                    <td>{data.datetime}</td>
+                                    <td>{data.fname + ' ' + data.lname}</td>
+                                    <td>{data.children + data.adults}</td>
+                                    <td>{data.phone}</td>
+                                    <td><ReserveEdit fname={data.fname} lname={data.lname} phone={data.phone} email={data.email}/></td>
+                                    <td><ReserveDelete /></td>
+                                </tr>
+                            )})}
                         </table>
                     </div>
                 </Container>

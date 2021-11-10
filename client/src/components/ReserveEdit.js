@@ -19,7 +19,7 @@ const style = {
   p: 4,
 };
 
-export default function BasicModal() {
+export default function BasicModal(props) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -43,6 +43,7 @@ export default function BasicModal() {
                 label="First Name" 
                 type="text"
                 fullWidth
+                value={props.fname}
                 InputProps={{style: {fontSize: 14}}}
                 InputLabelProps={{style: {fontSize: 14}}}/>
           </div>
@@ -53,6 +54,7 @@ export default function BasicModal() {
                 label="Last Name" 
                 type="text"
                 fullWidth
+                value={props.lname}
                 InputProps={{style: {fontSize: 14}}}
                 InputLabelProps={{style: {fontSize: 14}}}/>
           </div>
@@ -63,6 +65,7 @@ export default function BasicModal() {
                 label="Phone Number" 
                 type="text"
                 fullWidth
+                value={props.phone}
                 InputProps={{style: {fontSize: 14}}}
                 InputLabelProps={{style: {fontSize: 14}}}/>
           </div>
@@ -73,6 +76,7 @@ export default function BasicModal() {
                 label="Email address" 
                 type="text"
                 fullWidth
+                value={props.email}
                 InputProps={{style: {fontSize: 14}}}
                 InputLabelProps={{style: {fontSize: 14}}}/>
           </div>
