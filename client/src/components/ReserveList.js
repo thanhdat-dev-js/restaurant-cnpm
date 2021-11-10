@@ -1,35 +1,69 @@
-import React from 'react';
-
+import React, { useState, useEffect } from 'react';
+import { useHistory } from "react-router-dom";
 import ReserveNavbar from './ReserveNavbar';
 import ReserveEdit from './ReserveEdit';
 import ReserveDelete from './ReserveDelete';
 import '../scss/reservelist.scss';
-
 import { Container } from '@material-ui/core';
-import Edit from '@material-ui/icons/Edit'
-import Delete from '@material-ui/icons/Delete'
+import verifyToken from '../midlewares/verifyToken';
+import socketClient from "socket.io-client";
+import getReserve from '../midlewares/getReserve';
+const SERVER = "http://localhost:4000/";
+var socket = null;
+
+const formatDate = (dateString) => {
+    return new Date(dateString).toLocaleTimeString() + ' ' + new Date(dateString).toLocaleDateString();
+}
 
 function ReserveList() {
-    var data = [
-        {
-            datetime: "2021-10-24 07:22 CH",
-            adults: 2,
-            children: 2,
-            fname: "Edward",
-            lname: "Cullen",
-            phone: "123456789",
-            email: "edward@gmail.com"
-        },
-        {
-            datetime: "2021-10-24 07:22 CH",
-            adults: 2,
-            children: 2,
-            fname: "Alice",
-            lname: "Cullen",
-            phone: "987654321",
-            email: "alice@gmail.com"
-        },
-    ]
+    const [data, setData] = useState(null);
+    const history = useHistory();
+    function getData(userEmail) {
+        var reserve = getReserve(userEmail);
+        console.log(reserve);
+        if (reserve) {
+            reserve.then(res => {
+                if (res.data.reserve) {
+                    setData([...res.data.reserve]);
+                }
+            })
+        }
+    }
+    useEffect(() => {
+        const getInfo = verifyToken();
+        if (getInfo) {
+            getInfo.then(res => {
+                if (res.data.permission !== 'clerk' && res.data.permission !== 'customer') {
+                    history.push("/login");
+                }
+                else if (res.data.permission == 'clerk') {
+                    getData();
+                    try {
+                        socket = socketClient(SERVER);
+                        socket.on('clerk', () => {
+                            getData();
+                        })
+                    }
+                    catch (err) {
+                        console.log(err)
+                    }
+                }
+                else if (res.data.permission == 'customer') {
+                    getData(res.data.email);
+                    try {
+                        socket = socketClient(SERVER);
+                        socket.on('customer', () => {
+                            getData(res.data.email);
+                        })
+                    }
+                    catch (err) {
+                        console.log(err)
+                    }
+                }
+            })
+        }
+    }, []);
+
     return (
         <div>
             <ReserveNavbar/>
@@ -40,25 +74,26 @@ function ReserveList() {
                             <p>Customer Reservation</p>
                         </div>
                         <table>
-                            <tr>
-                                <th>Date and time</th>
-                                <th>Customer's Full Name</th>
-                                <th>Number of People</th>
-                                <th>Phone Number</th>
-                                <th><Edit fontSize="large"/></th>
-                                <th><Delete fontSize="large"/></th>
-                            </tr>
-                            {data.map((data) => {
-                                return (
+                            <tbody>
                                 <tr>
-                                    <td>{data.datetime}</td>
-                                    <td>{data.fname + ' ' + data.lname}</td>
-                                    <td>{data.children + data.adults}</td>
-                                    <td>{data.phone}</td>
-                                    <td><ReserveEdit fname={data.fname} lname={data.lname} phone={data.phone} email={data.email}/></td>
-                                    <td><ReserveDelete /></td>
+                                    <th>Date and time</th>
+                                    <th>Customer's Full Name</th>
+                                    <th>Number of People</th>
+                                    <th>Phone Number</th>
+                                    <th>Edit</th>
+                                    <th>Delete</th>
                                 </tr>
-                            )})}
+                                {data && data.map((data) => (
+                                    <tr>
+                                        <td>{formatDate(data.date)}</td>
+                                        <td>{data.firstName + ' ' + data.lastName}</td>
+                                        <td>{data.kidsNumber + data.adultsNumber}</td>
+                                        <td>{data.phone}</td>
+                                        <td><ReserveEdit fname={data.firstName} lname={data.lastName} phone={data.phone} email={data.email}/></td>
+                                        <td><ReserveDelete /></td>
+                                    </tr>
+                                ))}
+                            </tbody>
                         </table>
                     </div>
                 </Container>

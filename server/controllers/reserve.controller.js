@@ -4,7 +4,45 @@ const shortId = require('shortid');
 module.exports = {
 
     async getReserve(req,res) {
-        res.send('On get reserve.');
+        try {
+            if (req.user.permission === 'clerk') {
+                const reserve = await Reserve.find({});
+                if (reserve) {
+                    return res.json({
+                        success: 1,
+                        reserve,
+                        message: "thanh cong"
+                    })
+                }
+                return res.json({
+                    success: 0,
+                    message: "that bai"
+                })
+            }
+            else if (req.user.permission === 'customer') {
+                const reserve = req.query.userEmail ? await Reserve.find({ userEmail: req.query.userEmail }) : null;
+                if (reserve) {
+                    return res.json({
+                        success: 1,
+                        reserve,
+                        message: "thanh cong",
+                    })
+                }
+                return res.json({
+                    success: 0,
+                    message: "that bai"
+                })
+            }
+            else {
+                return res.json({
+                    success: 0,
+                    message: "Invalid token"
+                })
+            }
+        }
+        catch (err) {
+            console.log(err);
+        }
     },
     
     async putReserve(req,res) {
