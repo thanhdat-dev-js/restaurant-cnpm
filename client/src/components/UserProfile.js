@@ -4,6 +4,7 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import React from 'react'
 import ReserveNavbar from './ReserveNavbar'
 import ReceiptIcon from '@material-ui/icons/Receipt';
+import { useState, useEffect } from 'react';
 
 const Img = styled('img')({
   margin: 'auto',
@@ -16,6 +17,13 @@ function UserProfile() {
 	const userFirstName = "Edward";
 	const userLastName = "Cullen";
 	const userEmail = "cullen.edward@gmail.com";
+
+	const [profile, setProfile] = useState({
+		"FirstName": "Edward",
+		"LastName": "Cullen",
+		"Email": "cullen.edward@gmail.com",
+		"Phone": "0123456789"
+	});
 	return (
 		<Container fluid='lg' sx={{}}>
 			<ReserveNavbar homeOnly={true}/>
@@ -41,16 +49,16 @@ function UserProfile() {
 								<Box id="body-title" sx={{display:'flex', }}>
 									<AccountCircleIcon sx={{width: 80, height: 80}}/>
 									<Box sx={{display:'flex', flexDirection: 'column', my:'auto'}}>
-										<Box sx={{fontSize: 20}}>{userFirstName} {userLastName}</Box>
-										<Box sx={{fontSize: 16}}>{userEmail}</Box>
+										<Box sx={{fontSize: 20}}>{profile.FirstName} {profile.LastName}</Box>
+										<Box sx={{fontSize: 16}}>{profile.Email}</Box>
 									</Box>
 								</Box>
 								<Grid container spacing={2}>
 									<Grid item xs={12} md={6} >
-										<TextField fullWidth label='First Name' variant="outlined" />
+										<TextField fullWidth label='First Name' variant="outlined" name="FirstName" placeholder={profile.FirstName}/>
 									</Grid>
 									<Grid item xs={12} md={6}>
-										<TextField fullWidth label='Last Name' variant="outlined" />
+										<TextField fullWidth label='Last Name' variant="outlined" name="LastName"/>
 									</Grid>
 									<Grid item xs={12} md={6}>
 										<TextField fullWidth label='Email' type='email' variant="outlined" />

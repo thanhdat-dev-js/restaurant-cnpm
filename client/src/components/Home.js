@@ -62,8 +62,8 @@ export default () => {
                         {isAuthen ?
                             <>
                                 <li>
-                                    <Link to="/user">
-                                        <span>profile</span>
+                                    <Link to="/profile">
+                                        <span>Profile</span>
                                         <AccountCircleIcon />
                                     </Link>
                                 </li>
