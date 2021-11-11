@@ -1,8 +1,7 @@
 // import { Link } from 'react-router-dom';
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState} from 'react';
 // import { useHistory } from "react-router-dom";
 // import HomeIcon from '@material-ui/icons/Home';
-import DownArrow from '@material-ui/icons/ArrowDropDownCircle';
 // import { Container, formatMs } from '@material-ui/core';
 import 'react-date-range/dist/styles.css'; // main css file
 import 'react-date-range/dist/theme/default.css'; // theme css file
@@ -24,7 +23,6 @@ export default function Statistics(){
     key: 'selection'
 }
     ]);
-    const [open, setOpen] = useState(false);
     const [data, setData] = useState([]);
     // let optionRef = useRef();
     function getData(startDate, endDate) {
@@ -46,19 +44,6 @@ export default function Statistics(){
             // console.log(dateRange[0]);
             getData(dateRange[0].startDate.toISOString(), dateRange[0].endDate.toISOString());
     }, [dateRange]);
-    // useEffect(() => {
-    //     let handler = (event) =>{
-    //         if (!optionRef.current.contains(event.target)){
-    //             console.log(optionRef.current)
-    //             setOpen(false);
-    //             setButtonPopup(false);
-    //         }
-    //     }
-    //     document.addEventListener("mousedown", handler);
-    //     return () => {
-    //         document.removeEventListener("mousedown", handler)
-    //     }
-    // });
 
     return (
         <div>
