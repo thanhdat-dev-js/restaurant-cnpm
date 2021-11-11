@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useHistory } from "react-router-dom";
 import ReserveNavbar from './ReserveNavbar';
 import ReserveEdit from './ReserveEdit';
@@ -20,7 +20,6 @@ function ReserveList() {
     const history = useHistory();
     function getData(userEmail) {
         var reserve = getReserve(userEmail);
-        console.log(reserve);
         if (reserve) {
             reserve.then(res => {
                 if (res.data.reserve) {
@@ -29,6 +28,7 @@ function ReserveList() {
             })
         }
     }
+    
     useEffect(() => {
         const getInfo = verifyToken();
         if (getInfo) {
@@ -89,8 +89,8 @@ function ReserveList() {
                                         <td>{data.firstName + ' ' + data.lastName}</td>
                                         <td>{data.kidsNumber + data.adultsNumber}</td>
                                         <td>{data.phone}</td>
-                                        <td><ReserveEdit fname={data.firstName} lname={data.lastName} phone={data.phone} email={data.email}/></td>
-                                        <td><ReserveDelete /></td>
+                                        <td><ReserveEdit id={data._id} fname={data.firstName} lname={data.lastName} phone={data.phone} email={data.email} /></td>
+                                        <td><ReserveDelete id={data._id} /></td>
                                     </tr>
                                 ))}
                             </tbody>

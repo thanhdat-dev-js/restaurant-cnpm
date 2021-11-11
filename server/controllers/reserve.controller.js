@@ -46,11 +46,43 @@ module.exports = {
     },
     
     async putReserve(req,res) {
-        res.send('On get reserve.');
+        try {
+            const reserveID = req.params.reserveID;
+            const existed = await Reserve.findOne({ _id: reserveID });
+
+            if (!existed) {
+                return res.status(400).json({
+                    success: 0,
+                    message: "Reservation not found."
+                })
+            }
+
+            existed.firstName = req.body.firstName || existed.firstName;
+            existed.lastName = req.body.lastName || existed.lastName;
+            existed.phone = req.body.phone || existed.phone;
+            existed.email = req.body.email || existed.email;
+
+            if (await existed.save()) {
+                res.status(200).json(existed);
+            }
+        }
+        catch (err) {
+            res.status(500).json({ success: 0, message: err });
+        }
     },
     
     async deleteReserve(req,res) {
-        res.send('On get reserve.');
+        Reserve.deleteOne({ _id: req.params.reserveID }, (err) => {
+            if (err) {
+                res.status(500).json({
+                    sucess: 0,
+                    message: err
+                });
+            }
+            else {
+                res.status(200).json({ success: 1 });
+            }
+        });
     },
     
     async postReserve(req, res) {
