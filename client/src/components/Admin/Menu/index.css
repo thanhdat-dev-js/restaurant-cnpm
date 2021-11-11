@@ -1,0 +1,56 @@
+.am-modal {
+    position: fixed;
+    z-index: 100;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.671);
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.am-modal.open {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.am-form::-webkit-scrollbar {
+    display: none;
+  }
+  
+/* Hide scrollbar for IE, Edge and Firefox */
+.am-form {
+-ms-overflow-style: none;  /* IE and Edge */
+scrollbar-width: none;  /* Firefox */
+}
+
+.am-form {
+    z-index: 50;
+    width: 80%;
+    height: fit-content;
+    max-height: 80%;
+    padding: 20px;
+    overflow-y: scroll;
+    max-width: 900px;
+    background-color: white;
+    border-radius: 16px;
+}
+
+.am-form h3 {
+    margin: 12px 0;
+}
+
+.am-form-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.am-product {
+    margin: 10px 0;
+}

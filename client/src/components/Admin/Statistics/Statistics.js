@@ -17,12 +17,12 @@ import Popup from './Popup';
 
 export default function Statistics(){
     const [buttonPopup, setButtonPopup] = useState(false);
-     const [dateRange, detDateRange] = useState([
-  {
+    const [dateRange, detDateRange] = useState([
+{
     startDate: new Date(),
     endDate: addDays(new Date(), 7),
     key: 'selection'
-  }
+}
     ]);
     const [open, setOpen] = useState(false);
     const [data, setData] = useState([]);
@@ -62,7 +62,7 @@ export default function Statistics(){
 
     return (
         <div>
-             <Popup trigger={buttonPopup} setTrigger={setButtonPopup} >
+            <Popup trigger={buttonPopup} setTrigger={setButtonPopup} >
                     <h3>My popup</h3>
                     <div className="dateRangePicker">
                         <DateRangePicker
@@ -75,8 +75,8 @@ export default function Statistics(){
                     />
                     </div>
             </Popup>
-             <h3>{dateRange[0].startDate.toISOString()} - {dateRange[0].endDate.toISOString()}</h3>
-             <a href="#" className="icon-button" onClick={()=> Handle()} >
+            <h3>{dateRange[0].startDate.toISOString()} - {dateRange[0].endDate.toISOString()}</h3>
+            <a href="#" className="icon-button" onClick={()=> Handle()} >
                     <DateRangeIcon fontSize="large"/>
             </a>
                     {/* <div className="dateRangePicker">
