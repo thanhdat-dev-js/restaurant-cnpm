@@ -59,3 +59,7 @@ scrollbar-width: none;  /* Firefox */
     margin: 10px 0;
     display: flex;
 }
+
+.am-form-search {
+    display: flex;
+}
