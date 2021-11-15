@@ -4,7 +4,7 @@ import axios from "axios";
 
 import "../../../scss/clerk.scss";
 import "./index.css";
-import { Button, TextField } from "@material-ui/core";
+import { Button } from "@material-ui/core";
 // import CloseIcon from "@mui/icons-material/Close";
 // import classNames from "classnames";
 
@@ -32,6 +32,7 @@ export default function Menu() {
   const [showModal, setShowModal] = useState(false);
   function closeModal() {
     setShowModal(false);
+    getData();
   }
 
   const history = useHistory();
@@ -45,11 +46,9 @@ export default function Menu() {
         }
       });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
-  useEffect(() => {
     getData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   function getData() {
@@ -66,22 +65,6 @@ export default function Menu() {
     }
   }
 
-  function postCategory(val) {
-    let req = {
-      url: SERVER + "category/",
-      method: "POST",
-      data: {
-        type: val.type,
-        imgURL: val.imgURL,
-        products: [],
-      },
-    };
-    axios.request(req).then((res) => console.log(res));
-    getData();
-  }
-
-  function putCategory() {}
-
   function deleteCategory(id) {
     try {
       let req = {
@@ -97,7 +80,7 @@ export default function Menu() {
 
   return (
     <div className="clerk">
-      
+
       {showModal && (
         <Popup
           data={dataTag.data[dataTag.current]}
@@ -133,9 +116,8 @@ export default function Menu() {
                   variant="contained"
                   color="primary"
                   onClick={() => {
-                    setShowModal(true);
                     setDataTag({ ...dataTag, current: ADD_NEW });
-                    // handleCategory("update", val._id);
+                    setShowModal(true);
                   }}
                 >
                   Thêm mới
@@ -159,9 +141,8 @@ export default function Menu() {
                       variant="contained"
                       color="primary"
                       onClick={() => {
-                        setShowModal(true);
                         setDataTag({ ...dataTag, current: idx });
-                        // handleCategory("update", val._id);
+                        setShowModal(true);
                       }}
                     >
                       Cập nhật
@@ -176,6 +157,7 @@ export default function Menu() {
                         window.confirm(
                           `Bạn thực sự muốn xoá mục ${val.type}?\nMọi thay đổi sẽ không được hoàn tác!`
                         ) && deleteCategory(val._id);
+                        getData();
                       }}
                     >
                       Xoá

@@ -1,8 +1,10 @@
 import classNames from "classnames";
 import { Button, TextField } from "@material-ui/core";
 import { useState } from "react";
+import axios from "axios";
 
 import "./index.css";
+const SERVER = "http://localhost:4000/";
 
 export default function Popup(props) {
   const [content, setContent] = useState(props.data);
@@ -11,9 +13,34 @@ export default function Popup(props) {
 
   // showModal, closeModal , current, data
 
-  function postCategory() {}
-  function putCategory() {}
-  function deleteCategory() {}
+  function postCategory() {
+    try {
+      if (window.confirm("Bạn có chắc không?")) {
+        let req = {
+          url: SERVER + "category/",
+          method: "POST",
+          data: content,
+        };
+        axios.request(req).then(props.closeModal());
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
+  function putCategory() {
+    try {
+      if (window.confirm("Bạn có chắc không?")) {
+        let req = {
+          url: SERVER + "category/" + content._id,
+          method: "PUT",
+          data: content,
+        };
+        axios.request(req).then(props.closeModal());
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
   return (
     <div className={classNames("am-modal", { open: props.showModal })}>
@@ -60,10 +87,45 @@ export default function Popup(props) {
           onChange={(e) => setContent({ ...content, imgURL: e.target.value })}
         />
 
-        {props.current != ADD_NEW && <h3>Món ăn</h3>}
+        <h3>Món ăn</h3>
+
+        <Button
+          color="primary"
+          variant="outlined"
+          onClick={() => {
+            props.current == ADD_NEW
+              ? setContent({
+                  ...content,
+                  products: [
+                    {
+                      productID: " ",
+                      name: " ",
+                      imgURL: " ",
+                      price: " ",
+                      description: " ",
+                    },
+                  ],
+                })
+              : setContent({
+                  ...content,
+                  products: [
+                    ...content?.products,
+                    {
+                      productID: " ",
+                      name: " ",
+                      imgURL: " ",
+                      price: " ",
+                      description: " ",
+                    },
+                  ],
+                });
+          }}
+        >
+          Thêm món
+        </Button>
+
         {content?.products?.map((product, idx) => (
           <div className="am-product">
-            <h1>{product.description}</h1>
             <TextField
               label="ID"
               defaultValue={product.productID}
@@ -144,6 +206,21 @@ export default function Popup(props) {
                 })
               }
             />
+
+            <Button
+              color="secondary"
+              variant="outlined"
+              onClick={() => {
+                setContent({
+                  ...content,
+                  products: content?.products?.filter(
+                    (p) => p.productID !== product.productID && p
+                  ),
+                });
+              }}
+            >
+              Xoá món
+            </Button>
           </div>
         ))}
       </div>
