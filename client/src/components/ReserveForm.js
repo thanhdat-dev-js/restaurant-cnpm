@@ -65,6 +65,8 @@ function ReserveForm() {
             lastName: confirmForm.lname
         });
         console.log(res);
+        setChecking(true);
+        setErrorMsg('');
     }
 
     return (
@@ -110,7 +112,7 @@ function ReserveForm() {
 
                         <Button
                             fullWidth type="submit" variant="contained" color="secondary"
-                            onclick={handleOnclickCheckbtn}
+                            onClick={handleOnclickCheckbtn}
                             style={{ fontSize: '14px'}}
                         >
                             Check available tables
@@ -123,7 +125,7 @@ function ReserveForm() {
                 <>
                 <Box 
                     sx={{display:'flex', alignItems:'center'}}
-                    onClick={()=>{setChecking(true);}}
+                    onClick={()=>{setErrorMsg('');setChecking(true); }}
                 >
                     <ArrowBackIosIcon/>
                     <Box>Change info</Box>
@@ -170,7 +172,7 @@ function ReserveForm() {
 
                         <Button
                             fullWidth type="submit" color="secondary" variant="contained"
-                            onclick={handleOnclickConfirmbtn}
+                            onClick={handleOnclickConfirmbtn}
                             style={{ fontSize: '14px' }}
                         >
                             Confirm reservation
