@@ -9,9 +9,9 @@ router.get('/reserve', validateToken, reserve.getReserve);
 
 router.get('/reserve/verify', validateToken, reserve.verifyReserve);
 
-router.put('/reserve', validateToken, reserve.putReserve);
+router.put('/reserve/:reserveID', reserve.putReserve);
 
-router.delete('/reserve', validateToken, reserve.deleteReserve);
+router.delete('/reserve/:reserveID', reserve.deleteReserve);
 
 router.post('/reserve', validateToken, reserve.postReserve);
 

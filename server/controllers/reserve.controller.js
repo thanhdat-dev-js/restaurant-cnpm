@@ -4,15 +4,85 @@ const shortId = require('shortid');
 module.exports = {
 
     async getReserve(req,res) {
-        res.send('On get reserve.');
+        try {
+            if (req.user.permission === 'clerk') {
+                const reserve = await Reserve.find({});
+                if (reserve) {
+                    return res.json({
+                        success: 1,
+                        reserve,
+                        message: "thanh cong"
+                    })
+                }
+                return res.json({
+                    success: 0,
+                    message: "that bai"
+                })
+            }
+            else if (req.user.permission === 'customer') {
+                const reserve = req.query.userEmail ? await Reserve.find({ userEmail: req.query.userEmail }) : null;
+                if (reserve) {
+                    return res.json({
+                        success: 1,
+                        reserve,
+                        message: "thanh cong",
+                    })
+                }
+                return res.json({
+                    success: 0,
+                    message: "that bai"
+                })
+            }
+            else {
+                return res.json({
+                    success: 0,
+                    message: "Invalid token"
+                })
+            }
+        }
+        catch (err) {
+            console.log(err);
+        }
     },
     
     async putReserve(req,res) {
-        res.send('On get reserve.');
+        try {
+            const reserveID = req.params.reserveID;
+            const existed = await Reserve.findOne({ _id: reserveID });
+
+            if (!existed) {
+                return res.status(400).json({
+                    success: 0,
+                    message: "Reservation not found."
+                })
+            }
+
+            existed.firstName = req.body.firstName || existed.firstName;
+            existed.lastName = req.body.lastName || existed.lastName;
+            existed.phone = req.body.phone || existed.phone;
+            existed.email = req.body.email || existed.email;
+
+            if (await existed.save()) {
+                res.status(200).json(existed);
+            }
+        }
+        catch (err) {
+            res.status(500).json({ success: 0, message: err });
+        }
     },
     
     async deleteReserve(req,res) {
-        res.send('On get reserve.');
+        Reserve.deleteOne({ _id: req.params.reserveID }, (err) => {
+            if (err) {
+                res.status(500).json({
+                    sucess: 0,
+                    message: err
+                });
+            }
+            else {
+                res.status(200).json({ success: 1 });
+            }
+        });
     },
     
     async postReserve(req, res) {

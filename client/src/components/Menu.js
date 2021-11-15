@@ -94,6 +94,7 @@ export default () => {
       catch (e) {
          console.log(e);
       }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
    }, [])
    useEffect(() => {
       var totalOrder = 0;
@@ -106,10 +107,14 @@ export default () => {
       };
       localStorage.setItem('ORDER', JSON.stringify(data));
       setDataCart(data)
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+
    }, [dataCart.products])
    useEffect(() => {
       window.addEventListener("resize", handleWindowResize);
       return () => window.removeEventListener("resize", handleWindowResize);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+
    });
    useEffect(() => handleWindowResize(), []);
    function handleWindowResize() {
