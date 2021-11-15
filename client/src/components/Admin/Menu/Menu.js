@@ -5,10 +5,12 @@ import axios from "axios";
 import "../../../scss/clerk.scss";
 import "./index.css";
 import { Button, TextField } from "@material-ui/core";
-import CloseIcon from "@mui/icons-material/Close";
-import classNames from "classnames";
+// import CloseIcon from "@mui/icons-material/Close";
+// import classNames from "classnames";
 
 import verifyToken from "../../../midlewares/verifyToken";
+import Popup from "./Popup";
+
 const SERVER = "http://localhost:4000/";
 
 const formatDate = (dateString) => {
@@ -20,12 +22,14 @@ const formatDate = (dateString) => {
 };
 
 export default function Menu() {
+  const ADD_NEW = -1;
+
   const [dataTag, setDataTag] = useState({
     data: [],
-    current: -1,
+    current: ADD_NEW,
   });
-  const [showModal, setShowModal] = useState(false);
 
+  const [showModal, setShowModal] = useState(false);
   function closeModal() {
     setShowModal(false);
   }
@@ -62,7 +66,7 @@ export default function Menu() {
     }
   }
 
-  function addCategory(val) {
+  function postCategory(val) {
     let req = {
       url: SERVER + "category/",
       method: "POST",
@@ -75,6 +79,8 @@ export default function Menu() {
     axios.request(req).then((res) => console.log(res));
     getData();
   }
+
+  function putCategory() {}
 
   function deleteCategory(id) {
     try {
@@ -91,81 +97,14 @@ export default function Menu() {
 
   return (
     <div className="clerk">
+      
       {showModal && (
-        <div className={classNames("am-modal", { open: showModal })}>
-          <div className="am-form">
-            <div className="am-form-header">
-              {dataTag.current === -1 ? (
-                <h2>Thêm danh mục</h2>
-              ) : (
-                <h2>Chỉnh sửa danh mục</h2>
-              )}
-
-              <div>
-                <Button color="primary" variant="contained">
-                  Lưu thay đổi
-                </Button>
-                <Button
-                  color="secondary"
-                  variant="contained"
-                  onClick={closeModal}
-                >
-                  Thoát
-                </Button>
-              </div>
-            </div>
-
-            <h3>Mục</h3>
-            <TextField
-              label="Loại"
-              defaultValue={dataTag.data[dataTag.current]?.type}
-              variant="outlined"
-              margin="dense"
-              />
-            <TextField
-              label="Đường dẫn ảnh"
-              defaultValue={dataTag.data[dataTag.current]?.imgURL}
-              variant="outlined"
-              margin="dense"
-              />
-
-            {dataTag.current != -1 && <h3>Món ăn</h3>}
-            {dataTag.data[dataTag.current]?.products.map((product, idx) => (
-              <div className="am-product">
-                <TextField
-                  label="ID"
-                  defaultValue={product.productID}
-                  variant="outlined"
-                  margin="dense"
-                />
-                <TextField
-                  label="Tên"
-                  defaultValue={product.name}
-                  variant="outlined"
-                  margin="dense"
-                />
-                <TextField
-                  label="Đường dẫn ảnh"
-                  defaultValue={product.imgURL}
-                  variant="outlined"
-                  margin="dense"
-                />
-                <TextField
-                  label="Giá"
-                  defaultValue={product.price}
-                  variant="outlined"
-                  margin="dense"
-                />
-                <TextField
-                  label="Mô tả"
-                  defaultValue={product.description}
-                  variant="outlined"
-                  margin="dense"
-                />
-              </div>
-            ))}
-          </div>
-        </div>
+        <Popup
+          data={dataTag.data[dataTag.current]}
+          current={dataTag.current}
+          showModal={showModal}
+          closeModal={closeModal}
+        />
       )}
 
       <div className="body">
@@ -195,7 +134,7 @@ export default function Menu() {
                   color="primary"
                   onClick={() => {
                     setShowModal(true);
-                    setDataTag({ ...dataTag, current: -1 });
+                    setDataTag({ ...dataTag, current: ADD_NEW });
                     // handleCategory("update", val._id);
                   }}
                 >
