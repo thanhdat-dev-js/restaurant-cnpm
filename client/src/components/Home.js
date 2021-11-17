@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 // import { Container } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import MenuBookIcon from '@material-ui/icons/MenuBook';
-import ReceiptIcon from '@material-ui/icons/Receipt';
 // import ReceiptIcon from '@material-ui/icons/Receipt';
 import verifyToken from '../midlewares/verifyToken';
 import ReactTypingEffect from 'react-typing-effect';
