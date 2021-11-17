@@ -6,6 +6,7 @@ import MenuBookIcon from '@material-ui/icons/MenuBook';
 import verifyToken from '../midlewares/verifyToken';
 import ReactTypingEffect from 'react-typing-effect';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import ReceiptIcon from '@material-ui/icons/Receipt';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import '../scss/home.scss';
 export default () => {
@@ -37,6 +38,12 @@ export default () => {
                             <Link to="/menu">
                                 <span>Menu</span>
                                 <MenuBookIcon />
+                            </Link>
+                        </li>}
+                        {permission === 'customer' && isAuthen && <li>
+                            <Link to="/reserve">
+                                <span>Reserve</span>
+                                <ReceiptIcon />
                             </Link>
                         </li>}
                         {permission === 'clerk' && <li>
