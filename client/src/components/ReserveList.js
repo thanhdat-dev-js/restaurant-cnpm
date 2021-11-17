@@ -84,7 +84,7 @@ function ReserveList() {
                                     <th>Delete</th>
                                 </tr>
                                 {data && data.map((data) => (
-                                    <tr>
+                                    <tr key={data._id}>
                                         <td>{formatDate(data.date)}</td>
                                         <td>{data.firstName + ' ' + data.lastName}</td>
                                         <td>{data.kidsNumber + data.adultsNumber}</td>

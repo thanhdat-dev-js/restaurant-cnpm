@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 // import { Container } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import MenuBookIcon from '@material-ui/icons/MenuBook';
+import ReceiptIcon from '@material-ui/icons/Receipt';
 // import ReceiptIcon from '@material-ui/icons/Receipt';
 import verifyToken from '../midlewares/verifyToken';
 import ReactTypingEffect from 'react-typing-effect';
@@ -39,12 +40,21 @@ export default () => {
                                 <MenuBookIcon />
                             </Link>
                         </li>}
-                        {permission === 'clerk' && <li>
+                        {permission === 'clerk' && 
+                        <>
+                        <li>
                             <Link to="/clerk">
                                 <span>Clerk</span>
                                 <MenuBookIcon />
                             </Link>
-                        </li>}
+                        </li>
+                        <li>
+                            <Link to="/reservelist">
+                                <span>Reserve List</span>
+                                <ReceiptIcon />
+                            </Link>
+                        </li>
+                        </>}
                         {permission === 'admin' && <li>
                             <Link to="/admin">
                                 <span>admin</span>

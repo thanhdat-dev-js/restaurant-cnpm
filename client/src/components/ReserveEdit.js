@@ -49,6 +49,7 @@ export default function BasicModal(props) {
         console.log(err);
     }
     setOpen(false);
+    window.location.reload(true);
   }
 
   return (
