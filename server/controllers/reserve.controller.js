@@ -86,7 +86,7 @@ module.exports = {
     },
     
     async postReserve(req, res) {
-        const data = 'data' in req.body ? req.body.data : JSON.Parse(req.query.data); 
+        const data = 'data' in req.body ? req.body.data : JSON.parse(req.query.data); 
         const reserve = new Reserve({
             userEmail: req.user.email,
             reserveID: shortId.generate(),
