@@ -204,7 +204,11 @@ function ReserveForm() {
                     onClose={()=>{setModalOpen(false); setChecking(true);}}
                     aria-labelledby="modal-modal-title"
                 >
-                    <Box sx={{width:100, height: 100, backgroundColor: 'black'}}></Box>
+                    <Box sx={{maxWidth: '50%', display: 'flex', justifyContent: 'center'}}>
+                        <Box sx={{border: '1px solid'}}>Notification</Box>
+                        <Box>Your reservation has been recorded.</Box>
+                        
+                    </Box>
                 </Modal>
                 </>
             }
