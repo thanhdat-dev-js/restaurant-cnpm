@@ -11,13 +11,13 @@ const SERVER = "http://localhost:4000/";
 
 const style = {
   position: 'absolute',
-  top: '50%',
+  top: window.innerWidth <= 500 ? '55%' : '50%',
   left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: '60%',
+  transform: window.innerWidth <= 800 ? 'translate(-50%, -60%)' : 'translate(-50%, -50%)',
+  width: window.innerWidth <= 800 ? '85%' : '50%',
   bgcolor: 'background.paper',
   boxShadow: 24,
-  p: 4,
+  p: window.innerWidth <= 500 ? 3 : 5,
 };
 
 export default function BasicModal(props) {
@@ -54,7 +54,7 @@ export default function BasicModal(props) {
 
   return (
     <div>
-      <Button onClick={handleOpen}><Edit fontSize="large"/></Button>
+      <Button onClick={handleOpen}><Edit fontSize={window.innerWidth <= 500 ? "medium" : "large" }/></Button>
       <Modal
         open={open}
         onClose={handleClose}
@@ -73,8 +73,8 @@ export default function BasicModal(props) {
                 fullWidth
                 defaultValue={props.fname}
                 onChange={handleOnchangeFirstName}
-                InputProps={{style: {fontSize: 14}}}
-                InputLabelProps={{style: {fontSize: 14}}}/>
+                InputProps={{style: {fontSize: 17}}}
+                InputLabelProps={{style: {fontSize: 17}}}/>
           </div>
 
           <div className="form-edit">
@@ -85,8 +85,8 @@ export default function BasicModal(props) {
                 fullWidth
                 defaultValue={props.lname}
                 onChange={handleOnchangeLastName}
-                InputProps={{style: {fontSize: 14}}}
-                InputLabelProps={{style: {fontSize: 14}}}/>
+                InputProps={{style: {fontSize: 17}}}
+                InputLabelProps={{style: {fontSize: 17}}}/>
           </div>
 
           <div className="form-edit">
@@ -97,8 +97,8 @@ export default function BasicModal(props) {
                 fullWidth
                 defaultValue={props.phone}
                 onChange={handleOnchangePhone}
-                InputProps={{style: {fontSize: 14}}}
-                InputLabelProps={{style: {fontSize: 14}}}/>
+                InputProps={{style: {fontSize: 17}}}
+                InputLabelProps={{style: {fontSize: 17}}}/>
           </div>
 
           <div className="form-edit">
@@ -109,8 +109,8 @@ export default function BasicModal(props) {
                 fullWidth
                 defaultValue={props.email}
                 onChange={handleOnchangeEmail}
-                InputProps={{style: {fontSize: 14}}}
-                InputLabelProps={{style: {fontSize: 14}}}/>
+                InputProps={{style: {fontSize: 17}}}
+                InputLabelProps={{style: {fontSize: 17}}}/>
           </div>
 
           <div className="btn-edit">

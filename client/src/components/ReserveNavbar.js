@@ -38,7 +38,7 @@ function ReserveNavbar(props) {
 						</li>
 							
 					</ul>
-					{!homeOnly ? 
+					{!homeOnly && permission === 'customer' ? 
 						(
 						<ul>
 							<li>
@@ -47,6 +47,7 @@ function ReserveNavbar(props) {
 									<ReceiptIcon />
 								</Link>
 							</li>
+							
 							<li>
 								<Link to="/reservelist">
 									<span>Reserve List</span>

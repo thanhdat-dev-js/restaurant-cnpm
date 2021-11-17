@@ -45,7 +45,7 @@ function ReserveList() {
                         })
                     }
                     catch (err) {
-                        console.log(err)
+                        console.log(err) 
                     }
                 }
                 else if (res.data.permission == 'customer') {

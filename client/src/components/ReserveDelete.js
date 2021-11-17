@@ -12,7 +12,7 @@ const style = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: '35%',
+  width: window.innerWidth <= 500 ? '80%' : (window.innerWidth <= 800 ? '50%' : '35%'),
   bgcolor: 'background.paper',
   boxShadow: 24,
   p: 4,
@@ -39,7 +39,7 @@ export default function BasicModal(props) {
 
   return (
     <div>
-      <Button onClick={handleOpen}><Delete fontSize="large"/></Button>
+      <Button onClick={handleOpen}><Delete fontSize={window.innerWidth <= 500 ? "medium" : "large" }/></Button>
       <Modal
         open={open}
         onClose={handleClose}
