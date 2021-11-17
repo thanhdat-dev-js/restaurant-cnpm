@@ -4,10 +4,10 @@ import axios from "axios";
 
 import "../../../scss/clerk.scss";
 import { Button, TextField } from "@material-ui/core";
-import classNames from "classnames";
 
 import verifyToken from "../../../midlewares/verifyToken";
-// const SERVER = "http://localhost:4000/";
+import Popup from "./Popup";
+const SERVER = "http://localhost:4000/";
 
 const formatDate = (dateString) => {
   return (
@@ -26,6 +26,7 @@ export default function Staff() {
 
   const closeModal = () => {
     setShowModal(false)
+    getData()
   }
 
   const history = useHistory();
@@ -40,17 +41,14 @@ export default function Staff() {
       });
     }
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  useEffect(() => {
     getData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   function getData() {
     try {
       let reqOptions = {
-        url: "http://localhost:4000/admin/employee",
+        url: SERVER + "admin/employee",
         method: "GET",
       };
       axios.request(reqOptions).then(function (response) {
@@ -65,38 +63,12 @@ export default function Staff() {
     <div className="clerk">
 
       {showModal && 
-        <div className={classNames("am-modal", { open: showModal })}>
-        
-          <div className="am-form">
-
-            <div className="am-form-header">
-              <h2>Tìm người</h2>
-              
-              <div>
-                <Button color="primary" variant="contained">
-                  Lưu thay đổi
-                </Button>
-                <Button
-                  color="secondary"
-                  variant="contained"
-                  onClick={closeModal}
-                >
-                  Thoát
-                </Button>
-              </div>
-            </div>
-
-            <TextField
-              label='Tìm theo email'
-              variant='outlined'
-            >
-
-
-            </TextField>
-
-          </div>
-        
-        </div>
+        <Popup 
+          showModal={showModal}
+          closeModal={closeModal}
+          data={dataTag.data?.[dataTag.current]}
+          current={dataTag.current}
+        />
       }
 
 
@@ -128,6 +100,7 @@ export default function Staff() {
                 variant="contained"
                 color="primary"
                 onClick={() => {
+                  setDataTag({ ...dataTag, current: -1 });
                   setShowModal(true)
                 }}
               >
@@ -153,6 +126,7 @@ export default function Staff() {
                     variant="contained"
                     color="primary"
                     onClick={() => {
+                      setDataTag({ ...dataTag, current: idx });
                       setShowModal(true)
                     }}
                   >
