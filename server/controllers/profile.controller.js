@@ -4,6 +4,7 @@ const shortId = require('shortid');
 module.exports = {
     async getProfile(req, res) {
         try {
+            // 
             const theProfile = await Profile.findOne({email: req.query.email});
             if (theProfile){
                 return res.status(200).json({

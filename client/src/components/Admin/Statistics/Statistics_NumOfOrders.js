@@ -13,7 +13,7 @@ const dateDiff = (startDate, endDate) => {
 const Statistics_NumOfOrders = (props) =>{
 
     const {startDate, endDate, data} = props;
-    console.log(data);
+    // console.log(data);
     const numOfDays = dateDiff(startDate, endDate) + 1;
     const [graphData, setGraphData] = useState(Array.from(Array(3), _ => Array(numOfDays).fill(0)));
     var arr = Array.from(Array(3), _ => Array(numOfDays).fill(0));
@@ -51,7 +51,7 @@ const Statistics_NumOfOrders = (props) =>{
                 labels: graphData[0],
                 datasets: [
                     {
-                        label: 'confirmed',
+                        label: 'Xác nhận',
                         data: graphData[1],
                         backgroundColor:[
                             'rgba(255, 99, 132, 0.2)'
@@ -63,7 +63,7 @@ const Statistics_NumOfOrders = (props) =>{
                         
                     },
                     {
-                        label: 'cancel',
+                        label: 'Huỷ',
                         data: graphData[2],
                         backgroundColor:[
                             'rgba(54, 162, 235, 0.2)',
@@ -87,7 +87,10 @@ const Statistics_NumOfOrders = (props) =>{
                     },
                     y: {
                         stacked: true,
-                        beginAtZero: true
+                        beginAtZero: true,
+                        ticks:{
+                            stepSize: 1
+                        }
                     }
                 }
             }}

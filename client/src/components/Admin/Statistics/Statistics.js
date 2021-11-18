@@ -13,7 +13,11 @@ import Statistics_revenue from "./Statistics_revenue";
 import getStatistic from '../../../midlewares/getStatistic';
 import DateRangeIcon from '@mui/icons-material/DateRange';
 import Popup from './Popup';
-
+import { TextField } from '@mui/material';
+import Statistics_NumOfProducts from './Statistics_NumOfProducts';
+const formatDate = (dateString) => {
+    return new Date(dateString).toLocaleDateString();
+}
 export default function Statistics(){
     const [buttonPopup, setButtonPopup] = useState(false);
     const [dateRange, detDateRange] = useState([
@@ -48,7 +52,6 @@ export default function Statistics(){
     return (
         <div>
             <Popup trigger={buttonPopup} setTrigger={setButtonPopup} >
-                    <h3>My popup</h3>
                     <div className="dateRangePicker">
                         <DateRangePicker
                         onChange={item => detDateRange([item.selection])}
@@ -60,21 +63,34 @@ export default function Statistics(){
                     />
                     </div>
             </Popup>
-            <h3>{dateRange[0].startDate.toISOString()} - {dateRange[0].endDate.toISOString()}</h3>
-            <a href="#" className="icon-button" onClick={()=> Handle()} >
-                    <DateRangeIcon fontSize="large"/>
-            </a>
-                    {/* <div className="dateRangePicker">
-                        {open && <DateRangePicker
-                        onChange={item => detDateRange([item.selection])}
-                        showSelectionPreview={true}
-                        moveRangeOnFirstSelection={false}
-                        months={2}
-                        ranges={dateRange}
-                        direction="horizontal"
-                    />}
-                    </div> */}
+            <div className="dateRange">
+                <TextField className="TextField"
+                    id="outlined-read-only-input"
+                    label="Start Date"
+                    InputLabelProps={{style: {fontSize: 17}}}
+                    value={formatDate(dateRange[0].startDate)}
+                    InputProps={{
+                        readOnly: true,
+                        style:{fontSize: 17}
+                        }}
+                />
+                <TextField className="TextField"
+                    id="outlined-read-only-input"
+                    label="Start Date"
+                    InputLabelProps={{style: {fontSize: 17}}}
+                    value={formatDate(dateRange[0].endDate)}
+                    InputProps={{
+                        readOnly: true,
+                        style:{fontSize: 17}
+                        }}
+                />
+                    <DateRangeIcon fontSize="large" onClick={()=> Handle()}/>
+            
+            </div>
+
                     <Statistics_NumOfOrders startDate={dateRange[0].startDate} endDate={dateRange[0].endDate} data={data}/>
+                    <Statistics_revenue></Statistics_revenue>
+                    <Statistics_NumOfProducts data={data}/>
         </div>
     )
 }

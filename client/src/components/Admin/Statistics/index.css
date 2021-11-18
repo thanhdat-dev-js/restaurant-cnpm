@@ -1,7 +1,26 @@
-.dateRangPicker {
+.dateRangePicker {
   margin: auto;
   align-items: center;
   padding: auto;
+}
+.dateRange {
+  display: inline-block;
+  width: 100%;
+  align-items: center;
+  margin-top: 2rem;
+}
+.dateRange .MuiSvgIcon-root {
+  float: right;
+  font-size: 30px;
+}
+
+.dateRange .MuiSvgIcon-root:hover {
+  cursor: pointer;
+  color: darkblue;
+}
+.dateRange .TextField {
+  float: right;
+  margin-left: 1rem;
 }
 
 .Popup {
@@ -29,4 +48,9 @@
   position: absolute;
   top: 16px;
   right: 16px;
+}
+.NumOfProducts .Header {
+  margin: 30px;
+  display: flex;
+  justify-content: space-between;
 }
