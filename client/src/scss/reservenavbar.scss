@@ -26,9 +26,15 @@
                 span {
                     margin-right: 10px;
                     font-size: 1.8rem;
+                    font-weight: 500;
                 }
-                .MuiSvgIcon-root {
-                    font-size: 1.6rem;
+                #home-icon {
+                    text-decoration: none;
+                    font-size: 2.4rem;
+                    border-radius: 6px;
+                    color: $white-color;
+                    background-color: $text-color;
+                    margin: 0 10px;
                 }
             }
             &:hover {

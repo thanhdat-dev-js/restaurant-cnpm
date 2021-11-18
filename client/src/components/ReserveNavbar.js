@@ -31,8 +31,8 @@ function ReserveNavbar(props) {
 								
 					<ul>
 						<li>
-							<Link to='/'>
-								<HomeIcon />
+							<Link to='/' sx={{}}>
+								<HomeIcon id='home-icon' />
 								<span>Back to home</span>
 							</Link>
 						</li>

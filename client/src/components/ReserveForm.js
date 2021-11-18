@@ -5,7 +5,6 @@ import verifyReserve from '../midlewares/verifyReserve'
 import postReserve from '../midlewares/postReserve';
 
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
-import ReserveFormCarousel from './ReserveFormCarousel';
 
 function ReserveForm() {
     const [checking, setChecking] = useState(true);

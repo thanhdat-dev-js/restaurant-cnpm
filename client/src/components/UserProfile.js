@@ -1,10 +1,12 @@
 import { Box, Button, Container, Grid, TextField } from '@material-ui/core'
 import { styled } from '@material-ui/core';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import React from 'react'
+import React, { Profiler } from 'react'
 import ReserveNavbar from './ReserveNavbar'
+
 import ReceiptIcon from '@material-ui/icons/Receipt';
-import { useState, useEffect } from 'react';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import SecurityIcon from '@mui/icons-material/Security';
+import { useState } from 'react';
 
 const Img = styled('img')({
   margin: 'auto',
@@ -28,48 +30,111 @@ function UserProfile() {
 		<Container fluid='lg' sx={{}}>
 			<ReserveNavbar homeOnly={true}/>
 			<Container fluid='lg' sx={{p:2}}>
-				<Box sx={{bgcolor: '#F8F8F8',p:2 }}>
-					<Box fullWidth sx={{display:'flex', bgcolor:'white', py: 5, px: 3, justifyContent:'space-between'}}>
-						<Grid container>
-							<Grid item xs={4} id="sidebar">
-								<Box id="sidebar-title" sx={{fontWeight:600, fontSize: 20}}>User Profile</Box>
-								<Box id='sidebar-list' sx={{display:'flex', flexDirection:'column'}}>
-									<Box id='sidebar-item' sx={{display:'flex', alignItems:'center'}}>
-										<ReceiptIcon />
-										<Box sx={{fontSize: 18}}>My Profile</Box>
-									</Box>
-									<Box id='sidebar-item' sx={{display:'flex', alignItems:'center'}}>
-										<ReceiptIcon />
-										<Box sx={{fontSize: 18}}>Security Setting</Box>
-									</Box>
+				<Box sx={{bgcolor: '#F8F8F8',p:2, height: '100vh' }}>
+					<Box 
+						fullWidth 
+						sx={{
+							display:'flex', 
+							px: 5, bgcolor:'white', height:'98%'
+						}}
+					>
+						<Box id="sidebar" sx={{maxWidth: '35%', py: 8, pr: 6}} style={{borderRight: '1px solid grey'}}>
+							<Box 
+								id="sidebar-title" 
+								sx={{fontWeight:600, 
+								fontSize: 20, mb:3}}
+							>
+								User Profile
+							</Box>
+							<Box 
+								id='sidebar-list' 
+								sx={{display:'flex', flexDirection:'column'}}
+							>
+								<Box 
+									id='sidebar-item' 
+									sx={{display:'flex', alignItems:'center', mb: 1, fontSize: 22}}
+								>
+									<AccountCircleIcon fontSize='inherit'/>
+									<Box sx={{ml: 1, fontSize: 18}}>My Profile</Box>
 								</Box>
-							</Grid>
 
-							<Grid item xs={8} id="body" sx={{display:'flex', flexDirection: 'column'}}>
-								<Box id="body-title" sx={{display:'flex', }}>
-									<AccountCircleIcon sx={{width: 80, height: 80}}/>
-									<Box sx={{display:'flex', flexDirection: 'column', my:'auto'}}>
-										<Box sx={{fontSize: 20}}>{profile.FirstName} {profile.LastName}</Box>
-										<Box sx={{fontSize: 16}}>{profile.Email}</Box>
-									</Box>
+								<Box 
+									id='sidebar-item' 
+									sx={{display:'flex', alignItems:'center', fontSize: 22}}
+								>
+									<SecurityIcon fontSize='inherit' />
+									<Box sx={{ml: 1,fontSize: 18}}>Security Settings</Box>
 								</Box>
-								<Grid container spacing={2}>
+							</Box>
+						</Box>
+
+						<Box id="body" 
+							sx={{
+								width: '60%', py: 8, ml: 8, 
+								display:'flex', flexDirection: 'column'
+							}}
+						>
+							<Box id="body-title" sx={{display:'flex', fontSize: 50, mb: 8}}>
+								<AccountCircleIcon fontSize='inherit' x={{}}/>
+								<Box sx={{fontSize: 20, my: 'auto', ml: 2}}>{profile.FirstName} {profile.LastName}</Box>
+							</Box>
+							<Box sx={{mb: 3}}>
+								<Grid container spacing={3}>
 									<Grid item xs={12} md={6} >
-										<TextField fullWidth label='First Name' variant="outlined" name="FirstName" placeholder={profile.FirstName}/>
+										<TextField 
+											fullWidth 
+											label='First Name' 
+											variant="outlined" 
+											name="FirstName" 
+											defaultValue={profile['FirstName']}
+											placeholder={profile.FirstName}
+											InputProps={{ style: { fontSize: 14 } }}
+											InputLabelProps={{ style: { fontSize: 14 } }}
+										/>
 									</Grid>
 									<Grid item xs={12} md={6}>
-										<TextField fullWidth label='Last Name' variant="outlined" name="LastName"/>
+										<TextField 
+											fullWidth 
+											label='Last Name' 
+											variant='outlined' 
+											defaultValue={profile['LastName']}
+											name='LastName'
+											InputProps={{ style: { fontSize: 14 } }}
+											InputLabelProps={{ style: { fontSize: 14 } }}
+										/>
 									</Grid>
 									<Grid item xs={12} md={6}>
-										<TextField fullWidth label='Email' type='email' variant="outlined" />
+										<TextField 
+											fullWidth 
+											disabled 
+											label='Email' 
+											type='email' 
+											defaultValue={profile['Email']}
+											variant="outlined" 
+											InputProps={{ style: { fontSize: 14 } }}
+											InputLabelProps={{ style: { fontSize: 14 } }}
+										/>
 									</Grid>
 									<Grid item xs={12} md={6}>
-										<TextField fullWidth label='Phone number' variant="outlined" />
+										<TextField 
+											fullWidth 
+											defaultValue={profile['Phone']}
+											label='Phone number' 
+											variant="outlined" 
+											InputProps={{ style: { fontSize: 14 } }}
+											InputLabelProps={{ style: { fontSize: 14 } }}
+										/>
 									</Grid>
 								</Grid>
-								<Button fullWidth>Save Changes</Button>
-							</Grid>
-						</Grid>
+							</Box>
+							<Button 
+								fullWidth type="submit" color="secondary" variant="contained"
+								// onClick={handleOnclickConfirmbtn}
+								style={{ fontSize: '14px'}}
+							>
+								Save Changes
+							</Button>
+						</Box>
 					</Box>
 				</Box>
 			</Container>
