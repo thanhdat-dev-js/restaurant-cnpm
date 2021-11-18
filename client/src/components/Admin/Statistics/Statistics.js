@@ -12,6 +12,7 @@ import Statistics_NumOfOrders from "./Statistics_NumOfOrders";
 import Statistics_revenue from "./Statistics_revenue";
 import Statistics_hour from "./Statistics_hour";
 import Statistics_hour2 from "./Statistics_hour2";
+import Statistics_hour3 from "./Statistics_hour3";
 import getStatistic from '../../../midlewares/getStatistic';
 import DateRangeIcon from '@mui/icons-material/DateRange';
 import Popup from './Popup';
@@ -96,6 +97,8 @@ export default function Statistics(){
                     <Statistics_hour data={data}/>
                     <Statistics_NumOfProducts data={data}/>
                     <Statistics_hour2 data={data}/>
+                    <Statistics_hour3 data={data}/>
+
         </div>
     )
 }
