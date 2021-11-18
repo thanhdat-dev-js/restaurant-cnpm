@@ -482,9 +482,9 @@ export default () => {
                      <div className='cart-footer'>
                         <div className='cart-footer-wrap'>
                            <h3>Total:</h3>
-                           <p>{format(dataCart.totalOrder, 'đ')}</p>
+                           <p>{dataCart.totalOrder ? format(dataCart.totalOrder, 'đ') : 'đ0'}</p>
                         </div>
-                        <div className='discount'>Khuyen mai</div>
+                        <div className='discount'></div>
                         <Button className='btn-modal' variant="contained" color="secondary" onClick={handlePayment}>PAYMENT</Button>
                      </div>
                   </div>
