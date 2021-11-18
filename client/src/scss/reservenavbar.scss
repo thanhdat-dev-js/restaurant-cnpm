@@ -40,3 +40,46 @@
         }
     }
 }
+@media screen and (max-width: 450px) {
+    .reserve_navbar {
+        .header {
+            height: 60px;
+            box-shadow: $box-shadow;
+            background-color: $white-color;
+            display: flex;
+            justify-content: space-between;
+            ul {
+                padding-left: 0;
+                list-style: none;
+                margin: 0;
+                display: flex;
+                justify-content: flex-start;
+            }
+            li {
+                transition: $linear-3;
+                a {
+                    transition: $linear-3;
+                    color: $text-color;
+                    text-decoration: none;
+                    height: 60px;
+                    display: flex;
+                    align-items: center;
+                    padding: 0 20px;
+                    span {
+                        margin-right: 10px;
+                        font-size: 1.6rem;
+                    }
+                    .MuiSvgIcon-root {
+                        font-size: 1.6rem;
+                    }
+                }
+                &:hover {
+                    background-color: $text-color;
+                    a {
+                        color: $white-color;
+                    }
+                }
+            }
+        }
+    }
+}

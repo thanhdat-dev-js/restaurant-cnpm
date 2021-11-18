@@ -6,6 +6,7 @@ import MenuBookIcon from '@material-ui/icons/MenuBook';
 import verifyToken from '../midlewares/verifyToken';
 import ReactTypingEffect from 'react-typing-effect';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import ReceiptIcon from '@material-ui/icons/Receipt';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import '../scss/home.scss';
 export default () => {
@@ -39,12 +40,27 @@ export default () => {
                                 <MenuBookIcon />
                             </Link>
                         </li>}
-                        {permission === 'clerk' && <li>
+                        {permission === 'customer' && isAuthen && <li>
+                            <Link to="/reserve">
+                                <span>Reserve</span>
+                                <ReceiptIcon />
+                            </Link>
+                        </li>}
+                        {permission === 'clerk' && 
+                        <>
+                        <li>
                             <Link to="/clerk">
                                 <span>Clerk</span>
                                 <MenuBookIcon />
                             </Link>
-                        </li>}
+                        </li>
+                        <li>
+                            <Link to="/reservelist">
+                                <span>Reserve List</span>
+                                <ReceiptIcon />
+                            </Link>
+                        </li>
+                        </>}
                         {permission === 'admin' && <li>
                             <Link to="/admin">
                                 <span>admin</span>
@@ -62,8 +78,8 @@ export default () => {
                         {isAuthen ?
                             <>
                                 <li>
-                                    <Link to="/user">
-                                        <span>profile</span>
+                                    <Link to="/profile">
+                                        <span>Profile</span>
                                         <AccountCircleIcon />
                                     </Link>
                                 </li>

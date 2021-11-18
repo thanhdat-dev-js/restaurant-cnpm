@@ -7,8 +7,8 @@ import Login from './components/Login';
 import Register from './components/Register';
 import Admin from './components/Admin';
 import Payment from './components/Payment';
-import Reserve from './components/Reserve'
-import ReserveList from './components/ReserveList'
+import Reserve from './components/Reserve';
+import ReserveList from './components/ReserveList';
 import './scss/index.scss';
 import UserProfile from './components/UserProfile';
 

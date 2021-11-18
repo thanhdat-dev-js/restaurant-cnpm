@@ -16,6 +16,7 @@
     table td, table th {
         border: 1px solid #ddd;
         padding: 8px;
+        text-align: center;
     }
     table tr:nth-child(even) {
         background-color: #f2f2f2;
@@ -29,5 +30,40 @@
         text-align: center;
         background-color: $primary-color;
         color: white;
+    }
+}
+@media screen and (max-width: 450px) {
+    .reserve-list {
+        font-size: 1rem;
+        .reserve-title {
+            font-size: 200%;
+            text-align: center;
+            font-weight: bold;
+            margin: 50px 0px 30px 0px;
+            color: #000A43;
+        }
+        table {
+            font-family: Arial, Helvetica, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+        table td, table th {
+            border: 1px solid #ddd;
+            padding: 5px;
+            text-align: center;
+        }
+        table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        table tr:hover {
+            background-color: #ddd;
+        }
+        table th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: center;
+            background-color: $primary-color;
+            color: white;
+        }
     }
 }

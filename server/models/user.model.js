@@ -12,6 +12,8 @@ const userSchema = new mongoose.Schema({
     username: reqString,
     password: reqString,
     email: reqString,
+    fname: String,
+    lname: String,
     reservations: [String],
     permission: String
 },

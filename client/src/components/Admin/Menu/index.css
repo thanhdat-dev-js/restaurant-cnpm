@@ -46,6 +46,10 @@ scrollbar-width: none;  /* Firefox */
 }
 
 .am-form-header {
+    z-index: 100;
+    background-color: white;
+    position: sticky;
+    top: 0;
     display: flex;
     justify-content: space-between;
     margin-bottom: 20px;
@@ -53,4 +57,9 @@ scrollbar-width: none;  /* Firefox */
 
 .am-product {
     margin: 10px 0;
+    display: flex;
+}
+
+.am-form-search {
+    display: flex;
 }

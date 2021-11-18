@@ -1,8 +1,7 @@
 // import { Link } from 'react-router-dom';
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState} from 'react';
 // import { useHistory } from "react-router-dom";
 // import HomeIcon from '@material-ui/icons/Home';
-import DownArrow from '@material-ui/icons/ArrowDropDownCircle';
 // import { Container, formatMs } from '@material-ui/core';
 import 'react-date-range/dist/styles.css'; // main css file
 import 'react-date-range/dist/theme/default.css'; // theme css file
@@ -12,10 +11,15 @@ import { addDays } from 'date-fns';
 import Statistics_NumOfOrders from "./Statistics_NumOfOrders";
 import Statistics_revenue from "./Statistics_revenue";
 import Statistics_hour from "./Statistics_hour";
+import Statistics_hour2 from "./Statistics_hour2";
 import getStatistic from '../../../midlewares/getStatistic';
 import DateRangeIcon from '@mui/icons-material/DateRange';
 import Popup from './Popup';
-
+import { TextField } from '@mui/material';
+import Statistics_NumOfProducts from './Statistics_NumOfProducts';
+const formatDate = (dateString) => {
+    return new Date(dateString).toLocaleDateString();
+}
 export default function Statistics(){
     const [buttonPopup, setButtonPopup] = useState(false);
     const [dateRange, detDateRange] = useState([
@@ -25,7 +29,6 @@ export default function Statistics(){
     key: 'selection'
 }
     ]);
-    const [open, setOpen] = useState(false);
     const [data, setData] = useState([]);
     // let optionRef = useRef();
     function getData(startDate, endDate) {
@@ -47,24 +50,10 @@ export default function Statistics(){
             // console.log(dateRange[0]);
             getData(dateRange[0].startDate.toISOString(), dateRange[0].endDate.toISOString());
     }, [dateRange]);
-    // useEffect(() => {
-    //     let handler = (event) =>{
-    //         if (!optionRef.current.contains(event.target)){
-    //             console.log(optionRef.current)
-    //             setOpen(false);
-    //             setButtonPopup(false);
-    //         }
-    //     }
-    //     document.addEventListener("mousedown", handler);
-    //     return () => {
-    //         document.removeEventListener("mousedown", handler)
-    //     }
-    // });
 
     return (
         <div>
             <Popup trigger={buttonPopup} setTrigger={setButtonPopup} >
-                    <h3>My popup</h3>
                     <div className="dateRangePicker">
                         <DateRangePicker
                         onChange={item => detDateRange([item.selection])}
@@ -76,24 +65,37 @@ export default function Statistics(){
                     />
                     </div>
             </Popup>
-            <h3>{dateRange[0].startDate.toISOString()} - {dateRange[0].endDate.toISOString()}</h3>
-            <a href="#" className="icon-button" onClick={()=> Handle()} >
-                    <DateRangeIcon fontSize="large"/>
-            </a>
-                    {/* <div className="dateRangePicker">
-                        {open && <DateRangePicker
-                        onChange={item => detDateRange([item.selection])}
-                        showSelectionPreview={true}
-                        moveRangeOnFirstSelection={false}
-                        months={2}
-                        ranges={dateRange}
-                        direction="horizontal"
-                    />}
-                    </div> */}
+            <div className="dateRange">
+                <TextField className="TextField"
+                    id="outlined-read-only-input"
+                    label="Start Date"
+                    InputLabelProps={{style: {fontSize: 17}}}
+                    value={formatDate(dateRange[0].startDate)}
+                    InputProps={{
+                        readOnly: true,
+                        style:{fontSize: 17}
+                        }}
+                />
+                <TextField className="TextField"
+                    id="outlined-read-only-input"
+                    label="Start Date"
+                    InputLabelProps={{style: {fontSize: 17}}}
+                    value={formatDate(dateRange[0].endDate)}
+                    InputProps={{
+                        readOnly: true,
+                        style:{fontSize: 17}
+                        }}
+                />
+                    <DateRangeIcon fontSize="large" onClick={()=> Handle()}/>
+            
+            </div>
+
                     <Statistics_NumOfOrders startDate={dateRange[0].startDate} endDate={dateRange[0].endDate} data={data}/>
+
                     <Statistics_revenue startDate={dateRange[0].startDate} endDate={dateRange[0].endDate} data={data}/>
                     <Statistics_hour data={data}/>
-                    
+                    <Statistics_NumOfProducts data={data}/>
+                    <Statistics_hour2 data={data}/>
         </div>
     )
 }

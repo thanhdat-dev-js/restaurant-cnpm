@@ -9,10 +9,10 @@ function Reserve() {
     <div className="reserve">
       <ReserveNavbar/>
       <Container fluid="lg">
-        <Box className="reserve-body" sx={{p:3, bgcolor: '#f8f8f8'}}> 
+        <Box className="reserve-body" sx={{p:3, bgcolor: '#f8f8f8', height: {xs: 'auto', md: '100vh'}}}> 
           <Box 
             className="reserve-form-container"
-            sx={{pt:10, display: 'flex', justifyContent: 'center', bgcolor: '#fff'}}
+            sx={{ display: 'flex', justifyContent: 'center', bgcolor: '#fff', height: {xs: 'auto', md: '98vh'}}}
           >
             <ReserveForm/>
           </Box>

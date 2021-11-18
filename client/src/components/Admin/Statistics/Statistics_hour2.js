@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 // import { useMemo } from "react";
-import {Line} from "react-chartjs-2";
+import {PolarArea } from "react-chartjs-2";
 
 const dateDiff = (startDate, endDate) => {
     const date1 = startDate;
@@ -10,7 +10,7 @@ const dateDiff = (startDate, endDate) => {
     return diffDays
 }
 
-const Statistics_hour = (props) =>{
+const Statistics_hour2 = (props) =>{
 
     const {data} = props;
     console.log(data);
@@ -47,7 +47,7 @@ const Statistics_hour = (props) =>{
     return (
     <div>
         <h1>Bảng thống kê tần suất nhận đơn ở các khung giờ</h1>
-        <Line
+        <PolarArea 
             data = {{
                 labels: arr1,
                 datasets: [
@@ -56,13 +56,27 @@ const Statistics_hour = (props) =>{
                         data: graphData[1],
                         fill: true,
                         backgroundColor:[
-                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(255, 0, 0, 0.2)',
+                            'rgba(255, 0, 0, 0.4)',
+                            'rgba(255, 0, 0, 0.6)',
+                            'rgba(255, 0, 0, 0.8)',
+                            'rgba(255, 178, 0, 0.2)',
+                            'rgba(255, 178, 0, 0.4)',
+                            'rgba(255, 178, 0, 0.6)',
+                            'rgba(255, 178, 0, 0.8)',
+                            'rgba(0, 113, 122, 0.2)',
+                            'rgba(0, 113, 122, 0.4)',
+                            'rgba(0, 113, 122, 0.6)',
+                            'rgba(0, 113, 122, 0.8)',
+                            'rgba(0, 180, 41, 0.2)',
+                            'rgba(0, 180, 41, 0.4)',
+                            'rgba(0, 180, 41, 0.6)',
+                            'rgba(0, 180, 41, 0.8)',
                         ],
                         borderColor: [
-                            'rgba(54, 162, 235, 1)',  
+                            'rgba(54, 162, 235, 1)',
                         ],
-                        borderWidth: 2,
-                        tension: 0.3,
+                        borderWidth: 1,
                     },
                     
                 ]
@@ -81,9 +95,9 @@ const Statistics_hour = (props) =>{
                     }
                 }
             }}
-        ></Line>
+        ></PolarArea >
     </div>
     )
 }
 
-export default Statistics_hour
+export default Statistics_hour2
