@@ -79,7 +79,7 @@ export default function Statistics(){
                 />
                 <TextField className="TextField"
                     id="outlined-read-only-input"
-                    label="Start Date"
+                    label="End Date"
                     InputLabelProps={{style: {fontSize: 17}}}
                     value={formatDate(dateRange[0].endDate)}
                     InputProps={{
