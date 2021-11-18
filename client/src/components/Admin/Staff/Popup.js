@@ -1,6 +1,6 @@
 import classNames from "classnames";
-import { Button, TextField } from "@material-ui/core";
-import { useState } from "react";
+import { Button, TextField, Select, MenuItem } from "@material-ui/core";
+import { useState, useEffect } from "react";
 import axios from "axios";
 
 const SERVER = "http://localhost:4000/";
@@ -8,100 +8,135 @@ const SERVER = "http://localhost:4000/";
 export default function Popup(props) {
   const [content, setContent] = useState(props.data);
 
+  const [flag, setFlag] = useState(false);
+
   const ADD_NEW = -1;
 
   function getUser() {
-    setContent("user");
+    try {
+      let reqOptions = {
+        url: SERVER + "admin/employee/email?q=" + content.email,
+        method: "GET",
+      };
+      axios.request(reqOptions).then(function (response) {
+        setContent({ ...response.data });
+        setFlag(true);
+      });
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   function putEmployee() {
-    alert("Thành công");
-    props.closeModal();
+    try {
+      let reqOptions = {
+        url: SERVER + "admin/employee/email?q=" + content.email,
+        method: "PUT",
+        data: content,
+      };
+      axios.request(reqOptions).then(function () {
+        props.closeModal();
+      });
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   return (
     <div className={classNames("am-modal", { open: props.showModal })}>
-      {props.current == ADD_NEW ? (
-        <div className="am-form">
-          <div className="am-form-header">
+      <div className="am-form">
+        <div className="am-form-header">
+          {props.current === ADD_NEW ? (
             <h2>Tìm người</h2>
-            <div>
-              <Button color="primary" variant="contained">
-                Lưu thay đổi
-              </Button>
-              <Button
-                color="secondary"
-                variant="contained"
-                onClick={props.closeModal}
-              >
-                Thoát
-              </Button>
-            </div>
-          </div>
+          ) : (
+            <h2>Chỉnh sửa nhân sự</h2>
+          )}
 
-          <div className="am-form-search">
+          <div>
+            <Button color="primary" variant="contained" onClick={putEmployee}>
+              Lưu thay đổi
+            </Button>
+            <Button
+              color="secondary"
+              variant="contained"
+              onClick={props.closeModal}
+            >
+              Huỷ
+            </Button>
+          </div>
+        </div>
+
+        {props.current === ADD_NEW && (
+          <div className="am-form-search am-form-add">
             <TextField
               label="Tìm theo email"
               variant="outlined"
+              InputProps={{ style: { fontSize: 14 } }}
+              InputLabelProps={{ style: { fontSize: 14 } }}
               onChange={(e) =>
                 setContent({ ...content, email: e.target.value })
               }
             />
 
-            <Button color="secondary" variant="contained" onClick={getUser}>
+            <Button
+              color="secondary"
+              variant="contained"
+              onClick={() => {
+                setFlag(false);
+                getUser();
+              }}
+            >
               Tìm
             </Button>
           </div>
-        </div>
-      ) : (
-        <div className="am-form">
-          <div className="am-form-header">
-            <h2>Chỉnh sửa nhân sự</h2>
+        )}
 
-            <div>
-              <Button color="primary" variant="contained" onClick={putEmployee}>
-                Lưu thay đổi
-              </Button>
-              <Button
-                color="secondary"
-                variant="contained"
-                onClick={props.closeModal}
-              >
-                Thoát
-              </Button>
-            </div>
+        {(props.current != ADD_NEW || flag) && (
+          <div className="am-form-add">
+            <h2>Thông tin</h2>
+            <TextField
+              disabled
+              label="Username"
+              defaultValue={content?.username}
+              variant="outlined"
+              margin="dense"
+              fullWidth
+              InputProps={{ style: { fontSize: 14 } }}
+              InputLabelProps={{ style: { fontSize: 14 } }}
+              onChange={(e) =>
+                setContent({ ...content, username: e.target.value })
+              }
+            />
+            <TextField
+              disabled
+              label="Email"
+              defaultValue={content?.email}
+              variant="outlined"
+              margin="dense"
+              fullWidth
+              InputProps={{ style: { fontSize: 14 } }}
+              InputLabelProps={{ style: { fontSize: 14 } }}
+              onChange={(e) =>
+                setContent({ ...content, email: e.target.value })
+              }
+            />
+
+            <Select
+              value={content?.permission}
+              label="Quyển"
+              variant="outlined"
+              sx={{ fontSize: "24px" }}
+              onChange={(e) => {
+                setContent({ ...content, permission: e.target.value });
+              }}
+            >
+              <MenuItem value="customer">Customer</MenuItem>
+              <MenuItem value="kitchen">Kitchen</MenuItem>
+              <MenuItem value="clerk">Clerk</MenuItem>
+            </Select>
           </div>
-
-          <TextField
-            label="Username"
-            defaultValue={content.username}
-            variant="outlined"
-            margin="dense"
-            fullWidth="true"
-            onChange={(e) =>
-              setContent({ ...content, username: e.target.value })
-            }
-          />
-          <TextField
-            label="Email"
-            defaultValue={content.email}
-            variant="outlined"
-            margin="dense"
-            fullWidth="true"
-            onChange={(e) => setContent({ ...content, email: e.target.value })}
-          />
-          <TextField
-            label="Quyền"
-            defaultValue={content.permission}
-            variant="outlined"
-            margin="dense"
-            fullWidth="true"
-            onChange={(e) =>
-              setContent({ ...content, permission: e.target.value })
-            }
-          />
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 }

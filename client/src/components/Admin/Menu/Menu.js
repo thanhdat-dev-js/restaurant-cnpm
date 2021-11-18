@@ -5,7 +5,9 @@ import axios from "axios";
 import "../../../scss/clerk.scss";
 import "./index.css";
 import { Button } from "@material-ui/core";
-// import CloseIcon from "@mui/icons-material/Close";
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import AddBoxIcon from '@mui/icons-material/AddBox';
 // import classNames from "classnames";
 
 import verifyToken from "../../../midlewares/verifyToken";
@@ -40,7 +42,7 @@ export default function Menu() {
     const getInfo = verifyToken();
     if (getInfo) {
       getInfo.then((res) => {
-        console.log(res);
+        // console.log(res);
         if (res.data.permission !== "admin") {
           history.push("/login");
         }
@@ -58,7 +60,8 @@ export default function Menu() {
         method: "GET",
       };
       axios.request(reqOptions).then(function (response) {
-        setDataTag({ ...response });
+        const data = response.data;
+        setDataTag({ data: [...data], current: -1 });
       });
     } catch (e) {
       console.log(e);
@@ -80,7 +83,6 @@ export default function Menu() {
 
   return (
     <div className="clerk">
-
       {showModal && (
         <Popup
           data={dataTag.data[dataTag.current]}
@@ -120,7 +122,7 @@ export default function Menu() {
                     setShowModal(true);
                   }}
                 >
-                  Thêm mới
+                  <AddBoxIcon sx={{fontSize:'20px'}}></AddBoxIcon>
                 </Button>
               </td>
               <td></td>
@@ -138,14 +140,14 @@ export default function Menu() {
                   <td>
                     <Button
                       className="btn-modal"
-                      variant="contained"
+                      variant="outlined"
                       color="primary"
                       onClick={() => {
                         setDataTag({ ...dataTag, current: idx });
                         setShowModal(true);
                       }}
                     >
-                      Cập nhật
+                  <EditIcon sx={{fontSize:'20px'}}></EditIcon>
                     </Button>
                   </td>
                   <td>
@@ -160,7 +162,7 @@ export default function Menu() {
                         getData();
                       }}
                     >
-                      Xoá
+                  <DeleteIcon sx={{fontSize:'20px'}}></DeleteIcon>
                     </Button>
                   </td>
                 </tr>

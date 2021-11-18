@@ -1,6 +1,6 @@
-import classNames from "classnames";
+// import classNames from "classnames";
 import { Button, TextField } from "@material-ui/core";
-import { useState } from "react";
+import { useState, useRef, useCallback } from "react";
 import axios from "axios";
 
 import "./index.css";
@@ -8,7 +8,6 @@ const SERVER = "http://localhost:4000/";
 
 export default function Popup(props) {
   const [content, setContent] = useState(props.data);
-
   const ADD_NEW = -1;
 
   // showModal, closeModal , current, data
@@ -21,7 +20,7 @@ export default function Popup(props) {
           method: "POST",
           data: content,
         };
-        axios.request(req).then(props.closeModal());
+        axios.request(req).then(() => props.closeModal());
       }
     } catch (err) {
       console.log(err);
@@ -35,15 +34,20 @@ export default function Popup(props) {
           method: "PUT",
           data: content,
         };
-        axios.request(req).then(props.closeModal());
+        axios.request(req).then(() => props.closeModal());
       }
     } catch (err) {
       console.log(err);
     }
   }
 
+  const newDishRef = useRef();
+  function scrollToBottom() {
+    newDishRef.current?.scrollIntoView({ behavior: "smooth" });
+  }
+
   return (
-    <div className={classNames("am-modal", { open: props.showModal })}>
+    <div className="am-modal open">
       <div className="am-form">
         <div className="am-form-header">
           {props.current === ADD_NEW ? (
@@ -65,48 +69,46 @@ export default function Popup(props) {
               variant="contained"
               onClick={props.closeModal}
             >
-              Thoát
+              Huỷ
             </Button>
           </div>
         </div>
 
+        <div className="am-form-add">
         <h3>Mục</h3>
         <TextField
           label="Loại"
+          required
           defaultValue={content?.type}
           variant="outlined"
           margin="dense"
+          InputProps={{ style: { fontSize: 14 } }}
+          InputLabelProps={{ style: { fontSize: 14 } }}
           onChange={(e) => setContent({ ...content, type: e.target.value })}
         />
 
         <TextField
           label="Đường dẫn ảnh"
+          required
           defaultValue={content?.imgURL}
           variant="outlined"
           margin="dense"
+          InputProps={{ style: { fontSize: 14 } }}
+          InputLabelProps={{ style: { fontSize: 14 } }}
           onChange={(e) => setContent({ ...content, imgURL: e.target.value })}
         />
 
-        <h3>Món ăn</h3>
+        </div>
 
-        <Button
-          color="primary"
-          variant="outlined"
-          onClick={() => {
-            props.current == ADD_NEW
-              ? setContent({
-                  ...content,
-                  products: [
-                    {
-                      productID: " ",
-                      name: " ",
-                      imgURL: " ",
-                      price: " ",
-                      description: " ",
-                    },
-                  ],
-                })
-              : setContent({
+        {props.current !== ADD_NEW && (
+          <div className='am-form-add'>
+            <h3>Món ăn</h3>
+
+            <Button
+              color="primary"
+              variant="outlined"
+              onClick={() => {
+                setContent({
                   ...content,
                   products: [
                     ...content?.products,
@@ -119,23 +121,28 @@ export default function Popup(props) {
                     },
                   ],
                 });
-          }}
-        >
-          Thêm món
-        </Button>
+                scrollToBottom();
+              }}
+            >
+              Thêm món
+            </Button>
+          </div>
+        )}
 
         {content?.products?.map((product, idx) => (
-          <div className="am-product">
+          <div key={product.productID} className="am-product">
             <TextField
               label="ID"
               defaultValue={product.productID}
               variant="outlined"
               margin="dense"
+              InputProps={{ style: { fontSize: 14 } }}
+              InputLabelProps={{ style: { fontSize: 14 } }}
               onChange={(e) =>
                 setContent({
                   ...content,
                   products: content?.products?.map((p) =>
-                    p.productID == product.productID
+                    p.productID === product.productID
                       ? { ...p, productID: e.target.value }
                       : p
                   ),
@@ -147,11 +154,13 @@ export default function Popup(props) {
               defaultValue={product.name}
               variant="outlined"
               margin="dense"
+              InputProps={{ style: { fontSize: 14 } }}
+              InputLabelProps={{ style: { fontSize: 14 } }}
               onChange={(e) =>
                 setContent({
                   ...content,
                   products: content?.products?.map((p) =>
-                    p.productID == product.productID
+                    p.productID === product.productID
                       ? { ...p, name: e.target.value }
                       : p
                   ),
@@ -163,11 +172,13 @@ export default function Popup(props) {
               defaultValue={product.imgURL}
               variant="outlined"
               margin="dense"
+              InputProps={{ style: { fontSize: 14 } }}
+              InputLabelProps={{ style: { fontSize: 14 } }}
               onChange={(e) =>
                 setContent({
                   ...content,
                   products: content?.products?.map((p) =>
-                    p.productID == product.productID
+                    p.productID === product.productID
                       ? { ...p, imgURL: e.target.value }
                       : p
                   ),
@@ -179,11 +190,13 @@ export default function Popup(props) {
               defaultValue={product.price}
               variant="outlined"
               margin="dense"
+              InputProps={{ style: { fontSize: 14 } }}
+              InputLabelProps={{ style: { fontSize: 14 } }}
               onChange={(e) =>
                 setContent({
                   ...content,
                   products: content?.products?.map((p) =>
-                    p.productID == product.productID
+                    p.productID === product.productID
                       ? { ...p, price: e.target.value }
                       : p
                   ),
@@ -195,11 +208,13 @@ export default function Popup(props) {
               defaultValue={product.description}
               variant="outlined"
               margin="dense"
+              InputProps={{ style: { fontSize: 14 } }}
+              InputLabelProps={{ style: { fontSize: 14 } }}
               onChange={(e) =>
                 setContent({
                   ...content,
                   products: content?.products?.map((p) =>
-                    p.productID == product.productID
+                    p.productID === product.productID
                       ? { ...p, description: e.target.value }
                       : p
                   ),
@@ -214,7 +229,7 @@ export default function Popup(props) {
                 setContent({
                   ...content,
                   products: content?.products?.filter(
-                    (p) => p.productID !== product.productID && p
+                    (p) => p.productID !== product.productID
                   ),
                 });
               }}
@@ -223,6 +238,8 @@ export default function Popup(props) {
             </Button>
           </div>
         ))}
+
+        <div ref={newDishRef}></div>
       </div>
     </div>
   );

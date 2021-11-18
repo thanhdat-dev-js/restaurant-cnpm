@@ -4,6 +4,8 @@ import axios from "axios";
 
 import "../../../scss/clerk.scss";
 import { Button, TextField } from "@material-ui/core";
+import AddBoxIcon from "@mui/icons-material/AddBox";
+import EditIcon from "@mui/icons-material/Edit";
 
 import verifyToken from "../../../midlewares/verifyToken";
 import Popup from "./Popup";
@@ -18,23 +20,24 @@ const formatDate = (dateString) => {
 };
 
 export default function Staff() {
+  const history = useHistory();
+
   const [dataTag, setDataTag] = useState({
     data: [],
-    current: -1
+    current: -1,
   });
-  const [showModal, setShowModal] = useState(false)
+  const [showModal, setShowModal] = useState(false);
 
   const closeModal = () => {
-    setShowModal(false)
-    getData()
-  }
+    setShowModal(false);
+    getData();
+  };
 
-  const history = useHistory();
   useEffect(() => {
     const getInfo = verifyToken();
     if (getInfo) {
       getInfo.then((res) => {
-        console.log(res);
+        // console.log(res);
         if (res.data.permission !== "admin") {
           history.push("/login");
         }
@@ -52,7 +55,8 @@ export default function Staff() {
         method: "GET",
       };
       axios.request(reqOptions).then(function (response) {
-        setDataTag({ ...response });
+        const newdata = response.data;
+        setDataTag({ data: [...newdata], current: -1 });
       });
     } catch (e) {
       console.log(e);
@@ -61,19 +65,16 @@ export default function Staff() {
 
   return (
     <div className="clerk">
-
-      {showModal && 
-        <Popup 
+      {showModal && (
+        <Popup
           showModal={showModal}
           closeModal={closeModal}
           data={dataTag.data?.[dataTag.current]}
           current={dataTag.current}
         />
-      }
-
+      )}
 
       <div className="body">
-
         <table>
           <tr>
             <th>STT</th>
@@ -83,7 +84,6 @@ export default function Staff() {
             <th>Được tạo vào</th>
             <th>Cập nhật vào</th>
             <th>Cập nhật</th>
-            <th>Xoá</th>
           </tr>
 
           <tr>
@@ -101,18 +101,18 @@ export default function Staff() {
                 color="primary"
                 onClick={() => {
                   setDataTag({ ...dataTag, current: -1 });
-                  setShowModal(true)
+                  console.log(dataTag);
+                  setShowModal(true);
                 }}
               >
-                Thêm mới
+                <AddBoxIcon sx={{ fontSize: "20px" }}></AddBoxIcon>
               </Button>
             </td>
-            <td></td>
           </tr>
 
           {dataTag &&
             dataTag.data.map((val, idx) => (
-              <tr>
+              <tr key={idx}>
                 <td>{idx}</td>
                 <td>{val.username}</td>
                 <td>{val.email}</td>
@@ -123,28 +123,15 @@ export default function Staff() {
                 <td>
                   <Button
                     className="btn-modal"
-                    variant="contained"
+                    variant="outlined"
                     color="primary"
                     onClick={() => {
                       setDataTag({ ...dataTag, current: idx });
-                      setShowModal(true)
+                      console.log(dataTag);
+                      setShowModal(true);
                     }}
                   >
-                    Cập nhật
-                  </Button>
-                </td>
-                <td>
-                  <Button
-                    className="btn-modal"
-                    variant="outlined"
-                    color="secondary"
-                    // onClick={() => {
-                    //   window.confirm(
-                    //     `Bạn thực sự muốn xoá mục ${val.type}?\nMọi thay đổi sẽ không được hoàn tác!`
-                    //   ) && handleCategory("delete", val._id);
-                    // }}
-                  >
-                    Xoá
+                    <EditIcon sx={{ fontSize: "20px" }}></EditIcon>
                   </Button>
                 </td>
               </tr>

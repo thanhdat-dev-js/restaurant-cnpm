@@ -34,7 +34,7 @@ scrollbar-width: none;  /* Firefox */
     width: 80%;
     height: fit-content;
     max-height: 80%;
-    padding: 20px;
+    padding-bottom: 20px;
     overflow-y: scroll;
     max-width: 900px;
     background-color: white;
@@ -53,13 +53,22 @@ scrollbar-width: none;  /* Firefox */
     display: flex;
     justify-content: space-between;
     margin-bottom: 20px;
+    padding: 20px 20px 10px;
 }
 
 .am-product {
     margin: 10px 0;
+    padding: 0 20px;
     display: flex;
 }
 
 .am-form-search {
     display: flex;
+    margin-right: auto;
+    margin-left: auto;
+    margin-bottom: 20px;
+}
+
+.am-form-add {
+    padding: 0 20px;
 }
