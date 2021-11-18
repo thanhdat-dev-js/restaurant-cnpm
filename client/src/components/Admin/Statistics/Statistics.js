@@ -10,6 +10,8 @@ import {DateRangePicker} from 'react-date-range';
 import { addDays } from 'date-fns';
 import Statistics_NumOfOrders from "./Statistics_NumOfOrders";
 import Statistics_revenue from "./Statistics_revenue";
+import Statistics_hour from "./Statistics_hour";
+import Statistics_hour2 from "./Statistics_hour2";
 import getStatistic from '../../../midlewares/getStatistic';
 import DateRangeIcon from '@mui/icons-material/DateRange';
 import Popup from './Popup';
@@ -89,8 +91,11 @@ export default function Statistics(){
             </div>
 
                     <Statistics_NumOfOrders startDate={dateRange[0].startDate} endDate={dateRange[0].endDate} data={data}/>
-                    <Statistics_revenue></Statistics_revenue>
+
+                    <Statistics_revenue startDate={dateRange[0].startDate} endDate={dateRange[0].endDate} data={data}/>
+                    <Statistics_hour data={data}/>
                     <Statistics_NumOfProducts data={data}/>
+                    <Statistics_hour2 data={data}/>
         </div>
     )
 }
