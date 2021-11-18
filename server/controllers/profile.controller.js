@@ -5,7 +5,7 @@ module.exports = {
     async getProfile(req, res) {
         try {
             // 
-            const theProfile = await Profile.findOne({email: req.query.email});
+            const theProfile = await Profile.findOne({email: req.user.email});
             if (theProfile){
                 return res.status(200).json({
                     success: 1,
@@ -25,7 +25,7 @@ module.exports = {
 
     async postProfile(req,res){
         try{
-            const profileEmail = req.query.email;
+            const profileEmail = req.user.email;
             const theProfile = await Profile.findOne({email : profileEmail});
             if (theProfile){
                 theProfile.username = req.body.username || theProfile.username;
