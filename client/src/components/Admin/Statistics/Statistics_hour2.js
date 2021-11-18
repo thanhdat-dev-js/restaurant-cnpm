@@ -46,7 +46,7 @@ const Statistics_hour2 = (props) =>{
     }
     return (
     <div>
-        <h1>Bảng thống kê tần suất nhận đơn ở các khung giờ</h1>
+        <h1>Bảng thống kê tần suất nhận đơn ở các khung giờ (PolarArea) </h1>
         <PolarArea 
             data = {{
                 labels: arr1,
