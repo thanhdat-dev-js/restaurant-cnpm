@@ -26,9 +26,9 @@ export default function Admin() {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
-    useEffect(() => {
-        console.log(Active);
-    },[Active])
+    // useEffect(() => {
+    //     console.log(Active);
+    // },[Active])
     return (
         <div className="admin">
             <Container fluid='lg'>
@@ -37,13 +37,13 @@ export default function Admin() {
                         <HomeIcon />
                         <span>Back to home</span>
                     </Link>
-                </div>
-                <div className='body'>
                     <div className='filter'>
                         <span className={`${Active ==="Statistics" && 'option--active'}`} onClick={()=>{SetActive("Statistics")}}>Thống kê</span>
                         <span className={`${Active ==="Staff" && 'option--active'}`} onClick={()=>{SetActive("Staff")}}>Thông tin nhân viên</span>
                         <span className={`${Active ==="Menu" && 'option--active'}`} onClick={()=>{SetActive("Menu")}}>Chỉnh sửa thực đơn</span>
                     </div>
+                </div>
+                <div className='body'>
                 </div>
                 <div>
                     {Active==="Statistics" && <Statistics/>}

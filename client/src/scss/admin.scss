@@ -3,7 +3,16 @@
   font-size: 1.6rem;
   .body {
     margin-top: 10px;
+  }
+
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    
     .filter {
+
+      margin: auto 0;
       p {
         font-size: 2rem;
         font-weight: 700;
@@ -24,10 +33,7 @@
         color: $primary-color;
       }
     }
-  }
-  .header {
-    display: flex;
-    justify-content: space-between;
+    
     a,
     .btn-showCart {
       text-decoration: none;
@@ -55,6 +61,9 @@
       margin: 0 10px;
     }
   }
+
+
+
   table {
     font-family: Arial, Helvetica, sans-serif;
     border-collapse: collapse;
