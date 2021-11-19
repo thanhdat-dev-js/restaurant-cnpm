@@ -17,7 +17,7 @@ import socketClient from "socket.io-client";
 const SERVER = "http://localhost:4000/";
 const classNames = require('classnames');
 
-export default () => {
+export default function Menu() {
    const history = useHistory();
    const [dataTag, setDataTag] = useState(() => {
       const { start, end, responsive } = (() => {
@@ -455,7 +455,7 @@ export default () => {
                         {dataTag.data.length !== 0 && dataCart.products.map((item, idx) => (
                            <div className='product' key={idx}>
                               <div className='product-wrap'>
-                                 <img src={`${dataTag.data[item.currentIdx].products[item.currentIdxProduct].imgURL}`} />
+                                 <img src={`${dataTag.data[item.currentIdx].products[item.currentIdxProduct].imgURL}`} alt="img" />
                               </div>
                               <div className='body'>
                                  <p><span>{idx + 1}. </span>{dataTag.data[item.currentIdx].products[item.currentIdxProduct].name}</p>

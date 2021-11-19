@@ -4,7 +4,6 @@ import { useHistory } from "react-router-dom";
 import '../scss/clerk.scss';
 import HomeIcon from '@material-ui/icons/Home';
 import Button from '@material-ui/core/Button';
-import { Container } from '@material-ui/core';
 import verifyToken from '../midlewares/verifyToken';
 import socketClient from "socket.io-client";
 import getOrder from '../midlewares/getOrder';

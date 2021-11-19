@@ -9,7 +9,7 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import ReceiptIcon from '@material-ui/icons/Receipt';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import '../scss/home.scss';
-export default () => {
+export default function Home() {
     const [isAuthen, setIsAuthen] = useState(false);
     const [permission, setPermission] = useState('customer');
     useEffect(() => {
