@@ -1,7 +1,10 @@
 // import classNames from "classnames";
 import { Button, TextField } from "@material-ui/core";
-import { useState, useRef, useCallback } from "react";
+import { useState, useRef } from "react";
 import axios from "axios";
+
+import DeleteIcon from "@mui/icons-material/Delete";
+import AddBoxIcon from "@mui/icons-material/AddBox";
 
 import "./index.css";
 const SERVER = "http://localhost:4000/";
@@ -75,33 +78,32 @@ export default function Popup(props) {
         </div>
 
         <div className="am-form-add">
-        <h3>Mục</h3>
-        <TextField
-          label="Loại"
-          required
-          defaultValue={content?.type}
-          variant="outlined"
-          margin="dense"
-          InputProps={{ style: { fontSize: 14 } }}
-          InputLabelProps={{ style: { fontSize: 14 } }}
-          onChange={(e) => setContent({ ...content, type: e.target.value })}
-        />
+          <h3>Mục</h3>
+          <TextField
+            label="Loại"
+            required
+            defaultValue={content?.type}
+            variant="outlined"
+            margin="dense"
+            InputProps={{ style: { fontSize: 14 } }}
+            InputLabelProps={{ style: { fontSize: 14 } }}
+            onChange={(e) => setContent({ ...content, type: e.target.value })}
+          />
 
-        <TextField
-          label="Đường dẫn ảnh"
-          required
-          defaultValue={content?.imgURL}
-          variant="outlined"
-          margin="dense"
-          InputProps={{ style: { fontSize: 14 } }}
-          InputLabelProps={{ style: { fontSize: 14 } }}
-          onChange={(e) => setContent({ ...content, imgURL: e.target.value })}
-        />
-
+          <TextField
+            label="Đường dẫn ảnh"
+            required
+            defaultValue={content?.imgURL}
+            variant="outlined"
+            margin="dense"
+            InputProps={{ style: { fontSize: 14 } }}
+            InputLabelProps={{ style: { fontSize: 14 } }}
+            onChange={(e) => setContent({ ...content, imgURL: e.target.value })}
+          />
         </div>
 
         {props.current !== ADD_NEW && (
-          <div className='am-form-add'>
+          <div className="am-form-add">
             <h3>Món ăn</h3>
 
             <Button
@@ -124,7 +126,7 @@ export default function Popup(props) {
                 scrollToBottom();
               }}
             >
-              Thêm món
+              <AddBoxIcon sx={{ fontSize: "20px" }}></AddBoxIcon>
             </Button>
           </div>
         )}
@@ -234,7 +236,7 @@ export default function Popup(props) {
                 });
               }}
             >
-              Xoá món
+              <DeleteIcon sx={{ fontSize: "20px" }}></DeleteIcon>
             </Button>
           </div>
         ))}

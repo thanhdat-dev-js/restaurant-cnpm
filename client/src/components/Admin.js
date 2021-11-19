@@ -32,6 +32,7 @@ export default function Admin() {
     return (
         <div className="admin">
             <Container fluid='lg'>
+
                 <div className='header'>
                     <Link to='/'>
                         <HomeIcon />
@@ -43,13 +44,13 @@ export default function Admin() {
                         <span className={`${Active ==="Menu" && 'option--active'}`} onClick={()=>{SetActive("Menu")}}>Chỉnh sửa thực đơn</span>
                     </div>
                 </div>
+
                 <div className='body'>
-                </div>
-                <div>
                     {Active==="Statistics" && <Statistics/>}
                     {Active==="Staff" && <Staff/>}
                     {Active==="Menu" && <Menu/>}
                 </div>
+
             </Container>
         </div>
     )
