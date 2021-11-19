@@ -3,6 +3,7 @@
 .kitchen {
     font-size: 1.6rem;
     .body {
+        min-width: 900px;
         .filter {
             display: flex;
             justify-content: space-between;
