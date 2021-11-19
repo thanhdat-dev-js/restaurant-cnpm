@@ -55,10 +55,10 @@ export default function Register() {
         <div className='register'>
             <div class='form'>
                 <h3><img src="https://logopond.com/logos/e6b478cef54b8fb8acfd1b4dee22f543.png" height="70" /></h3>
-                <TextField variant="outlined" label='Name' type='text' id='name' name='name' onChange={handleOnchangeUsername} />
+                <TextField variant="outlined" label='Họ và tên' type='text' id='name' name='name' onChange={handleOnchangeUsername} />
                 <TextField variant="outlined" label='Email' type='text' id='email' name='email' onChange={handleOnchangeEmail} />
-                <TextField variant="outlined" label='password' type='password' id='password' name='password' onChange={handleOnchangePass} />
-                <Button variant="contained" color="secondary" onClick={handleRegister}>Register</Button>
+                <TextField variant="outlined" label='Password' type='password' id='password' name='password' onChange={handleOnchangePass} />
+                <Button variant="contained" color="secondary" onClick={handleRegister}>Đăng ký</Button>
             </div>
             {
                 error &&
