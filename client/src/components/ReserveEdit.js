@@ -62,13 +62,13 @@ export default function BasicModal(props) {
       >
         <Box sx={style}>
           <div className="title">
-            <Typography id="modal-modal-title" variant="h3" style={{fontWeight: 'bold', color: '#000a43'}}>Edit Customer Reservation</Typography>    
+            <Typography id="modal-modal-title" variant="h3" style={{fontWeight: 'bold', color: '#000a43'}}>Chỉnh sửa thông tin đặt bàn</Typography>    
           </div>
 
           <div className="form-edit">
             <TextField
                 variant="outlined" 
-                label="First Name" 
+                label="Họ, tên đệm" 
                 type="text"
                 fullWidth
                 defaultValue={props.fname}
@@ -80,7 +80,7 @@ export default function BasicModal(props) {
           <div className="form-edit">
             <TextField
                 variant="outlined" 
-                label="Last Name" 
+                label="Tên" 
                 type="text"
                 fullWidth
                 defaultValue={props.lname}
@@ -92,7 +92,7 @@ export default function BasicModal(props) {
           <div className="form-edit">
             <TextField
                 variant="outlined" 
-                label="Phone Number" 
+                label="Số điện thoại" 
                 type="tel"
                 fullWidth
                 defaultValue={props.phone}
@@ -104,7 +104,7 @@ export default function BasicModal(props) {
           <div className="form-edit">
             <TextField
                 variant="outlined" 
-                label="Email address" 
+                label="Địa chỉ Email" 
                 type="email"
                 fullWidth
                 defaultValue={props.email}
@@ -118,11 +118,11 @@ export default function BasicModal(props) {
               variant="contained" 
               fullWidth style={{ fontSize: 14, padding: 12}} 
               color="secondary"
-              onClick={() => handleUpdate(props.id)} >Save changes</Button>
+              onClick={() => handleUpdate(props.id)} >Lưu thay đổi</Button>
           </div>
           
           <div className="note">
-              <p>*Note: If you want to change date and time, please delete this reservation and make a new reservation.</p>
+              <p>*Lưu ý: Nếu quý khách muốn thay đổi thời gian đặt bàn, vui lòng xóa lần đặt bàn cũ và thêm một đặt bàn mới.</p>
           </div>
         </Box>
       </Modal>

@@ -62,7 +62,7 @@ function ReserveList() {
                 }
             })
         }
-    }, []);
+    }, [history]);
 
     return (
         <div>
@@ -71,17 +71,17 @@ function ReserveList() {
                 <Container fluid='lg'>
                     <div>
                         <div className="reserve-title">
-                            <p>Customer Reservation</p>
+                            <p>Danh sách đặt bàn</p>
                         </div>
                         <table>
                             <tbody>
                                 <tr>
-                                    <th>Date and time</th>
-                                    <th>Customer's Full Name</th>
-                                    <th>Number of People</th>
-                                    <th>Phone Number</th>
-                                    <th>Edit</th>
-                                    <th>Delete</th>
+                                    <th>Thời gian</th>
+                                    <th>Họ tên khách hàng</th>
+                                    <th>Số lượng khách</th>
+                                    <th>Số điện thoại</th>
+                                    <th>Chỉnh sửa</th>
+                                    <th>Xóa</th>
                                 </tr>
                                 {data && data.map((data) => (
                                     <tr key={data._id}>
