@@ -11,7 +11,7 @@ function ReserveForm() {
     const [errorMsg, setErrorMsg] = useState('');
     const [checkForm, setCheckForm] = useState({
         status: false,
-        datetime: null,
+        datetime: '',
         adults: 0,
         kids: 0
     });
@@ -36,12 +36,16 @@ function ReserveForm() {
         if (ret) {
             ret.then((res) => {
                 if (res.data.status===false) {
-                    setErrorMsg(res.data.message);
+                    setErrorMsg(res.data.message)
+                    return 
                 }
                 else {
-                    setChecking(false);
-                    // console.log(res.data.status);
-                    // console.log(res.data);
+                    console.log(checkForm)
+                    if (parseInt(checkForm['adults'])===0) {
+                        setErrorMsg('Cần có ít nhất một người lớn để tiến hành đặt bàn.')
+                        return
+                    }
+                    setChecking(false)
                 }
             })
         }
@@ -67,6 +71,16 @@ function ReserveForm() {
         console.log(res);
         setModalOpen(true);
         setErrorMsg('');
+        resetCheckForm();
+    }
+
+    const resetCheckForm = () => {
+        setCheckForm({
+            status: false,
+            datetime: '',
+            adults: 0,
+            kids: 0
+        })
     }
 
     return (
@@ -92,12 +106,13 @@ function ReserveForm() {
                 <Box className="check-form" sx={{my: 'auto',mx: 'auto', maxWidth: 350, width: '100%'}}>
                     {/* <ReserveFormCarousel sx={{zIndex:'auto', position: 'absolute'}}/> */}
                     <Box sx={{maxWidth:350}}>
-                        <Box sx={{mb:4, fontSize: 30, fontWeight: 700}}>Make a reservation</Box>
+                        <Box sx={{mb:4, fontSize: 30, fontWeight: 700}}>Thông tin đặt bàn</Box>
                         <form className="check-table-form" onSubmit={handleOnclickCheckbtn}>
                             <Box className="form-cell" sx={{mb:3}}>
                                 <TextField
                                     required fullWidth variant="outlined" type="datetime-local"
                                     onChange={handleOnchangeDatetime}
+                                    defaultValue={checkForm['datetime']}
                                     InputProps={{ style: { fontSize: 14 } }}
                                     InputLabelProps={{ style: { fontSize: 14 } }}
                                 />
@@ -105,9 +120,10 @@ function ReserveForm() {
 
                             <Box className="form-cell" sx={{mb:3}}>
                                 <TextField
-                                    required fullWidth type="number" label="Adults"
-                                    variant="outlined" placeholder="Number of adults"
+                                    required fullWidth type="number" label="Người lớn"
+                                    variant="outlined" placeholder="Số lượng người lớn"
                                     onChange={handleOnchangeAdults}
+                                    defaultValue={checkForm['adults']}
                                     InputProps={{ style: { fontSize: 16 } }}
                                     InputLabelProps={{ style: { fontSize: 16 } }}
                                 />
@@ -115,8 +131,9 @@ function ReserveForm() {
 
                             <Box className="form-cell" sx={{mb:3}}>
                                 <TextField
-                                    required fullWidth type="number" label="Children"
-                                    variant="outlined" placeholder="Number of children"
+                                    required fullWidth type="number" label="Trẻ em"
+                                    variant="outlined" placeholder="Số lượng trẻ em"
+                                    defaultValue={checkForm['kids']}
                                     onChange={handleOnchangeKids}
                                     InputProps={{ style: { fontSize: 16 } }}
                                     InputLabelProps={{ style: { fontSize: 16 } }}
@@ -128,7 +145,7 @@ function ReserveForm() {
                                 // onClick={handleOnclickCheckbtn}
                                 style={{ fontSize: '14px'}}
                             >
-                                Check available tables
+                                Kiểm tra bàn trống
                             </Button>
                             <Box sx={{color: 'red', fontSize: 16, textAlign: 'left', mt: 1}}>{errorMsg}</Box>
                         </form>
@@ -137,15 +154,15 @@ function ReserveForm() {
 
             :
                 <>
-                <Box className="confirm-form" sx={{my: 'auto', mx: 'auto'}}>
+                <Box className="confirm-form" sx={{my: 'auto', mx: 'auto', maxWidth:350, width: '100%'}}>
                     
-                    <Box sx={{mb: 4, fontSize:30, fontWeight: 700}}>How can we contact you?</Box>
+                    <Box sx={{mb: 4, fontSize:30, fontWeight: 700}}>Thông tin liên hệ</Box>
                     <Box mb={3}>
                         <form className="personal-info-form" onSubmit={handleOnclickConfirmbtn}>
                             <Box className="form-cell" sx={{mb:3}}>
                                 <TextField
-                                    required fullWidth label="First name"
-                                    variant="outlined" placeholder="Your first name"
+                                    required fullWidth label="Tên"
+                                    variant="outlined" placeholder="Tên"
                                     onChange={handleOnchangeFname}
                                     InputProps={{ style: { fontSize: 16 } }}
                                     InputLabelProps={{ style: { fontSize: 16 } }}
@@ -153,8 +170,8 @@ function ReserveForm() {
                             </Box>
                             <Box className="form-cell" sx={{mb:3}}>
                                 <TextField
-                                    required fullWidth label="Last name"
-                                    variant="outlined" placeholder="Your last name"
+                                    required fullWidth label="Họ"
+                                    variant="outlined" placeholder="Họ"
                                     onChange={handleOnchangeLname}
                                     InputProps={{ style: { fontSize: 16 } }}
                                     InputLabelProps={{ style: { fontSize: 16 } }}
@@ -163,7 +180,7 @@ function ReserveForm() {
                             <Box className="form-cell" sx={{mb:3}}>
                                 <TextField
                                     required fullWidth type="tel" variant="outlined" 
-                                    label="Phone number" placeholder="Your phone number"
+                                    label="Số điện thoại" placeholder="Số điện thoại"
                                     onChange={handleOnchangePhone}
                                     InputProps={{ style: { fontSize: 16 } }}
                                     InputLabelProps={{ style: { fontSize: 16 } }}
@@ -172,7 +189,7 @@ function ReserveForm() {
                             <Box className="form-cell" sx={{mb:3}}>
                                 <TextField
                                     required fullWidth type="email" variant="outlined"
-                                    label="Email address" placeholder="Your email address"
+                                    label="Địa chỉ email" placeholder="Địa chỉ email"
                                     onChange={handleOnchangeEmail}
                                     InputProps={{ style: { fontSize: 16 } }}
                                     InputLabelProps={{ style: { fontSize: 16 } }}
@@ -185,17 +202,17 @@ function ReserveForm() {
                                 style={{ fontSize: '14px'}}
                                 mb={3}
                             >
-                                Confirm reservation
+                                Xác nhận đặt bàn
                             </Button>
                         </form>
                     </Box>
                     <Button 
-                        fullWidth color="secondary" variant="contained"
+                        fullWidth color="error" variant="contained"
                         onClick={()=>{setErrorMsg('');setChecking(true); }}
                     >
                         
                         <ArrowBackIosIcon/>
-                        <Box sx={{fontSize: '14px'}}>Change info</Box>
+                        <Box sx={{fontSize: '14px'}}>Thay đổi thông tin</Box>
                     </Button>
                 </Box>
                 <Modal
@@ -213,7 +230,7 @@ function ReserveForm() {
                         p: 3,}}
                     >
                         <Box sx={{}}>
-                            <Box sx={{fontSize: 18}}>Your reservation has been recorded.</Box>
+                            <Box sx={{fontSize: 18}}>Việc đặt bàn đã được hoàn tất. Nhân viên sẽ liên hệ quý khách để xác nhận trong giây lát.</Box>
                         </Box>
                         
                     </Box>

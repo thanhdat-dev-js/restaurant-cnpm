@@ -26,7 +26,7 @@ const reserveSchema = new mongoose.Schema({
     },
     phone: reqString,
     email: reqString,
-    createdAt: { type: Date, expires: 60, default: Date.now }
+    // createdAt: { type: Date, expires: 60, default: Date.now }
 },
     { timestamps: true }
 )

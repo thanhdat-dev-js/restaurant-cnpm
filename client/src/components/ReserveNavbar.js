@@ -33,7 +33,7 @@ function ReserveNavbar(props) {
 						<li>
 							<Link to='/' sx={{}}>
 								<HomeIcon id='home-icon' />
-								<span>Back to home</span>
+								<span>Về trang chủ</span>
 							</Link>
 						</li>
 							
@@ -43,14 +43,14 @@ function ReserveNavbar(props) {
 						<ul>
 							<li>
 								<Link to="/reserve">
-									<span>Reserve</span>
+									<span>Đặt bàn</span>
 									<ReceiptIcon />
 								</Link>
 							</li>
 							
 							<li>
 								<Link to="/reservelist">
-									<span>Reserve List</span>
+									<span>Danh sách bàn đặt</span>
 									<ReceiptIcon />
 								</Link>
 							</li>

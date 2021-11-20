@@ -29,12 +29,11 @@ export default function BasicModal(props) {
           url: SERVER + "reserve/" + id,
           method: "DELETE",
         };
-        axios.request(req);
+        axios.request(req).then(() => props.getData());
     } catch (err) {
         console.log(err);
     }
     setOpen(false);
-    window.location.reload(true);
   };
 
   return (
