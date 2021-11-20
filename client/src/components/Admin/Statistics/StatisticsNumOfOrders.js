@@ -10,7 +10,7 @@ const dateDiff = (startDate, endDate) => {
     return diffDays
 }
 
-const Statistics_NumOfOrders = (props) =>{
+const StatisticsNumOfOrders = (props) =>{
 
     const {startDate, endDate, data} = props;
     // console.log(data);
@@ -22,30 +22,33 @@ const Statistics_NumOfOrders = (props) =>{
     // arr[2] for Cancelled
     
     useEffect(async () => {
-    //i is the number of day in the data
-    for(let i = 0; i < numOfDays; i++){
-        let Day = new Date(endDate - 86400000*i).setHours(0,0,0,0);
-        arr[0][numOfDays - i-1] = new Date(Day).toLocaleDateString();
-    }
-    await data.forEach((order) =>{
-        const dayOfOrder = new Date(order.updatedAt).setHours(0,0,0,0);
-        const index = arr[0].findIndex((day) => {
-            return day === new Date(dayOfOrder).toLocaleDateString(); 
-        })
-        if (order.status === "cancel"){
-            arr[2][index]++;
+        async function fetchData(){
+            for(let i = 0; i < numOfDays; i++){
+                let Day = new Date(endDate - 86400000*i).setHours(0,0,0,0);
+                arr[0][numOfDays - i-1] = new Date(Day).toLocaleDateString();
+            }
+            await data.forEach((order) =>{
+                const dayOfOrder = new Date(order.updatedAt).setHours(0,0,0,0);
+                const index = arr[0].findIndex((day) => {
+                    return day === new Date(dayOfOrder).toLocaleDateString(); 
+                })
+                if (order.status === "cancel"){
+                    arr[2][index]++;
+                }
+                else if (order.status === "confirmed"){
+                    arr[1][index]++;
+                }
+            })
         }
-        else if (order.status === "confirmed"){
-            arr[1][index]++;
-        }
-    })
+    fetchData();
+
     setGraphData(arr);
     // console.log(arr);
     // setGData();
     }, [data]);
     return (
     <div>
-        <h1>Đây là bảng số liệu đơn trong ngày</h1>
+        <h1>Số lượng đơn trong ngày</h1>
         <Bar
             data = {{
                 labels: graphData[0],
@@ -100,4 +103,4 @@ const Statistics_NumOfOrders = (props) =>{
     )
 }
 
-export default Statistics_NumOfOrders
+export default StatisticsNumOfOrders

@@ -3,47 +3,45 @@ import React, {useEffect, useState} from "react";
 import {Bar} from 'react-chartjs-2';
 import { TextField } from "@mui/material";
 
-const Statistics_NumOfProducts = (props) =>{
+const StatisticsNumOfProducts = (props) =>{
     // const data1 = data
     const {data} = props;
-    const [NoOfProducts, setNoOfProducts] = useState(0);
+    const [NoOfProducts, setNoOfProducts] = useState(10);
     // console.log(data);
     const [graphData, setGraphData] = useState(Array.from(Array(2), _ => Array(NoOfProducts).fill(0)));
     const [ProductsCount,setProductsCount] = useState(new Map());
 
     
-    useEffect(async () => {
-
-    let productsCnt = new Map();
-    await data.forEach((order) =>{
-        const products = order.products;
-        products.forEach((product) =>{
-            // console.log("product", product)
-            if (productsCnt.has(product.name)){
-                let cnt = productsCnt.get(product.name)
-                productsCnt.set(product.name, cnt + product.quantity)
+    useEffect(() => {
+        console.log("product", data)
+        async function fetchData(){
+            let productsCnt = new Map();
+                await data.forEach((order) =>{
+                    const products = order.products;
+                    products.forEach((product) =>{
+                        // console.log("product", product)
+                        if (productsCnt.has(product.name)){
+                            let cnt = productsCnt.get(product.name)
+                            productsCnt.set(product.name, cnt + product.quantity)
+                        }
+                        else {
+                            productsCnt.set(product.name, product.quantity)
+                        }
+                            
+                    })
+                })
+                setProductsCount(new Map([...productsCnt.entries()].sort((a,b) => b[1] - a[1])));
             }
-            else {
-                productsCnt.set(product.name, product.quantity)
-            }
-                
-        })
-    })
-    setProductsCount(new Map([...productsCnt.entries()].sort((a,b) => b[1] - a[1])));
-    console.log(ProductsCount);
-    setNoOfProducts(ProductsCount.size);
+        fetchData();
     }, [data]);
     useEffect(()=>{
         var arr = Array.from(Array(2), _ => Array(NoOfProducts).fill(0));
         arr[0] = [...ProductsCount.keys()].splice(0, NoOfProducts);
         arr[1] = [...ProductsCount.values()].splice(0, NoOfProducts);
         setGraphData(arr);
-    }, [NoOfProducts])
+    }, [NoOfProducts, ProductsCount])
     function handleChangeNoOfProducts(e){
         let value = e.target.value;
-        if (value ==""){
-            value = 1
-        }
         console.log(value);
         setNoOfProducts(value);
     }
@@ -102,4 +100,4 @@ const Statistics_NumOfProducts = (props) =>{
     )
 }
 
-export default Statistics_NumOfProducts
+export default StatisticsNumOfProducts
