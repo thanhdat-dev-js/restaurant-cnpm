@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 import "../../../scss/clerk.scss";
-import { Button, TextField } from "@material-ui/core";
+import { Button } from "@material-ui/core";
 import AddBoxIcon from "@mui/icons-material/AddBox";
 import EditIcon from "@mui/icons-material/Edit";
 
@@ -64,7 +64,7 @@ export default function Staff() {
   }
 
   return (
-    <div className="clerk">
+    <div className="admin">
       {showModal && (
         <Popup
           showModal={showModal}

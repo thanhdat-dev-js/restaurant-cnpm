@@ -82,7 +82,7 @@ export default function Menu() {
   }
 
   return (
-    <div className="clerk">
+    <div className="admin">
       {showModal && (
         <Popup
           data={dataTag.data[dataTag.current]}

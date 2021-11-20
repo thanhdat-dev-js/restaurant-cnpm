@@ -1,6 +1,12 @@
 import classNames from "classnames";
-import { Button, TextField, Select, MenuItem } from "@material-ui/core";
-import { useState, useEffect } from "react";
+import {
+  Button,
+  TextField,
+  Select,
+  MenuItem,
+  InputLabel,
+} from "@material-ui/core";
+import { useState } from "react";
 import axios from "axios";
 
 const SERVER = "http://localhost:4000/";
@@ -91,7 +97,7 @@ export default function Popup(props) {
           </div>
         )}
 
-        {(props.current != ADD_NEW || flag) && (
+        {(props.current !== ADD_NEW || flag) && (
           <div className="am-form-add">
             <h2>Thông tin</h2>
             <TextField
@@ -121,18 +127,24 @@ export default function Popup(props) {
               }
             />
 
+            <InputLabel id="role-select">Quyền</InputLabel>
             <Select
               value={content?.permission}
-              label="Quyển"
+              labelId="role-select"
               variant="outlined"
-              sx={{ fontSize: "24px" }}
               onChange={(e) => {
                 setContent({ ...content, permission: e.target.value });
               }}
             >
-              <MenuItem value="customer">Customer</MenuItem>
-              <MenuItem value="kitchen">Kitchen</MenuItem>
-              <MenuItem value="clerk">Clerk</MenuItem>
+              <MenuItem value="customer" style={{ fontSize: "14px" }}>
+                Customer
+              </MenuItem>
+              <MenuItem value="kitchen" style={{ fontSize: "14px" }}>
+                Kitchen
+              </MenuItem>
+              <MenuItem value="clerk" style={{ fontSize: "14px" }}>
+                Clerk
+              </MenuItem>
             </Select>
           </div>
         )}
