@@ -28,9 +28,9 @@ module.exports = {
             const profileEmail = req.user.email;
             const theProfile = await Profile.findOne({email : profileEmail});
             if (theProfile){
-                theProfile.username = req.body.username || theProfile.username;
-                theProfile.fname = req.body.firstname || theProfile.fname;
-                theProfile.lname = req.body.lastname || theProfile.lname;
+                theProfile.phone = req.query.phone || theProfile.username;
+                theProfile.fname = req.query.fname || theProfile.fname;
+                theProfile.lname = req.query.lname || theProfile.lname;
                 // theProfile.push({
                 //     'username': req.body.username,
                 //     'fname': req.body.firstname,

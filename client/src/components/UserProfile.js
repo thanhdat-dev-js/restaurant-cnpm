@@ -13,6 +13,7 @@ import putProfile from '../midlewares/putProfile';
 function UserProfile() {
 	const [profile, setProfile] = useState({})
 	const [displayName, setDisplayName] = useState('')
+	const [changeDB, setChangeDB] = useState('')
 
 	useEffect(() => {
 		const fetch = async () => {
@@ -25,7 +26,7 @@ function UserProfile() {
 			// console.log(pf.data['theProfile'])
 		}
 		fetch()
-	}, [])
+	}, [changeDB])
 
 	const handleOnChangeFname = (e) => {
 		setProfile({
@@ -49,10 +50,11 @@ function UserProfile() {
 	}
 
 	const handleOnclickSubmitbtn = (e) => {
-		// e.preventDefault()
+		e.preventDefault()
 		// console.log("Handle submit")
 		// console.log(profile)
 		putProfile(profile)
+		setChangeDB(!changeDB)
 		// console.log(res)
 	}
 
