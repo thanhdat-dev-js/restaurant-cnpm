@@ -134,7 +134,7 @@ export default function Popup(props) {
 
         {content?.products?.map((product, idx) => (
           <div key={product.productID} className="am-product">
-            <TextField
+            {/* <TextField
               label="ID"
               defaultValue={product.productID}
               variant="outlined"
@@ -151,7 +151,7 @@ export default function Popup(props) {
                   ),
                 })
               }
-            />
+            /> */}
             <TextField
               label="Tên"
               defaultValue={product.name}
