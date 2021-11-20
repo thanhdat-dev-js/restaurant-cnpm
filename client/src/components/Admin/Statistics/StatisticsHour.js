@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 // import { useMemo } from "react";
-import {Bar} from 'react-chartjs-2';
+import {Line} from "react-chartjs-2";
 
 const dateDiff = (startDate, endDate) => {
     const date1 = startDate;
@@ -10,54 +10,59 @@ const dateDiff = (startDate, endDate) => {
     return diffDays
 }
 
-const Statistics_revenue = (props) =>{
+const StatisticsHour = (props) =>{
 
-    const {startDate, endDate, data} = props;
+    const {data} = props;
     console.log(data);
-    const numOfDays = dateDiff(startDate, endDate) + 1;
-    const [graphData, setGraphData] = useState(Array.from(Array(3), _ => Array(numOfDays).fill(0)));
-    var arr = Array.from(Array(3), _ => Array(numOfDays).fill(0));
+    const start_hour=7;
+    const end_hour =23;
+    const NumOfHours =end_hour - start_hour;
+    //const numOfDays = dateDiff(startDate, endDate) + 1;
+    const [graphData, setGraphData] = useState(Array.from(Array(2), _ => Array(NumOfHours+1).fill(0)));
+    var arr = Array.from(Array(2), _ => Array(NumOfHours+1).fill(0));
     // arr[0] for Day
     // arr[1] for Confirmed
     // arr[2] for Cancelled
     
     useEffect(async () => {
     //i is the number of day in the data
-    for(let i = 0; i < numOfDays; i++){
-        let Day = new Date(endDate - 86400000*i).setHours(0,0,0,0);
-        arr[0][numOfDays - i-1] = new Date(Day).toLocaleDateString();
+    for(let i = start_hour; i < end_hour+1; i++){
+        //let Day = new Date(endDate - 86400000*i).setHours(0,0,0,0);
+        arr[0][i-start_hour] = i.toString();
     }
     await data.forEach((order) =>{
-        const dayOfOrder = new Date(order.updatedAt).setHours(0,0,0,0);
-        const index = arr[0].findIndex((day) => {
-            return day === new Date(dayOfOrder).toLocaleDateString(); 
-        })
-        if (order.status === "confirmed"){
-            arr[1][index]=arr[1][index] + order.total;
-        }
+        const TimeOfOrder = new Date(order.updatedAt).getHours();
+        arr[1][TimeOfOrder-start_hour]++;
+        console.log(arr[1], 'arr');
     })
     setGraphData(arr);
     // console.log(arr);
     // setGData();
     }, [data]);
+    var arr1=[];
+    const gio="giờ";
+    for(let i = start_hour; i < end_hour; i++){
+        arr1[i-start_hour]=i.toString() +' '+ gio;
+    }
     return (
     <div>
-        <h1>Bảng thống kê doanh thu</h1>
-        <Bar
+        <h1>Bảng thống kê tần suất nhận đơn ở các khung giờ</h1>
+        <Line
             data = {{
-                labels: graphData[0],
+                labels: arr1,
                 datasets: [
                     {
-                        label: 'Doanh Thu',
+                        label: 'Số đơn',
                         data: graphData[1],
+                        fill: true,
                         backgroundColor:[
-                            'rgba(255, 205, 71, 0.2)'
+                            'rgba(54, 162, 235, 0.2)',
                         ],
                         borderColor: [
-                            'rgba(255, 182, 71, 1)',
+                            'rgba(54, 162, 235, 1)',  
                         ],
-                        borderWidth: 1,
-                        
+                        borderWidth: 2,
+                        tension: 0.3,
                     },
                     
                 ]
@@ -76,9 +81,9 @@ const Statistics_revenue = (props) =>{
                     }
                 }
             }}
-        ></Bar>
+        ></Line>
     </div>
     )
 }
 
-export default Statistics_revenue
+export default StatisticsHour
