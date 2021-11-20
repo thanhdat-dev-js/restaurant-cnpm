@@ -56,3 +56,6 @@
   display: flex;
   justify-content: space-between;
 }
+.Statistics {
+  padding: 2rem;
+}

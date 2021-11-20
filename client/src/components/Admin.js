@@ -31,7 +31,7 @@ export default function Admin() {
     // },[Active])
     return (
         <div className="admin">
-            <Container fluid='lg'>
+            {/* <Container fluid='lg'> */}
 
                 <div className='header'>
                     <Link to='/'>
@@ -51,7 +51,7 @@ export default function Admin() {
                     {Active==="Menu" && <Menu/>}
                 </div>
 
-            </Container>
+            {/* </Container> */}
         </div>
     )
 }
