@@ -47,20 +47,20 @@ export default function BasicModal(props) {
       >
         <Box sx={style}>
           <div className="delete-title">
-            <p>Are you sure?</p>
+            <p>Bạn có chắc không?</p>
           </div>
 
           <div className="delete-description">
-            <p>Do you want to delete this reservation?</p>
+            <p>Có phải bạn đang muốn xóa thông tin đặt bàn này?</p>
           </div>
 
           <div className="modal-btn">
             <div className="btn">
-              <Button variant="contained" size="large" color="secondary" onClick={() => handleDelete(props.id)}>Delete</Button>
+              <Button variant="contained" size="large" color="secondary" onClick={() => handleDelete(props.id)}>Xóa</Button>
             </div>
             
             <div className="btn">
-              <Button variant="contained" size="large" onClick={handleClose}>Cancel</Button>
+              <Button variant="contained" size="large" onClick={handleClose}>Hủy</Button>
             </div>
           </div>
         </Box>
