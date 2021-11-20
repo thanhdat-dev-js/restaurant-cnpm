@@ -149,13 +149,13 @@ module.exports = {
             if (datetime < toDay) {
                 res.send({
                     'status': false,
-                    'message': 'Please not select day in the pass.'
+                    'message': 'Vui lòng không chọn thời gian trong quá khứ.'
                 })
             }
             else if (Math.ceil((datetime-toDay)/(1000*60*60*24)) > 3) {
                 res.send({
                     'status': false,
-                    'message': 'You can only reserve a table at most 3 days in advance.'
+                    'message': 'Vui lòng đặt bàn trong khoảng thời gian nhiều nhất là 3 ngày.'
                 })
             }
             else {
@@ -174,7 +174,7 @@ module.exports = {
                     else {
                         res.send({
                             'status': false, 
-                            'message': 'Sorry! There are not enough table in this interval.', 
+                            'message': 'Thật tiếc quá, không còn đủ bàn trong khoảng thời gian này.', 
                             'error': false});
                     }
                 }
