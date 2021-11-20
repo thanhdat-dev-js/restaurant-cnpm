@@ -106,7 +106,7 @@ export default function Home() {
                     </ul>
                 </div>
                 <div className="typing-effect" >
-                    <img src="https://logopond.com/logos/e6b478cef54b8fb8acfd1b4dee22f543.png" alt='logo' />;
+                    <img src="https://logopond.com/logos/e6b478cef54b8fb8acfd1b4dee22f543.png" alt='logo' />
                     <ReactTypingEffect
                         speed={80}
                         text={["Chào mừng quý khách ghé thăm nhà hàng sushi của chúng tôi!!!"]}
