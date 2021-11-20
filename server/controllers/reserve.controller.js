@@ -7,10 +7,13 @@ module.exports = {
         try {
             if (req.user.permission === 'clerk') {
                 const reserve = await Reserve.find({});
-                if (reserve) {
+                const reserve_filter = reserve.filter((reserve) => {
+                    return reserve.date >= new Date(Date.now());
+                })
+                if (reserve_filter) {
                     return res.json({
                         success: 1,
-                        reserve,
+                        reserve_filter,
                         message: "thanh cong"
                     })
                 }
@@ -21,10 +24,13 @@ module.exports = {
             }
             else if (req.user.permission === 'customer') {
                 const reserve = req.query.userEmail ? await Reserve.find({ userEmail: req.query.userEmail }) : null;
-                if (reserve) {
+                const reserve_filter = reserve.filter((reserve) => {
+                    return reserve.date >= new Date(Date.now());
+                })
+                if (reserve_filter) {
                     return res.json({
                         success: 1,
-                        reserve,
+                        reserve_filter,
                         message: "thanh cong",
                     })
                 }

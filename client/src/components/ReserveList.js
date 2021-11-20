@@ -22,8 +22,8 @@ function ReserveList() {
         var reserve = getReserve(userEmail);
         if (reserve) {
             reserve.then(res => {
-                if (res.data.reserve) {
-                    setData([...res.data.reserve]);
+                if (res.data.reserve_filter) {
+                    setData([...res.data.reserve_filter]);
                 }
             })
         }
@@ -36,7 +36,7 @@ function ReserveList() {
                 if (res.data.permission !== 'clerk' && res.data.permission !== 'customer') {
                     history.push("/login");
                 }
-                else if (res.data.permission == 'clerk') {
+                else if (res.data.permission === 'clerk') {
                     getData();
                     try {
                         socket = socketClient(SERVER);
@@ -48,7 +48,7 @@ function ReserveList() {
                         console.log(err) 
                     }
                 }
-                else if (res.data.permission == 'customer') {
+                else if (res.data.permission === 'customer') {
                     getData(res.data.email);
                     try {
                         socket = socketClient(SERVER);
