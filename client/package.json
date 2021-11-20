@@ -29,6 +29,7 @@
     "react-swipeable-views": "^0.14.0",
     "react-swipeable-views-utils": "^0.14.0",
     "react-typing-effect": "^2.0.5",
+    "shortid": "^2.2.16",
     "socket.io-client": "^4.2.0",
     "web-vitals": "^1.0.1"
   },

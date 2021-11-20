@@ -18,7 +18,7 @@ const style = {
   bgcolor: 'background.paper',
   boxShadow: 24,
   p: window.innerWidth <= 500 ? 3 : 5,
-};
+}; 
 
 export default function BasicModal(props) {
   const [open, setOpen] = useState(false);
@@ -44,12 +44,11 @@ export default function BasicModal(props) {
         method: "PUT",
         data: info
       };
-      axios.request(req).then((res) => console.log(res));
+      axios.request(req).then(() => props.getData());
     } catch (err) {
         console.log(err);
     }
     setOpen(false);
-    window.location.reload(true);
   }
 
   return (

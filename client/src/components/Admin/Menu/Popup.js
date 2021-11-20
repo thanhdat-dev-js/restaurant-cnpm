@@ -2,6 +2,7 @@
 import { Button, TextField } from "@material-ui/core";
 import { useState, useRef } from "react";
 import axios from "axios";
+import shortid from 'shortid'
 
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddBoxIcon from "@mui/icons-material/AddBox";
@@ -115,11 +116,11 @@ export default function Popup(props) {
                   products: [
                     ...content?.products,
                     {
-                      productID: " ",
-                      name: " ",
-                      imgURL: " ",
-                      price: " ",
-                      description: " ",
+                      productID: shortid.generate(),
+                      name: "",
+                      imgURL: "",
+                      price: "",
+                      description: "",
                     },
                   ],
                 });
@@ -133,7 +134,7 @@ export default function Popup(props) {
 
         {content?.products?.map((product, idx) => (
           <div key={product.productID} className="am-product">
-            <TextField
+            {/* <TextField
               label="ID"
               defaultValue={product.productID}
               variant="outlined"
@@ -150,7 +151,7 @@ export default function Popup(props) {
                   ),
                 })
               }
-            />
+            /> */}
             <TextField
               label="Tên"
               defaultValue={product.name}

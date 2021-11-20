@@ -51,7 +51,7 @@ export default function Statistics(){
     }, [dateRange]);
 
     return (
-        <div>
+        <div className="Statistics">
             <Popup trigger={buttonPopup} setTrigger={setButtonPopup} >
                     <div className="dateRangePicker">
                         <DateRangePicker

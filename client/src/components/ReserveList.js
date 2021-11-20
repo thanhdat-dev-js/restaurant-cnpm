@@ -89,8 +89,8 @@ function ReserveList() {
                                         <td>{data.firstName + ' ' + data.lastName}</td>
                                         <td>{data.kidsNumber + data.adultsNumber}</td>
                                         <td>{data.phone}</td>
-                                        <td><ReserveEdit id={data._id} fname={data.firstName} lname={data.lastName} phone={data.phone} email={data.email} /></td>
-                                        <td><ReserveDelete id={data._id} /></td>
+                                        <td><ReserveEdit id={data._id} fname={data.firstName} lname={data.lastName} phone={data.phone} email={data.email} getData={getData}/></td>
+                                        <td><ReserveDelete id={data._id} getData={getData}/></td>
                                     </tr>
                                 ))}
                             </tbody>

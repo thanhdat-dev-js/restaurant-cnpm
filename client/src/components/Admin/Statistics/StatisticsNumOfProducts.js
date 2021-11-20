@@ -48,7 +48,7 @@ const StatisticsNumOfProducts = (props) =>{
     return (
     <div className="NumOfProducts">
         <div className="Header">
-        <h1>Đây là bảng thống kê theo số lần món được đặt</h1>
+        <h1>Số lần món được đặt</h1>
          <TextField 
              onChange = {handleChangeNoOfProducts} 
              value = {NoOfProducts} 
