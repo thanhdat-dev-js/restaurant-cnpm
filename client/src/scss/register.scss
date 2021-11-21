@@ -32,4 +32,13 @@
             font-size: 1.6rem;
         }
     }
+    .error {
+        position: absolute;
+        top: 30px;
+        right: 30px;
+        h3 {
+            font-size: 2rem;
+            color: red;
+        }
+    }
 }
