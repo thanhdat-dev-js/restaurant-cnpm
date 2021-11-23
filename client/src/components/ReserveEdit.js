@@ -6,6 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import Modal from '@material-ui/core/Modal';
 import Edit from '@material-ui/icons/Edit'
 import TextField from '@material-ui/core/TextField';
+import verifyToken from '../midlewares/verifyToken';
 import axios from 'axios';
 const SERVER = "http://localhost:4000/";
 
@@ -44,7 +45,19 @@ export default function BasicModal(props) {
         method: "PUT",
         data: info
       };
-      axios.request(req).then(() => props.getData());
+      axios.request(req).then(() => {
+        const getInfo = verifyToken();
+          if (getInfo) {
+            getInfo.then(res => {
+                if (res.data.permission === 'clerk') {
+                    props.getData();
+                }
+                else if (res.data.permission === 'customer') {
+                    props.getData(res.data.email);
+                }
+            })
+          }
+      });
     } catch (err) {
         console.log(err);
     }

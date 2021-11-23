@@ -3,7 +3,8 @@ import '../scss/reservedelete.scss';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Modal from '@material-ui/core/Modal';
-import Delete from '@material-ui/icons/Delete'
+import Delete from '@material-ui/icons/Delete';
+import verifyToken from '../midlewares/verifyToken';
 import axios from 'axios';
 const SERVER = "http://localhost:4000/";
 
@@ -29,7 +30,19 @@ export default function BasicModal(props) {
           url: SERVER + "reserve/" + id,
           method: "DELETE",
         };
-        axios.request(req).then(() => props.getData());
+        axios.request(req).then(() => {
+          const getInfo = verifyToken();
+          if (getInfo) {
+            getInfo.then(res => {
+                if (res.data.permission === 'clerk') {
+                    props.getData();
+                }
+                else if (res.data.permission === 'customer') {
+                    props.getData(res.data.email);
+                }
+            })
+          }
+        });
     } catch (err) {
         console.log(err);
     }

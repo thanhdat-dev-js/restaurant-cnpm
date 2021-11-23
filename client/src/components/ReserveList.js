@@ -6,10 +6,7 @@ import ReserveDelete from './ReserveDelete';
 import '../scss/reservelist.scss';
 import { Container } from '@material-ui/core';
 import verifyToken from '../midlewares/verifyToken';
-import socketClient from "socket.io-client";
 import getReserve from '../midlewares/getReserve';
-const SERVER = "http://localhost:4000/";
-var socket = null;
 
 const formatDate = (dateString) => {
     return new Date(dateString).toLocaleTimeString() + ' ' + new Date(dateString).toLocaleDateString();
@@ -38,27 +35,9 @@ function ReserveList() {
                 }
                 else if (res.data.permission === 'clerk') {
                     getData();
-                    try {
-                        socket = socketClient(SERVER);
-                        socket.on('clerk', () => {
-                            getData();
-                        })
-                    }
-                    catch (err) {
-                        console.log(err) 
-                    }
                 }
                 else if (res.data.permission === 'customer') {
                     getData(res.data.email);
-                    try {
-                        socket = socketClient(SERVER);
-                        socket.on('customer', () => {
-                            getData(res.data.email);
-                        })
-                    }
-                    catch (err) {
-                        console.log(err)
-                    }
                 }
             })
         }
