@@ -13,7 +13,7 @@ const dateDiff = (startDate, endDate) => {
 const StatisticsNumOfOrders = (props) => {
 
     const { startDate, endDate, data } = props;
-    // console.log(data);
+    // console.log(startDate, " " , endDate);
     const numOfDays = dateDiff(startDate, endDate) + 1;
     const [graphData, setGraphData] = useState(Array.from(Array(3), _ => Array(numOfDays).fill(0)));
     var arr = Array.from(Array(3), _ => Array(numOfDays).fill(0));
