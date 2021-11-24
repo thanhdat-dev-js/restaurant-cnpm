@@ -43,7 +43,7 @@ npm start
 ## BUILD
 
 ````
-yarn build
+cd client
 npm install -g serve
 serve -s build
 ````
