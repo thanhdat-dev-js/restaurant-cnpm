@@ -31,25 +31,26 @@ function ReserveNavbar(props) {
 								
 					<ul>
 						<li>
-							<Link to='/'>
-								<HomeIcon />
-								<span>Back to home</span>
+							<Link to='/' sx={{}}>
+								<HomeIcon id='home-icon' />
+								<span>Về trang chủ</span>
 							</Link>
 						</li>
 							
 					</ul>
-					{!homeOnly ? 
+					{!homeOnly && permission === 'customer' ? 
 						(
 						<ul>
 							<li>
 								<Link to="/reserve">
-									<span>Reserve</span>
+									<span>Đặt bàn</span>
 									<ReceiptIcon />
 								</Link>
 							</li>
+							
 							<li>
 								<Link to="/reservelist">
-									<span>Reserve List</span>
+									<span>Danh sách bàn đặt</span>
 									<ReceiptIcon />
 								</Link>
 							</li>

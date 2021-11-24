@@ -4,47 +4,131 @@ const shortId = require('shortid');
 module.exports = {
 
     async getReserve(req,res) {
-        res.send('On get reserve.');
+        try {
+            if (req.user.permission === 'clerk') {
+                const reserve = await Reserve.find({});
+                const reserve_filter = reserve.filter((reserve) => {
+                    return reserve.date >= new Date(Date.now());
+                })
+                if (reserve_filter) {
+                    return res.json({
+                        success: 1,
+                        reserve_filter,
+                        message: "thanh cong"
+                    })
+                }
+                return res.json({
+                    success: 0,
+                    message: "that bai"
+                })
+            }
+            else if (req.user.permission === 'customer') {
+                const reserve = req.query.userEmail ? await Reserve.find({ userEmail: req.query.userEmail }) : null;
+                const reserve_filter = reserve.filter((reserve) => {
+                    return reserve.date >= new Date(Date.now());
+                })
+                if (reserve_filter) {
+                    return res.json({
+                        success: 1,
+                        reserve_filter,
+                        message: "thanh cong",
+                    })
+                }
+                return res.json({
+                    success: 0,
+                    message: "that bai"
+                })
+            }
+            else {
+                return res.json({
+                    success: 0,
+                    message: "Invalid token"
+                })
+            }
+        }
+        catch (err) {
+            console.log(err);
+        }
     },
     
     async putReserve(req,res) {
-        res.send('On get reserve.');
+        try {
+            const reserveID = req.params.reserveID;
+            const existed = await Reserve.findOne({ _id: reserveID });
+
+            if (!existed) {
+                return res.status(400).json({
+                    success: 0,
+                    message: "Reservation not found."
+                })
+            }
+
+            existed.firstName = req.body.firstName || existed.firstName;
+            existed.lastName = req.body.lastName || existed.lastName;
+            existed.phone = req.body.phone || existed.phone;
+            existed.email = req.body.email || existed.email;
+
+            if (await existed.save()) {
+                res.status(200).json(existed);
+            }
+        }
+        catch (err) {
+            res.status(500).json({ success: 0, message: err });
+        }
     },
     
     async deleteReserve(req,res) {
-        res.send('On get reserve.');
+        Reserve.deleteOne({ _id: req.params.reserveID }, (err) => {
+            if (err) {
+                res.status(500).json({
+                    sucess: 0,
+                    message: err
+                });
+            }
+            else {
+                res.status(200).json({ success: 1 });
+            }
+        });
     },
     
     async postReserve(req, res) {
-        const data = 'data' in req.body ? req.body.data : JSON.Parse(req.query.data); 
-        const reserve = new Reserve({
-            userEmail: req.user.email,
-            reserveID: shortId.generate(),
-            firstName: data.firstName,
-            lastName: data.lastName,
-            adultsNumber: data.adults,
-            kidsNumber: data.kids, 
-            date: data.datetime,
-            phone: data.phone,
-            email: data.email
-        });
-    
-        // console.log(data);
-        console.log(req);
-        console.log(reserve);
+        try{
 
-        try {
-            const reserveSave = await reserve.save();
-            // res.json(reserveSave);
-            console.log(reserveSave);
-            return res({
-                success: 1,
-                reserveId: reserve.reserveID,
-                message: "Successfully save reservation!"
-            })
+            // const data = 'data' in req.body ? req.body.data : JSON.parse(req.query.data); 
+            const data = 'data' in req.body ? req.body.data : JSON.parse(req.query.data); 
+            const reserve = new Reserve({
+                userEmail: req.user.email,
+                reserveID: shortId.generate(),
+                firstName: data.firstName,
+                lastName: data.lastName,
+                adultsNumber: data.adults,
+                kidsNumber: data.kids, 
+                date: data.datetime,
+                // createAt:
+                phone: data.phone,
+                email: data.email
+            });
+        
+            // console.log(data);
+            console.log(req);
+            console.log(reserve);
+    
+            try {
+                const reserveSave = await reserve.save();
+                // res.json(reserveSave);
+                console.log(reserveSave);
+                return res({
+                    success: 1,
+                    reserveId: reserve.reserveID,
+                    message: "Successfully save reservation!"
+                })
+            }
+            catch (err) {
+                res.json({message: err})
+            }
         }
-        catch (err) {
-            res.json({message: err})
+        catch(e) {
+            res.send({message: e})
         }
         
     },
@@ -57,13 +141,6 @@ module.exports = {
             const datetime = new Date(data.datetime);
             const toDay = new Date(Date.now());
             
-            console.log("Input");
-            console.log(datetime);
-            console.log("Output");
-            console.log(toDay);
-            console.log(datetime.getDate());
-            console.log(toDay.getDate());
-    
             // Accept conditions:
             // 1. Not in the pass
             // 2. Not earlier than 3 days
@@ -72,22 +149,37 @@ module.exports = {
             if (datetime < toDay) {
                 res.send({
                     'status': false,
-                    'message': 'Please not select day in the pass.'
+                    'message': 'Vui lòng không chọn thời gian trong quá khứ.'
                 })
             }
-            else if (datetime.getDate() - toDay.getDate() > 3) {
+            else if (Math.ceil((datetime-toDay)/(1000*60*60*24)) > 3) {
                 res.send({
                     'status': false,
-                    'message': 'You can only reserve a table at most 3 days in advance.'
+                    'message': 'Vui lòng đặt bàn trong khoảng thời gian nhiều nhất là 3 ngày.'
                 })
             }
             else {
                 try {
                     const reserves = await Reserve.find({});
-                    res.send(reserves);
+                    const tables = reserves.filter( (reserve) => {
+                            const reserve_date = new Date(reserve.date);
+                            const dist = Math.abs(datetime-reserve_date);
+                            const dist_minute = Math.ceil(dist/(1000*60));
+                            return dist_minute < 60;
+                        }
+                    )
+                    if (tables.length < 10) {
+                        res.send({'status': true, 'message': '', 'error': false});
+                    }
+                    else {
+                        res.send({
+                            'status': false, 
+                            'message': 'Thật tiếc quá, không còn đủ bàn trong khoảng thời gian này.', 
+                            'error': false});
+                    }
                 }
                 catch(e) {
-                    res.send({'status': false, 'message': e.toString(), 'error': true})
+                    res.send({'status': false, 'message': e.toString(), 'error': true});
                 }
             }
         }

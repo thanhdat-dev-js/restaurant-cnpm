@@ -1,15 +1,48 @@
-import React from 'react';
-
+import { useState, useEffect } from 'react';
+import { useHistory } from "react-router-dom";
 import ReserveNavbar from './ReserveNavbar';
 import ReserveEdit from './ReserveEdit';
 import ReserveDelete from './ReserveDelete';
 import '../scss/reservelist.scss';
-
 import { Container } from '@material-ui/core';
-import Edit from '@material-ui/icons/Edit'
-import Delete from '@material-ui/icons/Delete'
+import verifyToken from '../midlewares/verifyToken';
+import getReserve from '../midlewares/getReserve';
+
+const formatDate = (dateString) => {
+    return new Date(dateString).toLocaleTimeString() + ' ' + new Date(dateString).toLocaleDateString();
+}
 
 function ReserveList() {
+    const [data, setData] = useState(null);
+    const history = useHistory();
+    function getData(userEmail) {
+        var reserve = getReserve(userEmail);
+        if (reserve) {
+            reserve.then(res => {
+                if (res.data.reserve_filter) {
+                    setData([...res.data.reserve_filter]);
+                }
+            })
+        }
+    }
+    
+    useEffect(() => {
+        const getInfo = verifyToken();
+        if (getInfo) {
+            getInfo.then(res => {
+                if (res.data.permission !== 'clerk' && res.data.permission !== 'customer') {
+                    history.push("/login");
+                }
+                else if (res.data.permission === 'clerk') {
+                    getData();
+                }
+                else if (res.data.permission === 'customer') {
+                    getData(res.data.email);
+                }
+            })
+        }
+    }, [history]);
+
     return (
         <div>
             <ReserveNavbar/>
@@ -17,17 +50,29 @@ function ReserveList() {
                 <Container fluid='lg'>
                     <div>
                         <div className="reserve-title">
-                            <p>Customer Reservation</p>
+                            <p>Danh sách đặt bàn</p>
                         </div>
                         <table>
-                            <tr>
-                                <th>Date and time</th>
-                                <th>Customer's Full Name</th>
-                                <th>Number of People</th>
-                                <th>Phone Number</th>
-                                <th><Edit fontSize="large"/></th>
-                                <th><Delete fontSize="large"/></th>
-                            </tr>
+                            <tbody>
+                                <tr>
+                                    <th>Thời gian</th>
+                                    <th>Họ tên khách hàng</th>
+                                    <th>Số lượng khách</th>
+                                    <th>Số điện thoại</th>
+                                    <th>Chỉnh sửa</th>
+                                    <th>Xóa</th>
+                                </tr>
+                                {data && data.map((data) => (
+                                    <tr key={data._id}>
+                                        <td>{formatDate(data.date)}</td>
+                                        <td>{data.firstName + ' ' + data.lastName}</td>
+                                        <td>{data.kidsNumber + data.adultsNumber}</td>
+                                        <td>{data.phone}</td>
+                                        <td><ReserveEdit id={data._id} fname={data.firstName} lname={data.lastName} phone={data.phone} email={data.email} getData={getData}/></td>
+                                        <td><ReserveDelete id={data._id} getData={getData}/></td>
+                                    </tr>
+                                ))}
+                            </tbody>
                         </table>
                     </div>
                 </Container>

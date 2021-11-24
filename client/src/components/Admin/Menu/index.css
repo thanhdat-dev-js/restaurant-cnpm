@@ -1,0 +1,100 @@
+.am-modal {
+    position: fixed;
+    z-index: 100;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.671);
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.am-modal.open {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.am-form::-webkit-scrollbar {
+    display: none;
+  }
+  
+/* Hide scrollbar for IE, Edge and Firefox */
+.am-form {
+-ms-overflow-style: none;  /* IE and Edge */
+scrollbar-width: none;  /* Firefox */
+}
+
+.am-form {
+    z-index: 50;
+    width: 80%;
+    height: fit-content;
+    max-height: 80%;
+    padding-bottom: 20px;
+    overflow-y: scroll;
+    max-width: 900px;
+    background-color: white;
+    border-radius: 16px;
+}
+
+.am-form h3 {
+    margin: 12px 0;
+}
+
+.am-form-header {
+    z-index: 100;
+    background-color: white;
+    position: sticky;
+    top: 0;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    padding: 20px 20px 10px;
+}
+
+.am-product {
+    margin: 10px 0;
+    padding: 0 20px;
+    display: flex;
+}
+
+.am-form-search {
+    display: flex;
+    margin-right: auto;
+    margin-left: auto;
+    margin-bottom: 20px;
+}
+
+.am-form-add {
+    padding: 0 20px;
+}
+
+.am-form-add .MuiSelect-root,
+.am-form-add .MuiTextField-root {
+    font-size: 14px;
+}
+
+.admin .body {
+    overflow-x: scroll;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.admin .body::-webkit-scrollbar {
+    display: none;
+  }
+  
+/* Hide scrollbar for IE, Edge and Firefox */
+.admin .body{
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+.admin .header {
+    position:sticky;
+    top: 0;
+    z-index: 50;
+}

@@ -4,7 +4,6 @@ import { useHistory } from "react-router-dom";
 import '../scss/clerk.scss';
 import HomeIcon from '@material-ui/icons/Home';
 import Button from '@material-ui/core/Button';
-import { Container } from '@material-ui/core';
 import verifyToken from '../midlewares/verifyToken';
 import socketClient from "socket.io-client";
 import getOrder from '../midlewares/getOrder';
@@ -14,6 +13,12 @@ var socket = null;
 
 const formatDate = (dateString) => {
     return new Date(dateString).toLocaleTimeString() + ' ' + new Date(dateString).toLocaleDateString();
+}
+function format(n, currency) {
+    if (n && currency)
+        return n.toFixed(0).replace(/./g, function (c, i, a) {
+            return i > 0 && c !== "." && (a.length - i) % 3 === 0 ? "," + c : c;
+        }) + currency;
 }
 export default function Clerk() {
     const [data, setData] = useState(null);
@@ -52,6 +57,7 @@ export default function Clerk() {
                 }
             })
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
     async function handleClick(status, orderID) {
         if (socket) {
@@ -61,13 +67,13 @@ export default function Clerk() {
     }
     return (
         <div className="clerk">
-            <Container fluid='lg'>
+            <div>
                 <div className='body'>
                     <div className='filter'>
                         <div className='header'>
                             <Link to='/'>
                                 <HomeIcon />
-                                <span>Back to home</span>
+                                <span>Về trang chủ</span>
                             </Link>
                         </div>
 
@@ -82,10 +88,10 @@ export default function Clerk() {
                         <tr>
                             <th>STT</th>
                             <th>OrderID</th>
-                            <th>Status</th>
-                            <th>Total</th>
-                            <th>Create At</th>
-                            <th>Update At</th>
+                            <th>Trạng thái</th>
+                            <th>Tổng tiền</th>
+                            <th>Được tạo vào</th>
+                            <th>Cập nhật vào</th>
                             {filter === 'unconfirmed' && <><th>Xác nhận</th><th>Hủy</th></>}
                         </tr>
                         {data && data.map((val, idx) => (
@@ -93,7 +99,7 @@ export default function Clerk() {
                                 <td>{idx}</td>
                                 <td>{val.orderID}</td>
                                 <td>{val.status}</td>
-                                <td>{val.total}</td>
+                                <td>{format(val.total, 'đ')}</td>
                                 <td>{formatDate(val.createdAt)}</td>
                                 <td>{formatDate(val.updatedAt)}</td>
                                 {
@@ -119,7 +125,7 @@ export default function Clerk() {
                         )}
                     </table>
                 </div>
-            </Container>
+            </div>
         </div>
     )
 }

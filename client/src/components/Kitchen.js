@@ -4,7 +4,6 @@ import { useHistory } from "react-router-dom";
 import '../scss/clerk.scss';
 import HomeIcon from '@material-ui/icons/Home';
 import Button from '@material-ui/core/Button';
-import { Container } from '@material-ui/core';
 import verifyToken from '../midlewares/verifyToken';
 import socketClient from "socket.io-client";
 import getOrder from '../midlewares/getOrder';
@@ -14,6 +13,12 @@ var socket = null;
 
 const formatDate = (dateString) => {
     return new Date(dateString).toLocaleTimeString() + ' ' + new Date(dateString).toLocaleDateString();
+}
+function format(n, currency) {
+    if (n && currency)
+        return n.toFixed(0).replace(/./g, function (c, i, a) {
+            return i > 0 && c !== "." && (a.length - i) % 3 === 0 ? "," + c : c;
+        }) + currency;
 }
 export default function Kitchen() {
     const [data, setData] = useState(null);
@@ -51,6 +56,7 @@ export default function Kitchen() {
                 }
             })
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
     async function handleClick(status, orderID) {
         if (socket) {
@@ -60,20 +66,18 @@ export default function Kitchen() {
     }
     return (
         <div className="kitchen">
-            <Container fluid='lg'>
+            <div >
                 <div className='body'>
                     <div className='filter'>
                         <div className='header'>
                             <Link to='/'>
                                 <HomeIcon />
-                                <span>Back to home</span>
+                                <span>Về trang chủ</span>
                             </Link>
                         </div>
-
                         <div className="wrapper">
-                            <span className={classNames({ active: filter === 'unconfirmed' })} onClick={() => getData('unconfirmed')}>Chưa thanh toán</span>
-                            <span className={classNames({ active: filter === 'confirmed' })} onClick={() => getData('confirmed')}>Đã thanh toán</span>
-                            <span className={classNames({ active: filter === 'cancel' })} onClick={() => getData('cancel')}>Đã bị hủy</span>
+                            <span className={classNames({ active: filter === 'cooking' })} onClick={() => getData('cooking')}>Đang nấu</span>
+                            <span className={classNames({ active: filter === 'done' })} onClick={() => getData('done')}>Đã nấu xong</span>
                         </div>
                         <p>Danh sách đơn hàng</p>
                     </div>
@@ -81,10 +85,10 @@ export default function Kitchen() {
                         <tr>
                             <th>STT</th>
                             <th>OrderID</th>
-                            <th>Process</th>
-                            <th>Total</th>
-                            <th>Create At</th>
-                            <th>Update At</th>
+                            <th>Quá trình</th>
+                            <th>Tổng tiền</th>
+                            <th>Khởi tạo vào</th>
+                            <th>Cập nhật vào</th>
                             {filter === 'cooking' && <th>Hoàn thành</th>}
                         </tr>
                         {data && data.map((val, idx) => (
@@ -92,7 +96,7 @@ export default function Kitchen() {
                                 <td>{idx}</td>
                                 <td>{val.orderID}</td>
                                 <td>{val.process}</td>
-                                <td>{val.total}</td>
+                                <td>{format(val.total, 'đ')}</td>
                                 <td>{formatDate(val.createdAt)}</td>
                                 <td>{formatDate(val.updatedAt)}</td>
                                 {
@@ -102,7 +106,7 @@ export default function Kitchen() {
                                             disabled={val.status === 'done'}
                                             variant="contained" color="secondary"
                                             onClick={() => handleClick('done', val.orderID)}
-                                        >Done</Button>
+                                        >Nấu xong</Button>
                                     </td>
                                 }
                             </tr>
@@ -110,7 +114,7 @@ export default function Kitchen() {
                         )}
                     </table>
                 </div>
-            </Container>
+            </div>
         </div>
     )
 }

@@ -19,6 +19,8 @@ const category = require('../controllers/category.controller');
 
 router.get('/admin/statistics', admin.getFilteredOrders);
 router.get('/admin/employee', admin.getAllEmployee);
+router.get('/admin/employee/email', admin.getCustomer);
+router.put('/admin/employee/email', admin.putCustomer);
 // router.get('/admin/customer-info', validateAdmin, admin.displayCustomerInfo);
 
 

@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { Container } from '@material-ui/core';
+// import { Container } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import MenuBookIcon from '@material-ui/icons/MenuBook';
-import ReceiptIcon from '@material-ui/icons/Receipt';
+// import ReceiptIcon from '@material-ui/icons/Receipt';
 import verifyToken from '../midlewares/verifyToken';
 import ReactTypingEffect from 'react-typing-effect';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import ReceiptIcon from '@material-ui/icons/Receipt';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import '../scss/home.scss';
-export default () => {
+export default function Home() {
     const [isAuthen, setIsAuthen] = useState(false);
     const [permission, setPermission] = useState('customer');
     useEffect(() => {
@@ -35,25 +36,40 @@ export default () => {
                     <ul>
                         {permission === 'customer' && <li>
                             <Link to="/menu">
-                                <span>Menu</span>
+                                <span>Gọi món</span>
                                 <MenuBookIcon />
                             </Link>
                         </li>}
-                        {permission === 'clerk' && <li>
-                            <Link to="/clerk">
-                                <span>Clerk</span>
-                                <MenuBookIcon />
+                        {permission === 'customer' && isAuthen && <li>
+                            <Link to="/reserve">
+                                <span>Đặt bàn</span>
+                                <ReceiptIcon />
                             </Link>
                         </li>}
+                        {permission === 'clerk' &&
+                            <>
+                                <li>
+                                    <Link to="/clerk">
+                                        <span>Thu ngân</span>
+                                        <MenuBookIcon />
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link to="/reservelist">
+                                        <span>Danh sách đặt bàn</span>
+                                        <ReceiptIcon />
+                                    </Link>
+                                </li>
+                            </>}
                         {permission === 'admin' && <li>
                             <Link to="/admin">
-                                <span>admin</span>
+                                <span>Quản lý</span>
                                 <MenuBookIcon />
                             </Link>
                         </li>}
                         {permission === 'kitchen' && <li>
                             <Link to="/kitchen">
-                                <span>Kichen</span>
+                                <span>Nhà bếp</span>
                                 <MenuBookIcon />
                             </Link>
                         </li>}
@@ -62,14 +78,14 @@ export default () => {
                         {isAuthen ?
                             <>
                                 <li>
-                                    <Link to="/user">
-                                        <span>profile</span>
+                                    <Link to="/profile">
+                                        <span>Thông tin cá nhân</span>
                                         <AccountCircleIcon />
                                     </Link>
                                 </li>
                                 <li>
                                     <Link onClick={handleLogout}>
-                                        <span>Log out</span>
+                                        <span>Đăng xuất</span>
                                         <ExitToAppIcon />
                                     </Link>
                                 </li>
@@ -77,12 +93,12 @@ export default () => {
                             :
                             <> <li>
                                 <Link to="/login">
-                                    <span>Login</span>
+                                    <span>Đăng nhập</span>
                                 </Link>
                             </li>
                                 <li>
                                     <Link to="/register">
-                                        <span>Register</span>
+                                        <span>Đăng ký</span>
                                     </Link>
                                 </li>
                             </>
@@ -90,7 +106,7 @@ export default () => {
                     </ul>
                 </div>
                 <div className="typing-effect" >
-                    <img src="https://logopond.com/logos/e6b478cef54b8fb8acfd1b4dee22f543.png" />;
+                    <img src="https://logopond.com/logos/e6b478cef54b8fb8acfd1b4dee22f543.png" alt='logo' />
                     <ReactTypingEffect
                         speed={80}
                         text={["Chào mừng quý khách ghé thăm nhà hàng sushi của chúng tôi!!!"]}

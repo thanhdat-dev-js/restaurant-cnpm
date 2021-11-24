@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import { useHistory } from "react-router-dom";
 import '../scss/admin.scss';
 import HomeIcon from '@material-ui/icons/Home';
-import { Container } from '@material-ui/core';
 import verifyToken from '../midlewares/verifyToken';
 import Statistics from './Admin/Statistics/Statistics';
 import Menu from './Admin/Menu/Menu';
@@ -24,32 +23,34 @@ export default function Admin() {
                 }
             })
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
-    useEffect(() => {
-        console.log(Active);
-    },[Active])
+    // useEffect(() => {
+    //     console.log(Active);
+    // },[Active])
     return (
         <div className="admin">
-            <Container fluid='lg'>
+            {/* <Container fluid='lg'> */}
+
                 <div className='header'>
                     <Link to='/'>
                         <HomeIcon />
                         <span>Back to home</span>
                     </Link>
-                </div>
-                <div className='body'>
                     <div className='filter'>
                         <span className={`${Active ==="Statistics" && 'option--active'}`} onClick={()=>{SetActive("Statistics")}}>Thống kê</span>
                         <span className={`${Active ==="Staff" && 'option--active'}`} onClick={()=>{SetActive("Staff")}}>Thông tin nhân viên</span>
                         <span className={`${Active ==="Menu" && 'option--active'}`} onClick={()=>{SetActive("Menu")}}>Chỉnh sửa thực đơn</span>
                     </div>
                 </div>
-                <div>
+
+                <div className='body'>
                     {Active==="Statistics" && <Statistics/>}
                     {Active==="Staff" && <Staff/>}
                     {Active==="Menu" && <Menu/>}
                 </div>
-            </Container>
+
+            {/* </Container> */}
         </div>
     )
 }

@@ -17,7 +17,7 @@ import socketClient from "socket.io-client";
 const SERVER = "http://localhost:4000/";
 const classNames = require('classnames');
 
-export default () => {
+export default function Menu() {
    const history = useHistory();
    const [dataTag, setDataTag] = useState(() => {
       const { start, end, responsive } = (() => {
@@ -94,6 +94,7 @@ export default () => {
       catch (e) {
          console.log(e);
       }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
    }, [])
    useEffect(() => {
       var totalOrder = 0;
@@ -106,10 +107,14 @@ export default () => {
       };
       localStorage.setItem('ORDER', JSON.stringify(data));
       setDataCart(data)
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+
    }, [dataCart.products])
    useEffect(() => {
       window.addEventListener("resize", handleWindowResize);
       return () => window.removeEventListener("resize", handleWindowResize);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+
    });
    useEffect(() => handleWindowResize(), []);
    function handleWindowResize() {
@@ -378,7 +383,7 @@ export default () => {
                   onClick={() => closeModal()}>
                   <div className='modal-body' onClick={(e) => e.stopPropagation()}>
                      <div className='heading'>
-                        <h3>Add to cart</h3>
+                        <h3>Chi tiết sản phẩm</h3>
                         <CloseIcon onClick={() => closeModal()} />
                      </div>
                      <div className='container'>
@@ -398,12 +403,12 @@ export default () => {
                                  <p>{dataTag.data[dataTag.currentIdx].products[dataTag.currentIdxProduct]?.name}</p>
                               </div>
                               <div className='price'>
-                                 <h3>Unit Price</h3>
+                                 <h3>Đơn giá</h3>
                                  <span>{format(dataTag.data[dataTag.currentIdx].products[dataTag.currentIdxProduct]?.price, 'đ')}</span>
                               </div>
                            </div>
                            <div className='quantity'>
-                              <h3>Quantity</h3>
+                              <h3>Số lượng</h3>
                               <div>
                                  <div className='btn btn-decrease' onClick={() => handleClickDecrease()}><RemoveIcon /></div>
                                  <span>{dataTag.quantity}</span>
@@ -411,11 +416,11 @@ export default () => {
                               </div>
                            </div>
                            <div className='description'>
-                              <h3>Description</h3>
+                              <h3>Mô tả món ăn:</h3>
                               <p>{dataTag.data[dataTag.currentIdx].products[dataTag.currentIdxProduct]?.description}</p>
                            </div>
                            <Button className='btn-modal' variant="contained" color="secondary" onClick={() => addToCart()}>
-                              <ShoppingCartOutlinedIcon /> <span>Add to cart</span>
+                              <ShoppingCartOutlinedIcon /> <span>Thêm vào giỏ hàng</span>
                            </Button>
                         </div>
                      </div>
@@ -424,11 +429,11 @@ export default () => {
                <div className='header'>
                   <Link to='/'>
                      <HomeIcon />
-                     <span>Back to home</span>
+                     <span>Về trang chủ</span>
                   </Link>
                   <div className='btn-showCart' onClick={() => openCart()}>
                      <ShoppingCartIcon />
-                     <span>Cart({dataCart.products.length})</span>
+                     <span>Giỏ hàng({dataCart.products.length})</span>
                   </div>
                </div>
                <Menubody data={dataTag.data}
@@ -443,14 +448,14 @@ export default () => {
                   onClick={() => closeCart()}>
                   <div className='cart-wrap' onClick={(e) => e.stopPropagation()} >
                      <div className='cart-header'>
-                        <ShoppingCartIcon className='cart-icon' /><span>YourCart({dataCart.products.length})</span>
+                        <ShoppingCartIcon className='cart-icon' /><span>Giỏ hàng({dataCart.products.length})</span>
                         <CloseIcon className='cart-close' onClick={() => closeCart()} />
                      </div>
                      <div className='container'>
                         {dataTag.data.length !== 0 && dataCart.products.map((item, idx) => (
                            <div className='product' key={idx}>
                               <div className='product-wrap'>
-                                 <img src={`${dataTag.data[item.currentIdx].products[item.currentIdxProduct].imgURL}`} />
+                                 <img src={`${dataTag.data[item.currentIdx].products[item.currentIdxProduct].imgURL}`} alt="img" />
                               </div>
                               <div className='body'>
                                  <p><span>{idx + 1}. </span>{dataTag.data[item.currentIdx].products[item.currentIdxProduct].name}</p>
@@ -476,11 +481,11 @@ export default () => {
                      </div>
                      <div className='cart-footer'>
                         <div className='cart-footer-wrap'>
-                           <h3>Total:</h3>
-                           <p>{format(dataCart.totalOrder, 'đ')}</p>
+                           <h3>Tổng:</h3>
+                           <p>{dataCart.totalOrder ? format(dataCart.totalOrder, 'đ') : 'đ0'}</p>
                         </div>
-                        <div className='discount'>Khuyen mai</div>
-                        <Button className='btn-modal' variant="contained" color="secondary" onClick={handlePayment}>PAYMENT</Button>
+                        <div className='discount'></div>
+                        <Button className='btn-modal' variant="contained" color="secondary" onClick={handlePayment}>Thanh toán</Button>
                      </div>
                   </div>
                </div>

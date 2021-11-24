@@ -3,31 +3,43 @@
   font-size: 1.6rem;
   .body {
     margin-top: 10px;
+  }
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    box-shadow: $box-shadow;
+    background-color: $white-color;
+
     .filter {
+
+      margin: auto 2rem;
+      display: flex;
+
       p {
         font-size: 2rem;
         font-weight: 700;
         margin: 20px 0;
       }
+
       span {
         font-size: 1.6rem;
         font-weight: 500;
         line-height: 1.6;
         margin-left: 20px;
         cursor: pointer;
+
         &:hover {
           opacity: 0.8;
           background-color: $bg-color;
         }
       }
+      
       .option--active {
         color: $primary-color;
       }
     }
-  }
-  .header {
-    display: flex;
-    justify-content: space-between;
+    
     a,
     .btn-showCart {
       text-decoration: none;
@@ -55,6 +67,9 @@
       margin: 0 10px;
     }
   }
+
+
+
   table {
     font-family: Arial, Helvetica, sans-serif;
     border-collapse: collapse;

@@ -1,32 +1,72 @@
-import React from 'react';
+import {useState} from 'react';
 import '../scss/reserveedit.scss'
-
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Modal from '@material-ui/core/Modal';
 import Edit from '@material-ui/icons/Edit'
 import TextField from '@material-ui/core/TextField';
+import verifyToken from '../midlewares/verifyToken';
+import axios from 'axios';
+const SERVER = "http://localhost:4000/";
 
 const style = {
   position: 'absolute',
-  top: '50%',
+  top: window.innerWidth <= 500 ? '55%' : '50%',
   left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: '60%',
+  transform: window.innerWidth <= 800 ? 'translate(-50%, -60%)' : 'translate(-50%, -50%)',
+  width: window.innerWidth <= 800 ? '85%' : '50%',
   bgcolor: 'background.paper',
   boxShadow: 24,
-  p: 4,
-};
+  p: window.innerWidth <= 500 ? 3 : 5,
+}; 
 
-export default function BasicModal() {
-  const [open, setOpen] = React.useState(false);
+export default function BasicModal(props) {
+  const [open, setOpen] = useState(false);
+  const [info, setInfo] = useState({
+    firstName: props.firstName,
+    lastName: props.lastName,
+    phone: props.phone,
+    email: props.email
+  })
+
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  const handleOnchangeFirstName = (e) => setInfo({...info, firstName: e.target.value});
+  const handleOnchangeLastName = (e) => setInfo({...info, lastName: e.target.value});
+  const handleOnchangePhone = (e) => setInfo({...info, phone: e.target.value});
+  const handleOnchangeEmail = (e) => setInfo({...info, email: e.target.value});
+
+  const handleUpdate = (id) => {
+    try {
+      let req = {
+        url: SERVER + "reserve/" + id,
+        method: "PUT",
+        data: info
+      };
+      axios.request(req).then(() => {
+        const getInfo = verifyToken();
+          if (getInfo) {
+            getInfo.then(res => {
+                if (res.data.permission === 'clerk') {
+                    props.getData();
+                }
+                else if (res.data.permission === 'customer') {
+                    props.getData(res.data.email);
+                }
+            })
+          }
+      });
+    } catch (err) {
+        console.log(err);
+    }
+    setOpen(false);
+  }
+
   return (
     <div>
-      <Button  onClick={handleOpen}><Edit fontSize="large"/></Button>
+      <Button onClick={handleOpen}><Edit fontSize={window.innerWidth <= 500 ? "medium" : "large" }/></Button>
       <Modal
         open={open}
         onClose={handleClose}
@@ -34,55 +74,67 @@ export default function BasicModal() {
       >
         <Box sx={style}>
           <div className="title">
-            <Typography id="modal-modal-title" variant="h3" style={{fontWeight: 'bold', color: '#000a43'}}>Edit Customer Reservation</Typography>    
+            <Typography id="modal-modal-title" variant="h3" style={{fontWeight: 'bold', color: '#000a43'}}>Chỉnh sửa thông tin đặt bàn</Typography>    
           </div>
 
           <div className="form-edit">
             <TextField
                 variant="outlined" 
-                label="First Name" 
+                label="Họ, tên đệm" 
                 type="text"
                 fullWidth
-                InputProps={{style: {fontSize: 14}}}
-                InputLabelProps={{style: {fontSize: 14}}}/>
+                defaultValue={props.fname}
+                onChange={handleOnchangeFirstName}
+                InputProps={{style: {fontSize: 17}}}
+                InputLabelProps={{style: {fontSize: 17}}}/>
           </div>
 
           <div className="form-edit">
             <TextField
                 variant="outlined" 
-                label="Last Name" 
+                label="Tên" 
                 type="text"
                 fullWidth
-                InputProps={{style: {fontSize: 14}}}
-                InputLabelProps={{style: {fontSize: 14}}}/>
+                defaultValue={props.lname}
+                onChange={handleOnchangeLastName}
+                InputProps={{style: {fontSize: 17}}}
+                InputLabelProps={{style: {fontSize: 17}}}/>
           </div>
 
           <div className="form-edit">
             <TextField
                 variant="outlined" 
-                label="Phone Number" 
-                type="text"
+                label="Số điện thoại" 
+                type="tel"
                 fullWidth
-                InputProps={{style: {fontSize: 14}}}
-                InputLabelProps={{style: {fontSize: 14}}}/>
+                defaultValue={props.phone}
+                onChange={handleOnchangePhone}
+                InputProps={{style: {fontSize: 17}}}
+                InputLabelProps={{style: {fontSize: 17}}}/>
           </div>
 
           <div className="form-edit">
             <TextField
                 variant="outlined" 
-                label="Email address" 
-                type="text"
+                label="Địa chỉ Email" 
+                type="email"
                 fullWidth
-                InputProps={{style: {fontSize: 14}}}
-                InputLabelProps={{style: {fontSize: 14}}}/>
+                defaultValue={props.email}
+                onChange={handleOnchangeEmail}
+                InputProps={{style: {fontSize: 17}}}
+                InputLabelProps={{style: {fontSize: 17}}}/>
           </div>
 
           <div className="btn-edit">
-            <Button variant="contained" fullWidth style={{ fontSize: 14, padding: 12}} color="secondary">Save changes</Button>
+            <Button 
+              variant="contained" 
+              fullWidth style={{ fontSize: 14, padding: 12}} 
+              color="secondary"
+              onClick={() => handleUpdate(props.id)} >Lưu thay đổi</Button>
           </div>
           
           <div className="note">
-              <p>*Note: If you want to change date and time, please delete this reservation and make a new reservation.</p>
+              <p>*Lưu ý: Nếu quý khách muốn thay đổi thời gian đặt bàn, vui lòng xóa lần đặt bàn cũ và thêm một đặt bàn mới.</p>
           </div>
         </Box>
       </Modal>
