@@ -52,8 +52,8 @@ export default function Statistics(){
                 temptDate[0].endDate.setHours(0,0,0,0);
                 // tempStartDate.setTime(tempStartDate.getTime + 60*60*1000)
                 // detDateRange(temptDate);
-                console.log(temptDate);
-                console.log(dateRange[0]); 
+                // console.log(temptDate);
+                // console.log(dateRange[0]); 
             }
             updateDate();
             getData(dateRange[0].startDate.toISOString(), dateRange[0].endDate.toISOString());
