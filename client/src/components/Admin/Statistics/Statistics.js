@@ -46,7 +46,16 @@ export default function Statistics(){
         setButtonPopup(true);
     }
     useEffect(() => {
-            // console.log(dateRange[0]);
+            async function updateDate(){
+                let temptDate = [...dateRange];
+                temptDate[0].startDate.setTime(temptDate[0].startDate.getTime() + 60*60*1000);
+                temptDate[0].endDate.setHours(0,0,0,0);
+                // tempStartDate.setTime(tempStartDate.getTime + 60*60*1000)
+                // detDateRange(temptDate);
+                console.log(temptDate);
+                console.log(dateRange[0]); 
+            }
+            updateDate();
             getData(dateRange[0].startDate.toISOString(), dateRange[0].endDate.toISOString());
     }, [dateRange]);
 
@@ -67,16 +76,6 @@ export default function Statistics(){
             <div className="dateRange">
                 <TextField className="TextField"
                     id="outlined-read-only-input"
-                    label="Start Date"
-                    InputLabelProps={{style: {fontSize: 17}}}
-                    value={formatDate(dateRange[0].startDate)}
-                    InputProps={{
-                        readOnly: true,
-                        style:{fontSize: 17}
-                        }}
-                />
-                <TextField className="TextField"
-                    id="outlined-read-only-input"
                     label="End Date"
                     InputLabelProps={{style: {fontSize: 17}}}
                     value={formatDate(dateRange[0].endDate)}
@@ -85,6 +84,17 @@ export default function Statistics(){
                         style:{fontSize: 17}
                         }}
                 />
+                <TextField className="TextField"
+                    id="outlined-read-only-input"
+                    label="Start Date"
+                    InputLabelProps={{style: {fontSize: 17}}}
+                    value={formatDate(dateRange[0].startDate)}
+                    InputProps={{
+                        readOnly: true,
+                        style:{fontSize: 17}
+                        }}
+                />
+
                     <DateRangeIcon fontSize="large" onClick={()=> Handle()}/>
             
             </div>

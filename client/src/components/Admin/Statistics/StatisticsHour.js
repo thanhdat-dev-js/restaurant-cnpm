@@ -6,7 +6,7 @@ import { Line } from "react-chartjs-2";
 const StatisticsHour = (props) => {
 
     const { data } = props;
-    console.log(data);
+    // console.log(data);
     const start_hour = 7;
     const end_hour = 23;
     const NumOfHours = end_hour - start_hour;
@@ -25,7 +25,7 @@ const StatisticsHour = (props) => {
             await data.forEach((order) => {
                 const TimeOfOrder = new Date(order.updatedAt).getHours();
                 arr[1][TimeOfOrder - start_hour]++;
-                console.log(arr[1], 'arr');
+                // console.log(arr[1], 'arr');
             })
             setGraphData(arr);
         }
