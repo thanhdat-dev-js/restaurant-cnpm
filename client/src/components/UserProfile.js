@@ -110,7 +110,7 @@ function UserProfile() {
 							}}
 						>
 							<Box id="body-title" sx={{display:'flex', fontSize: 50, mb: 8}}>
-								<AccountCircleIcon fontSize='inherit' x={{}}/>
+								<AccountCircleIcon fontSize='inherit'/>
 								<Box sx={{my: 'auto', ml: 2}}>
 									{displayName==='' ?
 									<Box sx={{fontSize: 20, }}>Không tên</Box>
