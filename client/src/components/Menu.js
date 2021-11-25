@@ -107,15 +107,15 @@ export default function Menu() {
       };
       localStorage.setItem('ORDER', JSON.stringify(data));
       setDataCart(data)
+      
       // eslint-disable-next-line react-hooks/exhaustive-deps
-
    }, [dataCart.products])
    useEffect(() => {
       window.addEventListener("resize", handleWindowResize);
       return () => window.removeEventListener("resize", handleWindowResize);
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-
+      
    });
+   // eslint-disable-next-line react-hooks/exhaustive-deps
    useEffect(() => handleWindowResize(), []);
    function handleWindowResize() {
       if (window.innerWidth > 992) {
