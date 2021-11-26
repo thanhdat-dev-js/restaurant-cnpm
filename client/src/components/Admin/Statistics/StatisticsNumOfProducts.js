@@ -13,7 +13,7 @@ const StatisticsNumOfProducts = (props) =>{
 
     
     useEffect(() => {
-        console.log("product", data)
+        // console.log("product", data)
         async function fetchData(){
             let productsCnt = new Map();
                 await data.forEach((order) =>{
@@ -42,7 +42,7 @@ const StatisticsNumOfProducts = (props) =>{
     }, [NoOfProducts, ProductsCount])
     function handleChangeNoOfProducts(e){
         let value = e.target.value;
-        console.log(value);
+        // console.log(value);
         setNoOfProducts(value);
     }
     return (

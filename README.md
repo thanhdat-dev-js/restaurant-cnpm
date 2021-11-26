@@ -15,7 +15,7 @@ npm i -g yarn
 
 ## Thiết lập dữ liệu và install node_modules
 * Mở **MongoDB Tool Compass**, connect tới địa chỉ `mongodb://localhost:27017`, kết nối với **MongoDB** tạo document **cnpm** với collection **categories**
-* Nhập file dữ liệu từ file [category.json](https://drive.google.com/file/d/1V4iOMiBsC20SGzoDRMuPFAaRAEYphZpt/view?usp=sharing) vào collection **categories**
+* Nhập file dữ liệu từ file **categories.json** vào collection **categories**
 * Mở lại folder dự án đã clone về, vào folder client, chạy lệnh
 ```
 npm install
@@ -38,3 +38,12 @@ npm start
 ```
 npm start
 ```
+
+
+## BUILD
+
+````
+cd client
+npm install -g serve
+serve -s build
+````
