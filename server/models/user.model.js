@@ -12,10 +12,11 @@ const userSchema = new mongoose.Schema({
     username: reqString,
     password: reqString,
     email: reqString,
-    fname: String,
-    lname: String,
+    fname: {type: String, default: ''},
+    lname: {type: String, default: ''},
     reservations: [String],
-    permission: String
+    permission: String,
+    phone: {type:String, default: ''}
 },
     { timestamps: true }
 )

@@ -41,7 +41,12 @@ function ReserveForm() {
                 }
                 else {
                     console.log(checkForm)
-                    if (parseInt(checkForm['adults'])===0) {
+                    if (parseInt(checkForm['adults'])<=0 ||
+                    parseInt(checkForm['children'])<=0) {
+                        setErrorMsg('Vui lòng không điền số lượng âm.')
+                        return
+                    }
+                    else if (parseInt(checkForm['adults'])===0) {
                         setErrorMsg('Cần có ít nhất một người lớn để tiến hành đặt bàn.')
                         return
                     }
