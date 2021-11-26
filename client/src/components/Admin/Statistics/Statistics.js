@@ -49,11 +49,7 @@ export default function Statistics(){
             async function updateDate(){
                 let temptDate = [...dateRange];
                 temptDate[0].startDate.setTime(temptDate[0].startDate.getTime() + 60*60*1000);
-                temptDate[0].endDate.setHours(0,0,0,0);
-                // tempStartDate.setTime(tempStartDate.getTime + 60*60*1000)
-                // detDateRange(temptDate);
-                // console.log(temptDate);
-                // console.log(dateRange[0]); 
+                // temptDate[0].endDate.setHours(0,0,0,0);
             }
             updateDate();
             getData(dateRange[0].startDate.toISOString(), dateRange[0].endDate.toISOString());
