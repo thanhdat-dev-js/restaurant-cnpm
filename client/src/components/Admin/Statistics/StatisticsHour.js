@@ -40,7 +40,7 @@ const StatisticsHour = (props) => {
     }
     return (
         <div>
-            <h1>Bảng thống kê tần suất nhận đơn ở các khung giờ</h1>
+            <h1>Tần suất nhận đơn ở các khung giờ</h1>
             <Line
                 data={{
                     labels: arr1,
