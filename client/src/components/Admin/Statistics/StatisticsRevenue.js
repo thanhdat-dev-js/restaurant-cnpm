@@ -44,7 +44,7 @@ const StatisticsRevenue = (props) => {
     }, [data]);
     return (
         <div>
-            <h1>Bảng thống kê doanh thu</h1>
+            <h1>Thống kê doanh thu</h1>
             <Bar
                 data={{
                     labels: graphData[0],

@@ -52,7 +52,7 @@
   right: 16px;
 }
 .NumOfProducts .Header {
-  margin: 30px;
+  margin-top: 30px;
   display: flex;
   justify-content: space-between;
 }

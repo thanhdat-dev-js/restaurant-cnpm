@@ -13,6 +13,7 @@ import putProfile from '../midlewares/putProfile';
 function UserProfile() {
 	const [profile, setProfile] = useState({})
 	const [displayName, setDisplayName] = useState('')
+	const [changeDB, setChangeDB] = useState('')
 
 	useEffect(() => {
 		const fetch = async () => {
@@ -25,7 +26,7 @@ function UserProfile() {
 			// console.log(pf.data['theProfile'])
 		}
 		fetch()
-	}, [])
+	}, [changeDB])
 
 	const handleOnChangeFname = (e) => {
 		setProfile({
@@ -49,10 +50,11 @@ function UserProfile() {
 	}
 
 	const handleOnclickSubmitbtn = (e) => {
-		// e.preventDefault()
+		e.preventDefault()
 		// console.log("Handle submit")
 		// console.log(profile)
 		putProfile(profile)
+		setChangeDB(!changeDB)
 		// console.log(res)
 	}
 
@@ -108,7 +110,7 @@ function UserProfile() {
 							}}
 						>
 							<Box id="body-title" sx={{display:'flex', fontSize: 50, mb: 8}}>
-								<AccountCircleIcon fontSize='inherit' x={{}}/>
+								<AccountCircleIcon fontSize='inherit'/>
 								<Box sx={{my: 'auto', ml: 2}}>
 									{displayName==='' ?
 									<Box sx={{fontSize: 20, }}>Không tên</Box>

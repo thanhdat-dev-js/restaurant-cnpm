@@ -14,13 +14,14 @@ module.exports = {
     async getFilteredOrders(req, res) {
         // Lấy startTime, endTime từ request
         const {startTime, endTime} = req.query;
+        // console.log("date", startTime, endTime);
         try{
             //lấy hết orders từ database, orders là 1 json
             const orders = await Order.find({})
             //filter orders và chứa trong filtered_orders
             const filtered_orders = orders.filter((order)=>{
-                return (order.updatedAt >= new Date(startTime) &&
-                        order.updatedAt <= new Date(endTime)
+                return (order.updatedAt >= new Date(startTime).setHours(1,0,0,0) &&
+                        order.updatedAt <= new Date(endTime).setHours(23,0,0,0)
                 )
             })
             // return filtered_orders dưới dạng json
